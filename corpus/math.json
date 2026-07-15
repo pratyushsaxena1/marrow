@@ -319,7 +319,7 @@
     "title": "Four cards and a rule",
     "body": "Four cards lie on a table, each with a letter on one face and a number on the other. You see A, K, 4, and 7. Someone claims: if a card has a vowel on one side, then it has an even number on the other. You may turn over only the cards that could possibly expose a violation of that claim. Most people pick A and 4. Which cards must you actually turn?",
     "prompt": "Given cards showing A, K, 4, and 7, which must you turn over to test the rule that a vowel on one side means an even number on the other?",
-    "answer": "A and 7. A could hide an odd number and 7 could hide a vowel, each a direct violation. Turning 4 is useless because the rule constrains vowels only, so a consonant behind 4 breaks nothing. Testing a conditional means hunting for falsification, not confirmation.",
+    "answer": "A and 7. A could hide an odd number and 7 could hide a vowel, each a direct violation. Turning 4 is useless because the rule constrains vowels only, so a consonant behind 4 breaks nothing — testing a conditional means hunting for falsification, not confirmation.",
     "difficulty": 2,
     "sources": ["https://en.wikipedia.org/wiki/Wason_selection_task"],
     "tags": ["logic", "reasoning"]
