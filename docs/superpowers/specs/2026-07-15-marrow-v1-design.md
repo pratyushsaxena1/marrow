@@ -72,8 +72,10 @@ SQLite persistence of per-card progress.
 
 - `getState(id): CardState | null`
 - `putState(state: CardState): void`
-- `getDue(now: number, limit: number): CardState[]`
-- `getSeenIds(): string[]`
+- `getDue(now: number, limit: number): CardState[]` — `dueAt` ascending
+- `getSeenIds(): Set<string>`
+- `openStore(): Store` — opens/creates the DB, recreates it if corrupt
+- `reset(): void`
 
 ### `feed`
 The mixing policy. Dependencies injected as arguments, so it tests against fakes.
