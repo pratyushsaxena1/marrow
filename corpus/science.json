@@ -1,1 +1,582 @@
-[]
+[
+  {
+    "id": "science-0001",
+    "type": "concept",
+    "domain": "science",
+    "topic": "entropy",
+    "title": "Why irreversibility is a counting argument",
+    "body": "Drop ink in water and it spreads; it never gathers back. Nothing in the collision rules forbids the reverse — each individual collision is time-symmetric and would run backwards just as happily. What forbids it is counting. There are astronomically more molecular arrangements that look mixed than look separated, so a system wandering through arrangements lands in mixed ones essentially always. Entropy is the logarithm of that count, and irreversibility is a statement about overwhelming odds, not about a force pushing one way.",
+    "prompt": "Why are processes like ink spreading through water irreversible, given that the underlying molecular collisions are time-symmetric?",
+    "answer": "Because vastly more molecular arrangements look mixed than look separated, so a system wandering randomly among them lands in mixed states essentially always. Irreversibility is a statistical near-certainty produced by counting arrangements, not a directional force in the dynamics.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Second_law_of_thermodynamics",
+      "https://en.wikipedia.org/wiki/Entropy"
+    ],
+    "tags": ["entropy", "thermodynamics", "statistical-mechanics"]
+  },
+  {
+    "id": "science-0002",
+    "type": "concept",
+    "domain": "science",
+    "topic": "entropy and life",
+    "title": "Why life does not violate the second law",
+    "body": "A common objection says that assembling ordered organisms out of disordered matter violates the second law. It does not. The second law constrains the total entropy of an isolated system, and Earth is not isolated. It absorbs a small number of high-energy visible photons from the 5,800 K Sun and re-radiates roughly twenty times as many low-energy infrared photons into 3 K space. That exchange exports far more entropy than any local biological ordering creates.",
+    "prompt": "Why doesn't the growth of ordered living organisms on Earth violate the second law of thermodynamics?",
+    "answer": "The second law constrains isolated systems, and Earth is not isolated. It absorbs a few high-energy solar photons and re-radiates roughly twenty times as many low-energy infrared photons into cold space, exporting far more entropy than local biological ordering creates.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Second_law_of_thermodynamics",
+      "https://en.wikipedia.org/wiki/Entropy_and_life"
+    ],
+    "tags": ["entropy", "thermodynamics", "biophysics"]
+  },
+  {
+    "id": "science-0003",
+    "type": "concept",
+    "domain": "science",
+    "topic": "heat engines",
+    "title": "Why no engine converts all its heat to work",
+    "body": "An engine takes heat from a hot reservoir, turns part of it into work, and dumps the rest into a cold one. It cannot dump zero. Heat leaving the hot body at temperature Th carries entropy Qh/Th with it, and the second law says the engine cannot destroy that entropy, so some heat must be discharged into the cold reservoir to carry it back out. Because the cold reservoir is colder, less heat suffices — but never none. Efficiency is therefore capped below 1 − Tc/Th.",
+    "prompt": "Why can no heat engine convert all the heat it absorbs into useful work?",
+    "answer": "The absorbed heat carries entropy Qh/Th that the engine cannot destroy, so some heat must be exhausted into a colder reservoir to carry that entropy away. That mandatory exhaust caps efficiency at 1 − Tc/Th.",
+    "difficulty": 3,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Carnot%27s_theorem_(thermodynamics)",
+      "https://en.wikipedia.org/wiki/Heat_engine"
+    ],
+    "tags": ["thermodynamics", "entropy"]
+  },
+  {
+    "id": "science-0004",
+    "type": "concept",
+    "domain": "science",
+    "topic": "angular momentum",
+    "title": "Where the spinning skater's energy comes from",
+    "body": "A skater spinning with arms outstretched pulls them in and speeds up sharply. Angular momentum L = Iω is conserved because no external torque acts about the spin axis, so shrinking the moment of inertia I forces ω up. Energy, however, is not conserved here: rotational kinetic energy equals L²/2I, which rises as I falls. The skater supplies that energy herself, doing muscular work to drag her arms inward against the outward pull she feels while rotating.",
+    "prompt": "Why does a spinning skater speed up when she pulls her arms in, and where does the extra rotational kinetic energy come from?",
+    "answer": "Angular momentum Iω is conserved with no external torque, so reducing the moment of inertia raises the angular speed. The extra kinetic energy, L²/2I, comes from the muscular work she does pulling her arms inward against the outward pull.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Angular_momentum",
+      "https://en.wikipedia.org/wiki/Moment_of_inertia"
+    ],
+    "tags": ["classical-mechanics", "conservation-laws"]
+  },
+  {
+    "id": "science-0005",
+    "type": "concept",
+    "domain": "science",
+    "topic": "tides",
+    "title": "Why there are two tides a day, not one",
+    "body": "The Moon pulls Earth's near side harder than its centre, and the centre harder than the far side. Only that difference matters for tides. Measured relative to Earth's centre, near-side water is pulled toward the Moon while far-side water is effectively left behind, pulled away from the centre. Both raise a bulge — one facing the Moon, one directly opposite. Earth's rotation carries every coastline through both bulges each day, which is why high tides come roughly twice daily.",
+    "prompt": "Why does Earth have roughly two high tides per day rather than one on the side facing the Moon?",
+    "answer": "Tides come from the gradient of the Moon's gravity across Earth, which stretches it: relative to Earth's centre, near-side water is pulled toward the Moon and far-side water is left behind. That produces two opposite bulges, and rotation carries each place through both daily.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Tide",
+      "https://en.wikipedia.org/wiki/Tidal_force"
+    ],
+    "tags": ["gravitation", "classical-mechanics"]
+  },
+  {
+    "id": "science-0006",
+    "type": "concept",
+    "domain": "science",
+    "topic": "quantum energy levels",
+    "title": "Why atoms have discrete energy levels",
+    "body": "An electron bound to a nucleus behaves like a wave confined to a region. Confined waves, like those on a guitar string, only fit at particular wavelengths, because the wavefunction must be single-valued everywhere and must fall to zero far from the nucleus. Only certain energies yield solutions satisfying both conditions; all other energies produce wavefunctions that blow up. So the atom's allowed energies form a discrete ladder, and light is emitted or absorbed only at frequencies matching gaps between rungs.",
+    "prompt": "Why does an electron bound in an atom have only discrete allowed energies?",
+    "answer": "Because a bound electron is a confined wave, and only particular energies give wavefunctions that are well-behaved everywhere and decay far from the nucleus — just as a string supports only certain standing-wave modes. The surviving solutions form a discrete energy ladder.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Energy_level",
+      "https://en.wikipedia.org/wiki/Hydrogen_atom"
+    ],
+    "tags": ["quantum-mechanics", "atomic-physics"]
+  },
+  {
+    "id": "science-0007",
+    "type": "concept",
+    "domain": "science",
+    "topic": "uncertainty principle",
+    "title": "The uncertainty principle is not about disturbance",
+    "body": "Textbooks often explain uncertainty as a microscope's photon jostling the electron it measures. That story is misleading. Heisenberg's relation ΔxΔp ≥ ħ/2 is a property of the quantum state itself, provable from the fact that the position and momentum descriptions of a state are Fourier transforms of one another: a wave sharply localised in space must be built by superposing a broad spread of wavelengths, hence momenta. The spread exists before anyone looks. Clumsy measurement is a separate, additional effect.",
+    "prompt": "Why is it wrong to explain the uncertainty principle as a measurement disturbing the particle?",
+    "answer": "Because ΔxΔp ≥ ħ/2 is a property of the quantum state itself: position and momentum amplitudes are Fourier transforms of each other, so a narrow spread in one forces a wide spread in the other whether or not anyone measures. Measurement disturbance is a distinct effect.",
+    "difficulty": 3,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Uncertainty_principle"
+    ],
+    "tags": ["quantum-mechanics", "misconceptions"]
+  },
+  {
+    "id": "science-0008",
+    "type": "concept",
+    "domain": "science",
+    "topic": "entanglement",
+    "title": "Why entanglement cannot send a signal",
+    "body": "Measure one of two entangled particles and its distant partner's outcome becomes correlated with yours immediately. It is tempting to call that faster-than-light messaging. It is not. Whatever you choose to measure, the results your partner records look like unbiased random noise; the correlation only appears once the two lists of outcomes are compared, and comparing them requires an ordinary channel limited by light speed. Nothing you do changes the statistics anyone can observe on the far side.",
+    "prompt": "Why can't entangled particles be used to send information faster than light?",
+    "answer": "Because each side's local outcomes are random regardless of what the other party measures, so no choice alters the statistics observable remotely. The correlation only becomes visible when both result lists are brought together over a normal light-speed channel.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/No-communication_theorem",
+      "https://en.wikipedia.org/wiki/Quantum_entanglement"
+    ],
+    "tags": ["quantum-mechanics", "entanglement", "misconceptions"]
+  },
+  {
+    "id": "science-0009",
+    "type": "concept",
+    "domain": "science",
+    "topic": "periodic table",
+    "title": "Why the periodic table repeats",
+    "body": "Chemistry's periodicity follows from a rule about identical particles. Electrons are fermions, so no two in an atom may share a complete set of quantum numbers. Instead of all collapsing into the lowest orbital, they stack into shells and subshells that fill in a fixed order with fixed capacities. Elements whose outermost configuration repeats behave alike chemically, which is why lithium, sodium and potassium share a column. The row lengths — 2, 8, 8, 18 — are simply those orbital capacities.",
+    "prompt": "Why does the periodic table repeat, placing chemically similar elements in the same column?",
+    "answer": "The Pauli exclusion principle forbids electrons from sharing a quantum state, so they stack into shells and subshells of fixed capacity. Outer-shell configuration determines chemistry and it recurs at regular intervals, so similar elements line up in columns and row lengths match orbital capacities.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Pauli_exclusion_principle",
+      "https://en.wikipedia.org/wiki/Periodic_table"
+    ],
+    "tags": ["quantum-mechanics", "chemistry", "atomic-physics"]
+  },
+  {
+    "id": "science-0010",
+    "type": "concept",
+    "domain": "science",
+    "topic": "time dilation",
+    "title": "Why a moving clock ticks slowly",
+    "body": "Imagine a clock that ticks each time light bounces between two mirrors a fixed distance apart. In the clock's own frame the light crosses straight over and back. In a frame where the clock glides sideways, that same light must travel a longer diagonal path. Since the speed of light is identical in every inertial frame, a longer path means a longer tick. So the moving clock runs slow by the factor 1/√(1−v²/c²). Nothing mechanical is wrong with it; time itself is frame-dependent.",
+    "prompt": "Why does a clock moving relative to you tick more slowly than one at rest beside you?",
+    "answer": "Because light travels at the same speed in every inertial frame. In your frame, light inside the moving clock traces a longer diagonal between its mirrors, so each tick takes longer, slowed by the factor 1/√(1−v²/c²).",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Time_dilation",
+      "https://en.wikipedia.org/wiki/Special_relativity"
+    ],
+    "tags": ["relativity", "spacetime"]
+  },
+  {
+    "id": "science-0011",
+    "type": "concept",
+    "domain": "science",
+    "topic": "gravitational time dilation",
+    "title": "Why GPS needs both theories of relativity",
+    "body": "GPS satellites carry atomic clocks and broadcast timestamps; your receiver converts tiny arrival-time differences into a position. Both relativistic effects bite. Orbital speed makes each satellite's clock lose about 7 microseconds per day, while sitting higher in Earth's weaker gravitational potential makes it gain about 45 microseconds per day. The net gain of roughly 38 microseconds daily is engineered out by offsetting the clock's frequency before launch. Left uncorrected, navigation errors would accumulate at around ten kilometres per day.",
+    "prompt": "Why must GPS satellite clocks be corrected for relativity, and what would happen if they weren't?",
+    "answer": "Orbital motion slows each clock by roughly 7 microseconds per day while weaker gravity speeds it up about 45, netting some 38 microseconds of daily gain. Uncorrected, that timing drift would grow position errors by roughly ten kilometres a day.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Gravitational_time_dilation",
+      "https://en.wikipedia.org/wiki/Global_Positioning_System"
+    ],
+    "tags": ["relativity", "gravitation", "applied-physics"]
+  },
+  {
+    "id": "science-0012",
+    "type": "concept",
+    "domain": "science",
+    "topic": "refraction",
+    "title": "Why light slows down in glass",
+    "body": "Light is often said to slow in glass because it keeps bumping into atoms. That picture is wrong: random scattering off atoms would blur any image, and glass is clear. What actually happens is coherent. The incoming wave drives the electrons of every atom, each re-radiates a wavelet, and all those wavelets superpose with the original wave. The sum has the same frequency but a retarded phase, which is exactly what a reduced phase velocity means. Between atoms, light still propagates at c.",
+    "prompt": "Why does light travel more slowly through glass, if not by bouncing off its atoms?",
+    "answer": "The incoming wave drives the glass's electrons, which coherently re-radiate wavelets that superpose with it. The sum keeps the same frequency but has a retarded phase — a reduced phase velocity. It is interference, not scattering; random bouncing would make glass opaque.",
+    "difficulty": 3,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Refractive_index"
+    ],
+    "tags": ["optics", "electromagnetism", "misconceptions"]
+  },
+  {
+    "id": "science-0013",
+    "type": "concept",
+    "domain": "science",
+    "topic": "light scattering",
+    "title": "Why the sky is blue and sunsets are red",
+    "body": "Air molecules are far smaller than the wavelength of visible light, so they scatter it in the Rayleigh regime, where scattered intensity scales as 1/λ⁴. Blue light near 450 nm is therefore scattered several times more strongly than red near 700 nm. Look anywhere away from the Sun and you are seeing this scattered light, so the sky reads blue. Near sunset, sunlight crosses far more atmosphere, so blue is scattered out of the direct beam before reaching you, leaving red.",
+    "prompt": "Why is the daytime sky blue while the setting Sun looks red?",
+    "answer": "Air molecules scatter light in the Rayleigh regime, with intensity proportional to 1/λ⁴, so short blue wavelengths scatter far more than red. Away from the Sun you see that scattered blue; at sunset the long atmospheric path strips blue from the direct beam, leaving red.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Rayleigh_scattering",
+      "https://en.wikipedia.org/wiki/Diffuse_sky_radiation"
+    ],
+    "tags": ["optics", "atmospheric-physics"]
+  },
+  {
+    "id": "science-0014",
+    "type": "concept",
+    "domain": "science",
+    "topic": "electromagnetic induction",
+    "title": "Why induced currents fight the magnet that made them",
+    "body": "Move a magnet toward a coil and current flows; hold it still and nothing happens. Faraday's law says the induced electromotive force equals minus the rate of change of magnetic flux through the circuit, so only change drives current. The minus sign is Lenz's law: the induced current generates its own field opposing the change. It must, or you could extract energy for free. That opposition is the resistance you feel pushing the magnet, and your mechanical work is precisely where the electrical energy comes from.",
+    "prompt": "Why does only a moving magnet induce current in a coil, and why does that current oppose the motion?",
+    "answer": "Faraday's law makes the induced EMF equal to the negative rate of change of magnetic flux, so a static magnet drives nothing. The opposing sign, Lenz's law, is demanded by energy conservation: the work you do pushing against that opposition supplies the electrical energy.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Faraday%27s_law_of_induction",
+      "https://en.wikipedia.org/wiki/Lenz%27s_law"
+    ],
+    "tags": ["electromagnetism", "conservation-laws"]
+  },
+  {
+    "id": "science-0015",
+    "type": "concept",
+    "domain": "science",
+    "topic": "hydrogen bonding",
+    "title": "Why ice floats on water",
+    "body": "Almost every liquid is denser than its own solid, but water is not. Each water molecule can hydrogen-bond to four neighbours, through its two hydrogens and its two lone pairs. In the liquid those bonds constantly break and reform, letting molecules slip into tight packing. On freezing, each molecule locks into all four bonds at once, and the tetrahedral geometry forces an open hexagonal lattice riddled with holes. That structure is about 9% less dense, so ice floats and lakes freeze downward from the top.",
+    "prompt": "Why is ice less dense than liquid water, unlike almost every other solid in its own liquid?",
+    "answer": "Each water molecule can form four tetrahedrally arranged hydrogen bonds. Freezing locks all four in simultaneously, forcing an open hexagonal lattice with empty space, roughly 9% less dense than liquid water, where transient bonds let molecules pack more tightly.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Hydrogen_bond",
+      "https://en.wikipedia.org/wiki/Ice"
+    ],
+    "tags": ["chemistry", "chemical-bonding"]
+  },
+  {
+    "id": "science-0016",
+    "type": "concept",
+    "domain": "science",
+    "topic": "catalysis",
+    "title": "Why a catalyst cannot shift an equilibrium",
+    "body": "A catalyst does not make a reaction more favourable. It cannot change the equilibrium constant, because that is set by the free-energy difference between reactants and products, which the catalyst never touches. What it changes is the route: it opens an alternative pathway with a lower activation barrier, so a far larger fraction of molecular collisions carries enough energy to cross. Being regenerated at the end, it accelerates the forward and reverse reactions equally, and simply reaches the same equilibrium sooner.",
+    "prompt": "How does a catalyst speed up a reaction without changing where its equilibrium lies?",
+    "answer": "It provides an alternative pathway with a lower activation energy, so many more collisions surmount the barrier. Because it leaves the free-energy difference between reactants and products untouched, it accelerates forward and reverse rates equally and only reaches the same equilibrium faster.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Catalysis",
+      "https://en.wikipedia.org/wiki/Activation_energy"
+    ],
+    "tags": ["chemistry", "kinetics", "thermodynamics"]
+  },
+  {
+    "id": "science-0017",
+    "type": "concept",
+    "domain": "science",
+    "topic": "solvation",
+    "title": "Why salt dissolves in water but not in oil",
+    "body": "Prising a sodium ion away from a chloride ion costs a large amount of energy, since the crystal's lattice energy is enormous. So why does salt dissolve? Water molecules are polar: their partial charges crowd around each freed ion, and the energy released by that solvation very nearly repays the lattice energy. The small shortfall is covered by the entropy gained when ions scatter through the liquid. Oil molecules are nonpolar and cannot solvate ions, so nothing pays the bill and the crystal stays intact.",
+    "prompt": "Why does salt dissolve readily in water but not in oil?",
+    "answer": "Polar water molecules crowd around the separated ions, and the energy released by that solvation, plus the entropy gained by dispersing them, nearly repays the crystal's lattice energy. Nonpolar oil cannot solvate ions, so nothing offsets the cost of breaking the lattice.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Solvation",
+      "https://en.wikipedia.org/wiki/Lattice_energy"
+    ],
+    "tags": ["chemistry", "chemical-bonding", "thermodynamics"]
+  },
+  {
+    "id": "science-0018",
+    "type": "concept",
+    "domain": "science",
+    "topic": "DNA replication",
+    "title": "Why one DNA strand is copied backwards in pieces",
+    "body": "DNA polymerase can only add nucleotides to the 3′ end of a growing chain, so it always builds a new strand 5′→3′. The two strands of the double helix run antiparallel, yet the replication fork opens in a single direction. One new strand can therefore be extended continuously, chasing the fork. The other must grow pointing away from the fork, so it is made in short pieces restarted as fresh template is exposed. Those Okazaki fragments are later stitched together by DNA ligase.",
+    "prompt": "Why is one strand of DNA synthesised in short discontinuous fragments during replication?",
+    "answer": "DNA polymerase can only extend a strand 5′→3′, and the two templates are antiparallel while the fork opens one way. On the lagging template the new strand must be built away from the fork, in short Okazaki fragments later sealed by ligase.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/DNA_replication",
+      "https://en.wikipedia.org/wiki/Okazaki_fragments"
+    ],
+    "tags": ["molecular-biology", "genetics"]
+  },
+  {
+    "id": "science-0019",
+    "type": "concept",
+    "domain": "science",
+    "topic": "genetic code",
+    "title": "Why the genetic code's redundancy is not an accident",
+    "body": "Sixty-four codons specify twenty amino acids plus stop, so most amino acids have several codons. The redundancy is not arranged randomly. Synonymous codons usually differ only at the third base, and codons that differ at the first or second base often specify chemically similar amino acids. A large share of single-base mutations therefore change nothing, or swap in a similar residue. Computational comparisons find the real code more error-tolerant than the vast majority of randomly generated alternative assignments.",
+    "prompt": "Why does the layout of the genetic code make it unusually resistant to point mutations?",
+    "answer": "Synonymous codons mostly differ at the third base, so many point mutations are silent, and codons differing elsewhere often encode chemically similar amino acids, making many others conservative. Comparisons show the real code beats the vast majority of randomly generated alternatives on error tolerance.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Genetic_code"
+    ],
+    "tags": ["molecular-biology", "evolution", "genetics"]
+  },
+  {
+    "id": "science-0020",
+    "type": "concept",
+    "domain": "science",
+    "topic": "enzyme catalysis",
+    "title": "Why enzymes must not fit their substrates perfectly",
+    "body": "An enzyme is usually pictured as a lock matched to its substrate key. If it truly fitted the substrate perfectly it would be a poor catalyst. Reaction rate depends on the free-energy gap between the ground state and the transition state, so what an enzyme must bind most tightly is the strained, fleeting transition state, not the comfortable substrate. Binding energy released there lowers the barrier and can accelerate rates by many orders of magnitude. Transition-state analogues make correspondingly potent inhibitors.",
+    "prompt": "Why must an enzyme bind the transition state more tightly than it binds its own substrate?",
+    "answer": "Rate is governed by the free-energy gap between ground state and transition state. Preferentially binding the transition state lowers that barrier, whereas binding the substrate tightly merely deepens the starting well and helps nothing. Hence transition-state analogues are exceptionally potent inhibitors.",
+    "difficulty": 3,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Enzyme_catalysis",
+      "https://en.wikipedia.org/wiki/Transition_state"
+    ],
+    "tags": ["molecular-biology", "biochemistry", "kinetics"]
+  },
+  {
+    "id": "science-0021",
+    "type": "concept",
+    "domain": "science",
+    "topic": "balancing selection",
+    "title": "Why a lethal allele stays common",
+    "body": "A single base change in the β-globin gene makes haemoglobin polymerise and deforms red blood cells. Two copies cause sickle cell disease, historically often fatal before reproduction, so selection should have purged the allele. Yet in parts of sub-Saharan Africa it exceeds 10% frequency. The reason is that carrying one copy confers substantial protection against severe Plasmodium falciparum malaria. Selection against homozygotes is balanced by selection favouring heterozygotes, pinning the allele at an intermediate equilibrium frequency.",
+    "prompt": "Why does the sickle-cell allele remain common in some populations despite being lethal in homozygotes?",
+    "answer": "Heterozygotes with one copy are substantially protected against severe falciparum malaria, so selection favours them even while removing homozygotes. This heterozygote advantage is balancing selection, holding the allele at an intermediate equilibrium frequency wherever malaria is endemic.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Heterozygote_advantage",
+      "https://en.wikipedia.org/wiki/Sickle_cell_disease"
+    ],
+    "tags": ["evolution", "genetics", "natural-selection"]
+  },
+  {
+    "id": "science-0022",
+    "type": "concept",
+    "domain": "science",
+    "topic": "antibiotic resistance",
+    "title": "Antibiotics select for resistance, they do not cause it",
+    "body": "Antibiotics do not teach bacteria to resist them. Resistance mutations and genes already sit at low frequency in any large bacterial population before the drug ever arrives. The antibiotic simply kills everything else, so the rare survivors' descendants become the entire population within hours. Two things make this fast: generation times of minutes, and horizontal gene transfer, which carries a resistance gene on a plasmid between unrelated cells and even across species. This is selection on standing variation, not drug-induced adaptation.",
+    "prompt": "Why does antibiotic resistance appear and spread so quickly in bacterial populations?",
+    "answer": "Resistant variants already exist at low frequency; the antibiotic kills susceptible cells, letting rare survivors take over within hours given minute-scale generation times. Horizontal gene transfer spreads resistance plasmids even across species. It is selection acting on existing variation, not adaptation caused by the drug.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Antimicrobial_resistance",
+      "https://en.wikipedia.org/wiki/Horizontal_gene_transfer"
+    ],
+    "tags": ["evolution", "microbiology", "natural-selection"]
+  },
+  {
+    "id": "science-0023",
+    "type": "concept",
+    "domain": "science",
+    "topic": "mitochondrial inheritance",
+    "title": "Why mitochondrial DNA traces only the maternal line",
+    "body": "Mitochondria carry their own small circular genome, separate from the nucleus. At fertilisation the egg contributes its whole cytoplasm and thousands of mitochondria, while the sperm contributes essentially only its nucleus; the few paternal mitochondria that do enter are actively degraded. Mitochondrial DNA therefore passes from a mother to all her children, and her sons transmit none of it onward. Because it does not recombine, lineage differences accumulate only by mutation, giving a clean molecular clock for maternal ancestry.",
+    "prompt": "Why is mitochondrial DNA inherited only from the mother, and why does that make it useful for tracing ancestry?",
+    "answer": "The egg supplies the cytoplasm and nearly all mitochondria, and the few paternal ones entering at fertilisation are actively destroyed. Because mitochondrial DNA does not recombine, differences between lineages accumulate purely by mutation, giving a clean maternal-line molecular clock.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Mitochondrial_DNA",
+      "https://en.wikipedia.org/wiki/Mitochondrial_Eve"
+    ],
+    "tags": ["genetics", "molecular-biology", "evolution"]
+  },
+  {
+    "id": "science-0024",
+    "type": "concept",
+    "domain": "science",
+    "topic": "population genetics",
+    "title": "Hardy–Weinberg is valuable because it is usually violated",
+    "body": "Hardy–Weinberg says that with two alleles at frequencies p and q, genotype frequencies settle at p², 2pq and q² and then stay there. Its worth is not that populations obey it — real ones rarely do exactly. It is that the equilibrium holds only under a specific list of assumptions: no selection, no mutation, no migration, random mating, and effectively infinite population size. It is a null model, so an observed departure from those proportions is evidence that some evolutionary force is acting.",
+    "prompt": "Why is the Hardy–Weinberg equilibrium useful even though real populations rarely satisfy it?",
+    "answer": "It is a null model: genotype frequencies remain at p², 2pq and q² only when selection, mutation, migration, non-random mating and drift are all absent. A measured departure from those proportions is therefore evidence that at least one of those forces is operating.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Hardy%E2%80%93Weinberg_principle"
+    ],
+    "tags": ["genetics", "evolution", "statistics"]
+  },
+  {
+    "id": "science-0025",
+    "type": "concept",
+    "domain": "science",
+    "topic": "action potentials",
+    "title": "Why nerve signals are all-or-none",
+    "body": "A neuron's membrane rests near −70 millivolts. Depolarise it past roughly −55 and voltage-gated sodium channels open, sodium rushes in, which depolarises the membrane further and opens still more channels. That positive feedback runs to completion regardless of how far past threshold the stimulus reached, so every spike has essentially the same amplitude. A stronger stimulus cannot make a bigger spike; it makes spikes more often. Neurons therefore encode intensity in firing rate and timing, never in pulse size.",
+    "prompt": "Why is a neuron's action potential all-or-none, and how does a neuron encode stimulus strength instead?",
+    "answer": "Sodium influx through voltage-gated channels is regeneratively self-amplifying once threshold is crossed, so the spike always runs to the same full amplitude regardless of stimulus size. Intensity is encoded in firing rate and timing rather than in spike amplitude.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Action_potential"
+    ],
+    "tags": ["neuroscience", "biophysics"]
+  },
+  {
+    "id": "science-0026",
+    "type": "concept",
+    "domain": "science",
+    "topic": "plate tectonics",
+    "title": "What actually drives the plates",
+    "body": "Continents do not plough through the seafloor; they ride rigid plates sliding over the ductile asthenosphere. The dominant engine is not a mantle conveyor belt dragging plates from beneath. Oceanic lithosphere cools as it ages, becomes denser than the mantle below it, and sinks at subduction zones — and the weight of that sinking slab pulls the rest of the plate along behind it. The evidence is that plates with long subducting margins, like the Pacific, move fastest.",
+    "prompt": "What is the dominant force driving tectonic plate motion, and what observation supports it?",
+    "answer": "Slab pull: ageing oceanic lithosphere grows denser than the underlying mantle, sinks at subduction zones, and drags the attached plate behind it. The supporting observation is that plates with long subducting margins, such as the Pacific, move fastest.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Slab_pull",
+      "https://en.wikipedia.org/wiki/Plate_tectonics"
+    ],
+    "tags": ["geology", "geophysics"]
+  },
+  {
+    "id": "science-0027",
+    "type": "concept",
+    "domain": "science",
+    "topic": "radiometric dating",
+    "title": "The assumption radiometric dating rests on",
+    "body": "Radioactive decay is a nuclear process, essentially unaffected by temperature, pressure or chemistry, and every nuclide has a fixed half-life. If a mineral trapped a parent isotope when it crystallised and has since lost neither parent nor daughter, the parent-to-daughter ratio gives elapsed time directly. That closed-system condition is the fragile part of the argument. So geochronologists favour isochron methods, which measure several minerals from one rock and test the assumption rather than simply asserting it.",
+    "prompt": "What assumption does radiometric dating depend on, and how do geologists test rather than assume it?",
+    "answer": "It assumes the mineral has remained a closed system, losing neither parent nor daughter isotope since crystallisation. Isochron methods test this by measuring several minerals from the same rock: if their compositions fall on a straight line, the closed-system assumption holds.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Radiometric_dating",
+      "https://en.wikipedia.org/wiki/Isochron_dating"
+    ],
+    "tags": ["geology", "deep-time", "scientific-method"]
+  },
+  {
+    "id": "science-0028",
+    "type": "concept",
+    "domain": "science",
+    "topic": "stellar structure",
+    "title": "Why a star's fusion doesn't run away",
+    "body": "A star is a standoff: gravity pulling inward, hot gas pressure pushing outward. The balance is self-correcting. If fusion sped up, the core would heat, expand, and thereby cool — and fusion rates fall steeply with temperature, so the reaction throttles itself back. If fusion slowed, the core would contract, heat, and speed up again. That thermostat keeps a star like the Sun stable for billions of years. It fails in degenerate matter, where pressure no longer depends on temperature, allowing runaway helium flashes.",
+    "prompt": "Why is nuclear fusion in a star like the Sun self-regulating rather than explosive?",
+    "answer": "Fusion is coupled to hydrostatic balance: faster fusion heats and expands the core, which cools it and steeply cuts the reaction rate, and slower fusion lets it contract and reheat. The thermostat only fails in degenerate matter, where pressure is independent of temperature.",
+    "difficulty": 3,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Hydrostatic_equilibrium",
+      "https://en.wikipedia.org/wiki/Stellar_nucleosynthesis"
+    ],
+    "tags": ["astrophysics", "nuclear-physics"]
+  },
+  {
+    "id": "science-0029",
+    "type": "concept",
+    "domain": "science",
+    "topic": "cosmic microwave background",
+    "title": "Why the universe still glows from its 380,000th year",
+    "body": "For its first roughly 380,000 years the universe was hot enough to keep hydrogen ionised, and free electrons scattered photons incessantly, making everything opaque like fog. Once expansion cooled it below about 3,000 kelvin, electrons combined with protons into neutral atoms, scattering ceased, and light streamed free for the first time. That released radiation still fills space, stretched by expansion from a 3,000 K glow into a 2.7 K microwave background whose temperature is uniform to about one part in 100,000.",
+    "prompt": "Why does the cosmic microwave background exist, and why is it microwaves rather than visible light?",
+    "answer": "When expansion cooled the universe below roughly 3,000 K at around 380,000 years, electrons and protons formed neutral atoms, so photons stopped scattering and streamed freely. Cosmic expansion has since stretched that 3,000 K glow down to a 2.7 K microwave background.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Cosmic_microwave_background",
+      "https://en.wikipedia.org/wiki/Recombination_(cosmology)"
+    ],
+    "tags": ["cosmology", "astrophysics"]
+  },
+  {
+    "id": "science-0030",
+    "type": "puzzle",
+    "domain": "science",
+    "topic": "fermi estimation",
+    "title": "How heavy is the sky",
+    "body": "Atmospheric pressure at sea level is about 100,000 pascals, meaning 100,000 newtons of force pressing on every square metre of ground. That pressure exists because the ground holds up the weight of all the air above it. Take Earth's radius as 6,400 kilometres and gravitational acceleration as 10 metres per second squared, and treat the atmosphere as a thin shell over a sphere. Using only these numbers, estimate the total mass of Earth's atmosphere.",
+    "prompt": "Given sea-level pressure of 100 kPa, g = 10 m/s², and Earth's radius of 6,400 km, estimate the total mass of the atmosphere.",
+    "answer": "About 5 × 10^18 kilograms. The key step is recognising that surface pressure is just weight per unit area, so the air column over each square metre has mass P/g = 10,000 kg; multiplying by Earth's surface area 4πR² ≈ 5 × 10^14 m² gives the total.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Atmospheric_pressure"
+    ],
+    "tags": ["estimation", "atmospheric-physics"]
+  },
+  {
+    "id": "science-0031",
+    "type": "puzzle",
+    "domain": "science",
+    "topic": "refrigeration",
+    "title": "Cooling a kitchen with the fridge door",
+    "body": "It is a hot day and your air conditioning has failed. You open the refrigerator door and prop it open, reasoning that cold air will pour out and cool the kitchen down. Assume the kitchen is perfectly sealed and insulated, so no heat escapes through its walls. The fridge runs on mains electricity from a wall socket. Its cooling coils sit inside the cabinet and its condenser coils and compressor motor are on the back, also inside the kitchen. What happens to the kitchen's temperature over the next few hours?",
+    "prompt": "In a sealed, insulated kitchen, does propping the refrigerator door open make the room colder?",
+    "answer": "No — the room steadily gets warmer. A fridge moves heat rather than destroying it, so everything it pulls from its interior is dumped straight back into the same room by the condenser, plus all the electrical energy the compressor draws, which also ends up as heat. It is a net heater.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Heat_pump_and_refrigeration_cycle"
+    ],
+    "tags": ["thermodynamics", "energy-conservation"]
+  },
+  {
+    "id": "science-0032",
+    "type": "puzzle",
+    "domain": "science",
+    "topic": "confounding",
+    "title": "The ward that looks safer than intensive care",
+    "body": "A hospital analyst compares outcomes for every patient admitted with pneumonia over five years. Those treated in the intensive care unit show a 30-day mortality of 18%. Those treated on an ordinary general ward show 4%. The data are accurate, the sample is large, no patients are missing, and the difference is wildly beyond chance. The analyst concludes that intensive care is harming pneumonia patients and recommends admitting far fewer of them to it. Something is badly wrong with that inference.",
+    "prompt": "Why can't the higher mortality among ICU pneumonia patients be taken as evidence that intensive care harms them?",
+    "answer": "Confounding by indication. Patients are sent to intensive care precisely because they are already far sicker, so baseline severity drives both the treatment assignment and the death rate. The groups were never comparable; isolating the ICU's effect needs randomisation or adjustment for severity.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Confounding"
+    ],
+    "tags": ["statistics", "scientific-method", "causal-inference"]
+  },
+  {
+    "id": "science-0033",
+    "type": "puzzle",
+    "domain": "science",
+    "topic": "buoyancy",
+    "title": "The anchor and the swimming pool",
+    "body": "You are sitting in a small boat floating in a swimming pool, holding a heavy iron anchor in your lap. The water is still, and you mark its exact level on the pool wall. You then drop the anchor over the side. It sinks and settles on the bottom of the pool, where it stays. The boat, now lighter, rides higher in the water. No water is added to or removed from the pool, and water is incompressible. Does the marked level rise, fall, or stay the same?",
+    "prompt": "After you drop an iron anchor from a boat to the bottom of the pool it floats in, does the pool's water level rise, fall, or stay the same?",
+    "answer": "It falls. The key step is comparing displacements: while riding in the boat, the anchor displaced a volume of water weighing as much as the anchor, but on the bottom it displaces only its own volume. Iron is much denser than water, so the second volume is far smaller.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Archimedes%27_principle"
+    ],
+    "tags": ["fluid-mechanics", "classical-mechanics"]
+  },
+  {
+    "id": "science-0034",
+    "type": "puzzle",
+    "domain": "science",
+    "topic": "molecular scale",
+    "title": "Caesar's last breath",
+    "body": "One mole of gas contains 6 × 10^23 molecules and occupies about 22 litres at ordinary conditions. A human breath is roughly half a litre, so it holds on the order of 10^22 molecules. Earth's atmosphere has a mass of about 5 × 10^18 kilograms, which amounts to roughly 10^44 molecules, and over two thousand years it has mixed thoroughly. Julius Caesar's dying breath dispersed into that atmosphere. Estimate how many molecules from it are in the breath you just took.",
+    "prompt": "If a breath holds about 10^22 molecules and the well-mixed atmosphere about 10^44, roughly how many molecules of Caesar's dying breath are in your current breath?",
+    "answer": "Roughly one. Caesar's breath makes up a fraction 10^22 / 10^44 = 10^-22 of the atmosphere, and your breath samples 10^22 molecules, so you expect 10^22 × 10^-22 ≈ 1. The key insight is that the enormous molecule count per breath nearly cancels the enormous size of the atmosphere.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Avogadro_constant"
+    ],
+    "tags": ["estimation", "chemistry"]
+  },
+  {
+    "id": "science-0035",
+    "type": "puzzle",
+    "domain": "science",
+    "topic": "effective gravity",
+    "title": "The balloon in the accelerating car",
+    "body": "You are sitting in a car with every window shut and the vents closed, holding a helium balloon by its string. The cabin air is sealed in with you. The car accelerates hard forward from a standstill. You feel yourself pressed back into the seat, and a pendant hanging from the rear-view mirror swings backward toward the rear of the car. Which way does the helium balloon lean — forward toward the windscreen, or backward like everything else?",
+    "prompt": "When a sealed car accelerates forward, does a helium balloon inside it lean toward the windscreen or toward the rear?",
+    "answer": "Forward, toward the windscreen. The key step is that the sealed cabin's air also gets thrown backward, piling up at the rear and creating a pressure gradient rising toward the back — an effective gravity pointing rearward. Being less dense than air, the balloon floats 'up' against that gradient, which now means forward.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Buoyancy"
+    ],
+    "tags": ["fluid-mechanics", "classical-mechanics"]
+  },
+  {
+    "id": "science-0036",
+    "type": "puzzle",
+    "domain": "science",
+    "topic": "survivorship bias",
+    "title": "Where to armour the bombers",
+    "body": "During the Second World War, analysts examined bombers returning from missions over Europe and mapped every bullet hole. The damage clustered heavily on the wings, the fuselage and the tail gunner's position, while the engines and cockpit showed comparatively few hits. Armour is heavy, so only a small fraction of the airframe can be protected. The officers proposed reinforcing the areas riddled with the most holes. The statistician Abraham Wald told them to armour the engines instead.",
+    "prompt": "Why did Wald recommend armouring the parts of returning bombers that showed the fewest bullet holes?",
+    "answer": "Because the sample contained only planes that made it home. Hits arrive roughly uniformly, so regions showing few holes on survivors are precisely the regions where a hit stops a plane returning — the engines. The information lives in the missing data: the aircraft that never came back.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Survivorship_bias",
+      "https://en.wikipedia.org/wiki/Abraham_Wald"
+    ],
+    "tags": ["statistics", "scientific-method"]
+  },
+  {
+    "id": "science-0037",
+    "type": "puzzle",
+    "domain": "science",
+    "topic": "regression to the mean",
+    "title": "The instructor who concluded praise is harmful",
+    "body": "A flight instructor notices a consistent pattern. Whenever he praises a trainee for an exceptionally smooth landing, that trainee's next landing is usually worse. Whenever he shouts at a trainee for an exceptionally rough landing, the next landing is usually better. He concludes that praise damages performance while criticism improves it, and adopts a policy of shouting. Assume landing quality is a trainee's steady skill plus a large random component, and that his feedback genuinely has no effect whatsoever.",
+    "prompt": "If the instructor's feedback truly has no effect, why do exceptional landings still tend to be followed by worse ones and terrible landings by better ones?",
+    "answer": "Regression to the mean. An extreme performance almost always combines the trainee's skill with an unusual run of luck, and luck does not persist, so the next attempt lands nearer their personal average whatever the instructor says. He is reading a statistical artefact as causation.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Regression_toward_the_mean"
+    ],
+    "tags": ["statistics", "scientific-method"]
+  }
+]
