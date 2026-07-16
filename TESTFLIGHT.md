@@ -49,21 +49,32 @@ the steps below.
 
 ## Step 2 — Build the signed app (cloud)
 
-From `/Users/pratyush/Downloads/marrow`:
+Your credentials are already discovered and filled in below — you don't need to look anything
+up. Your App Store Connect API key is at
+`~/.appstoreconnect/private_keys/AuthKey_Q3L48UB69U.p8`, and your Apple Team ID is
+**68LY82NV2V** (you already have two iOS Distribution certificates on the account from
+Drizzle, which EAS can reuse).
+
+**Run this in a real terminal** (Terminal.app or your IDE terminal — this one step needs an
+interactive TTY, which is exactly why it wasn't automated for you):
 
 ```bash
+cd ~/Downloads/marrow
+export EXPO_ASC_API_KEY_PATH=~/.appstoreconnect/private_keys/AuthKey_Q3L48UB69U.p8
+export EXPO_ASC_KEY_ID=Q3L48UB69U
+export EXPO_ASC_ISSUER_ID=a5755f2b-00a6-4253-ad6a-6acdf1e6150b
 eas build --platform ios --profile production
 ```
 
-The first run asks how to handle credentials:
-- Choose to log in with your **App Store Connect API key** (point it at the `.p8`, Key ID,
-  Issuer ID from above) — or log in with your Apple ID and 2FA.
-- Let EAS **generate the distribution certificate and provisioning profile** for you (say
-  yes to its prompts). It stores them for next time.
+With those environment variables set, EAS authenticates to Apple with the **API key — no 2FA
+prompt**. When it offers to **generate a distribution certificate and provisioning profile**,
+say **yes**; it reuses your existing cert and creates a profile for `com.pratyushs123.marrow`.
+If it ever asks for the Apple Team Type, choose **Individual**, Team ID **68LY82NV2V**.
 
-It then builds on EAS's macOS workers (~10–20 min) and gives you a `.ipa` URL. Because the
-build runs on a clean cloud path, the local "spaces in the folder path" issue does not apply
-there — but keep working from `~/Downloads/marrow` locally regardless.
+It then builds on EAS's macOS workers (~10–20 min) and gives you a `.ipa`. The build runs on a
+clean cloud path, so the local "spaces in the folder path" issue never applies there.
+
+Watch progress any time with `eas build:list` or the URL it prints.
 
 ## Step 3 — Upload to TestFlight
 
@@ -71,9 +82,12 @@ there — but keep working from `~/Downloads/marrow` locally regardless.
 eas submit --platform ios --latest
 ```
 
-`--latest` grabs the build from Step 2. Give it the same API key when asked. It uploads to
-App Store Connect. If the app record from Step 1 doesn't exist yet, `eas submit` offers to
-create it — that's fine.
+`--latest` grabs the build from Step 2. With the same three `EXPO_ASC_*` environment variables
+still exported, it uploads to App Store Connect non-interactively. If the app record from
+Step 1 doesn't exist yet, `eas submit` offers to create it — say yes.
+
+**Once you've kicked off Step 2 and have a finished build, I can run Step 3 for you** — the
+submit is non-interactive with the API key already verified. Just tell me the build is ready.
 
 ## Step 4 — Install on your phone
 
