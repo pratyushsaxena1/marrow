@@ -2,7 +2,21 @@ import React from "react";
 import { View, Text, Pressable } from "react-native";
 import type { Grade } from "../types";
 
-export function GradeButtons({ onGrade }: { onGrade: (g: Grade) => void }) {
+export function GradeButtons(
+  { onGrade, graded }: { onGrade: (g: Grade) => void; graded?: Grade | null },
+) {
+  if (graded) {
+    return (
+      <View className="mt-8">
+        <View className="rounded-2xl py-4 items-center bg-neutral-100">
+          <Text className="text-neutral-900 text-base font-medium">
+            {graded === "got" ? "Got it" : "Missed it"}
+          </Text>
+        </View>
+      </View>
+    );
+  }
+
   return (
     <View className="flex-row gap-3 mt-8">
       <Pressable

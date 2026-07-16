@@ -24,6 +24,8 @@ export default function FeedScreen() {
   const seeded = useRef<Set<string>>(new Set());
   const [items, setItems] = useState<FeedItem[]>([]);
   const [done, setDone] = useState(false);
+  const listRef = useRef<FlatList<FeedItem>>(null);
+  const pendingScrollReset = useRef(false);
 
   const deps = useCallback(
     (): FeedDeps => ({ corpus, store, now: Date.now(), rng }),
@@ -38,25 +40,35 @@ export default function FeedScreen() {
   }, [deps, done]);
 
   // Reset the session on cold start, or on foreground after >= 30 min in background.
+  const backgroundedAt = useRef<number | null>(null);
   useEffect(() => {
-    let backgroundedAt: number | null = null;
     const sub = AppState.addEventListener("change", (next) => {
       if (next === "background") {
-        backgroundedAt = Date.now();
-      } else if (next === "active" && backgroundedAt !== null) {
-        if (Date.now() - backgroundedAt >= SESSION_IDLE_MS) {
+        backgroundedAt.current = Date.now();
+      } else if (next === "active" && backgroundedAt.current !== null) {
+        if (Date.now() - backgroundedAt.current >= SESSION_IDLE_MS) {
           session.current = createSession(rng);
           seeded.current = new Set();
           setDone(false);
+          pendingScrollReset.current = true;
           setItems(nextChunk(deps(), session.current, CHUNK_SIZE));
         }
-        backgroundedAt = null;
+        backgroundedAt.current = null;
       }
     });
     return () => sub.remove();
   }, [deps]);
 
   useEffect(() => { loadMore(); /* first chunk */ }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // After a session reset replaces the item list, snap the scroll position
+  // back to the first card so the user isn't stranded mid-list.
+  useEffect(() => {
+    if (pendingScrollReset.current) {
+      pendingScrollReset.current = false;
+      listRef.current?.scrollToOffset({ offset: 0, animated: false });
+    }
+  }, [items]);
 
   // A concept card is a passive read: seeing it is what schedules its first review.
   const onViewableItemsChanged = useRef(
@@ -98,8 +110,12 @@ export default function FeedScreen() {
   );
 
   return (
-    <View className="flex-1 bg-neutral-950" style={{ paddingTop: insets.top }}>
+    <View
+      className="flex-1 bg-neutral-950"
+      style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}
+    >
       <FlatList
+        ref={listRef}
         data={items}
         keyExtractor={(item, i) => (item.kind === "caught-up" ? `caught-up-${i}` : item.card.id)}
         renderItem={renderItem}

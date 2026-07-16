@@ -54,6 +54,42 @@ describe("RevealCard", () => {
     fireEvent.press(getByText("Missed it"));
     expect(onGrade).toHaveBeenCalledWith("missed");
   });
+
+  it("calls onGrade exactly once when 'Got it' is pressed twice", () => {
+    const onGrade = jest.fn();
+    const { getByText } = render(
+      <RevealCard card={card} height={800} showBody={false} onGrade={onGrade} />,
+    );
+    fireEvent.press(getByText("Reveal"));
+    fireEvent.press(getByText("Got it"));
+    fireEvent.press(getByText("Got it"));
+    expect(onGrade).toHaveBeenCalledTimes(1);
+    expect(onGrade).toHaveBeenCalledWith("got");
+  });
+
+  it("calls onGrade exactly once, with 'got', when 'Missed it' is pressed after 'Got it'", () => {
+    const onGrade = jest.fn();
+    const { getByText, queryByText } = render(
+      <RevealCard card={card} height={800} showBody={false} onGrade={onGrade} />,
+    );
+    fireEvent.press(getByText("Reveal"));
+    fireEvent.press(getByText("Got it"));
+    // Once graded, the opposing choice is no longer an available target to press.
+    const missed = queryByText("Missed it");
+    if (missed) fireEvent.press(missed);
+    expect(onGrade).toHaveBeenCalledTimes(1);
+    expect(onGrade).toHaveBeenCalledWith("got");
+  });
+
+  it("shows which choice was made after grading", () => {
+    const { getByText, queryByText } = render(
+      <RevealCard card={card} height={800} showBody={false} onGrade={jest.fn()} />,
+    );
+    fireEvent.press(getByText("Reveal"));
+    fireEvent.press(getByText("Got it"));
+    getByText("Got it"); // graded state still visibly confirms the choice
+    expect(queryByText("Missed it")).toBeNull();
+  });
 });
 
 describe("CaughtUpCard", () => {

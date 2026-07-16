@@ -9,6 +9,13 @@ export function RevealCard(
   { card: Card; height: number; showBody: boolean; onGrade: (g: Grade) => void },
 ) {
   const [revealed, setRevealed] = useState(false);
+  const [graded, setGraded] = useState<Grade | null>(null);
+
+  const handleGrade = (g: Grade) => {
+    if (graded !== null) return;
+    setGraded(g);
+    onGrade(g);
+  };
 
   return (
     <CardShell height={height} domain={card.domain}>
@@ -26,7 +33,7 @@ export function RevealCard(
       {revealed ? (
         <View>
           <Text className="text-neutral-400 text-lg leading-relaxed mt-6">{card.answer}</Text>
-          <GradeButtons onGrade={onGrade} />
+          <GradeButtons onGrade={handleGrade} graded={graded} />
         </View>
       ) : (
         <Pressable
