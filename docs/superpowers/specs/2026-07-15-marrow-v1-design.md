@@ -123,6 +123,13 @@ type CardState = {
 
 Absence of a `CardState` row means unseen. There is no `"unseen"` status.
 
+**Card ids are durable keys, not ordinals.** `CardState.cardId` is the primary key of the
+user's review history, so a card's id must never be renumbered — doing so silently orphans
+every affected card's progress. Ids follow `<domain>-NNNN` and are unique per file, but they
+are **not required to be sequential**: gaps are correct, and are the visible trace of a card
+that was deleted and whose id was never reused. This matters more as the corpus grows, since
+removing a bad card is a routine operation. The validator enforces format and uniqueness only.
+
 ### Type vs. presentation
 
 A card's **type** and its **presentation** are different things. The same card data renders
