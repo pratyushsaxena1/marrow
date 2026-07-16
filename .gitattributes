@@ -1,5 +1,0 @@
-# src/corpus/schema.ts embeds a literal U+0000 sentinel inside a string literal
-# (escaped as "\0"), which trips git's default binary-file heuristic (it scans
-# blob content for NUL bytes). Force diff/blame/merge to treat this one path as
-# text -- the content is plain ASCII source, not binary data.
-src/corpus/schema.ts diff
