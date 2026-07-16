@@ -37,7 +37,8 @@
   },
   "private": true,
   "overrides": {
-    "react-test-renderer": "19.2.3"
+    "react-test-renderer": "19.2.3",
+    "react-dom": "19.2.3"
   },
   "jest": {
     "preset": "jest-expo",
