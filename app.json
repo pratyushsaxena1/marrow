@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "marrow",
+    "name": "Marrow",
     "slug": "marrow",
     "version": "1.0.0",
     "scheme": "marrow",
@@ -9,7 +9,9 @@
     "userInterfaceStyle": "dark",
     "backgroundColor": "#0a0a0a",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.pratyushs123.marrow",
+      "buildNumber": "1"
     },
     "android": {
       "adaptiveIcon": {
@@ -27,6 +29,13 @@
       "expo-router",
       "expo-sqlite",
       "expo-status-bar"
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "fef996e1-7507-4989-9069-dd5145dacbeb"
+      }
+    },
+    "owner": "pratyushs123"
   }
 }
