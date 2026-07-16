@@ -82,6 +82,39 @@ describe("validateCard", () => {
     );
     expect(errs).toEqual([]);
   });
+
+  it("counts a sentence ending in a closing quote as a real boundary (not undercounted)", () => {
+    // 4 real sentences, the first ends in a quoted term (`."`). If the quote/bracket
+    // boundary were missed, this would undercount to 3 and wrongly validate.
+    const answer =
+      'The idea is called "closure." It captures the enclosing scope. It runs later. It persists state.';
+    const errs = validateCard({ ...valid, answer }, "cs");
+    expect(errs.some((e) => /answer has 4 sentences/i.test(e))).toBe(true);
+  });
+
+  it("still accepts a valid answer whose only sentence ends in a closing quote", () => {
+    const answer = 'The idea is called "closure." It captures the enclosing scope.';
+    expect(validateCard({ ...valid, answer }, "cs")).toEqual([]);
+  });
+
+  it("does not inflate the count on common mid-sentence abbreviations", () => {
+    // Each of these is exactly 3 real sentences with one abbreviation embedded
+    // mid-sentence. If the abbreviation's period were wrongly treated as a sentence
+    // boundary, the count would inflate to 4 and the (legitimate) answer would be
+    // rejected.
+    const cases = [
+      "Many languages support closures, e.g. Python and JavaScript. They allow deferred execution. This pattern is common in practice.",
+      "Closures capture scope, i.e. the variables visible at definition time. They keep those variables alive by reference. This lets them persist state.",
+      "This pattern is common in the U.S. and elsewhere in modern languages. It shows up in many codebases. Developers should understand it well.",
+      "Dr. Smith explained the theorem clearly to the students. She used concrete examples throughout. The class understood it well.",
+      "Interpreted languages, Python, Ruby, etc. add closure overhead at runtime. Compiled languages avoid much of this cost. The difference matters for performance-critical code.",
+      "Compiled languages behave differently vs. interpreted ones when closures are used. The gap has narrowed with modern JIT compilers. Most developers no longer notice it.",
+    ];
+    for (const answer of cases) {
+      const errs = validateCard({ ...valid, answer }, "cs");
+      expect(errs).toEqual([]);
+    }
+  });
 });
 
 describe("validateCorpus", () => {
@@ -123,16 +156,26 @@ describe("validateCorpus", () => {
     expect(errs.some((e) => /format/i.test(e))).toBe(true);
   });
 
-  it("flags an id that is out of sequence", () => {
-    const errs = validateCorpus([{ ...valid, id: "cs-0002" }], "cs");
-    expect(errs.some((e) => /sequence/i.test(e))).toBe(true);
-  });
-
   it("accepts sequential, well-formed ids with no gaps", () => {
     const errs = validateCorpus(
       [
         { ...valid, id: "cs-0001", prompt: "p1", topic: "a" },
         { ...valid, id: "cs-0002", prompt: "p2", topic: "b" },
+      ],
+      "cs",
+    );
+    expect(errs.filter((e) => /format|sequence/i.test(e))).toEqual([]);
+  });
+
+  it("accepts an id gap left by a deleted card — ids are stable keys, not ordinals", () => {
+    // card_state.cardId (src/store/index.ts) keys user progress on the card id, so a
+    // gap left by deleting a card must be valid, not an error. A sequence/no-gaps rule
+    // would force renumbering every later card, silently orphaning their persisted
+    // review history.
+    const errs = validateCorpus(
+      [
+        { ...valid, id: "cs-0001", prompt: "p1", topic: "a" },
+        { ...valid, id: "cs-0003", prompt: "p2", topic: "b" },
       ],
       "cs",
     );

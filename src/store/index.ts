@@ -23,17 +23,35 @@ export type Store = {
   reset(): void;
 };
 
-export function openStore(): Store {
-  let db = SQLite.openDatabaseSync("marrow.db");
+// Opens marrow.db and ensures the schema exists, recovering from a corrupt database
+// file. Both the open and the DDL are guarded, since corruption can surface at either
+// step. On failure, the failed handle (if any) is closed before the file is deleted —
+// deleting a database file while a native handle is still open can fail or leak a
+// native resource on some platforms — and the close itself is guarded too, since a
+// handle that is already dead may throw on close, and that must not block recovery.
+// The corpus is intact and progress is not precious in v1, so we always drop and
+// recreate rather than leaving the user with an app that will not open.
+function openAndInit(): SQLite.SQLiteDatabase {
+  let db: SQLite.SQLiteDatabase | undefined;
   try {
-    db.execSync(DDL);
-  } catch {
-    // Corrupt DB: the corpus is intact and progress is not precious in v1, so drop and
-    // recreate rather than leaving the user with an app that will not open.
-    SQLite.deleteDatabaseSync("marrow.db");
     db = SQLite.openDatabaseSync("marrow.db");
     db.execSync(DDL);
+    return db;
+  } catch {
+    try {
+      db?.closeSync();
+    } catch {
+      // ignore — handle may already be unusable; recovery must proceed regardless
+    }
+    SQLite.deleteDatabaseSync("marrow.db");
+    const fresh = SQLite.openDatabaseSync("marrow.db");
+    fresh.execSync(DDL);
+    return fresh;
   }
+}
+
+export function openStore(): Store {
+  const db = openAndInit();
 
   return {
     getState(id) {
