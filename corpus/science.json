@@ -13,7 +13,11 @@
       "https://en.wikipedia.org/wiki/Second_law_of_thermodynamics",
       "https://en.wikipedia.org/wiki/Entropy"
     ],
-    "tags": ["entropy", "thermodynamics", "statistical-mechanics"]
+    "tags": [
+      "entropy",
+      "thermodynamics",
+      "statistical-mechanics"
+    ]
   },
   {
     "id": "science-0002",
@@ -29,7 +33,11 @@
       "https://en.wikipedia.org/wiki/Second_law_of_thermodynamics",
       "https://en.wikipedia.org/wiki/Entropy_and_life"
     ],
-    "tags": ["entropy", "thermodynamics", "biophysics"]
+    "tags": [
+      "entropy",
+      "thermodynamics",
+      "biophysics"
+    ]
   },
   {
     "id": "science-0003",
@@ -45,7 +53,10 @@
       "https://en.wikipedia.org/wiki/Carnot%27s_theorem_(thermodynamics)",
       "https://en.wikipedia.org/wiki/Heat_engine"
     ],
-    "tags": ["thermodynamics", "entropy"]
+    "tags": [
+      "thermodynamics",
+      "entropy"
+    ]
   },
   {
     "id": "science-0004",
@@ -61,7 +72,10 @@
       "https://en.wikipedia.org/wiki/Angular_momentum",
       "https://en.wikipedia.org/wiki/Moment_of_inertia"
     ],
-    "tags": ["classical-mechanics", "conservation-laws"]
+    "tags": [
+      "classical-mechanics",
+      "conservation-laws"
+    ]
   },
   {
     "id": "science-0005",
@@ -77,7 +91,10 @@
       "https://en.wikipedia.org/wiki/Tide",
       "https://en.wikipedia.org/wiki/Tidal_force"
     ],
-    "tags": ["gravitation", "classical-mechanics"]
+    "tags": [
+      "gravitation",
+      "classical-mechanics"
+    ]
   },
   {
     "id": "science-0006",
@@ -93,7 +110,10 @@
       "https://en.wikipedia.org/wiki/Energy_level",
       "https://en.wikipedia.org/wiki/Hydrogen_atom"
     ],
-    "tags": ["quantum-mechanics", "atomic-physics"]
+    "tags": [
+      "quantum-mechanics",
+      "atomic-physics"
+    ]
   },
   {
     "id": "science-0007",
@@ -108,7 +128,10 @@
     "sources": [
       "https://en.wikipedia.org/wiki/Uncertainty_principle"
     ],
-    "tags": ["quantum-mechanics", "misconceptions"]
+    "tags": [
+      "quantum-mechanics",
+      "misconceptions"
+    ]
   },
   {
     "id": "science-0008",
@@ -124,7 +147,11 @@
       "https://en.wikipedia.org/wiki/No-communication_theorem",
       "https://en.wikipedia.org/wiki/Quantum_entanglement"
     ],
-    "tags": ["quantum-mechanics", "entanglement", "misconceptions"]
+    "tags": [
+      "quantum-mechanics",
+      "entanglement",
+      "misconceptions"
+    ]
   },
   {
     "id": "science-0009",
@@ -140,7 +167,11 @@
       "https://en.wikipedia.org/wiki/Pauli_exclusion_principle",
       "https://en.wikipedia.org/wiki/Periodic_table"
     ],
-    "tags": ["quantum-mechanics", "chemistry", "atomic-physics"]
+    "tags": [
+      "quantum-mechanics",
+      "chemistry",
+      "atomic-physics"
+    ]
   },
   {
     "id": "science-0010",
@@ -156,7 +187,10 @@
       "https://en.wikipedia.org/wiki/Time_dilation",
       "https://en.wikipedia.org/wiki/Special_relativity"
     ],
-    "tags": ["relativity", "spacetime"]
+    "tags": [
+      "relativity",
+      "spacetime"
+    ]
   },
   {
     "id": "science-0011",
@@ -172,7 +206,11 @@
       "https://en.wikipedia.org/wiki/Gravitational_time_dilation",
       "https://en.wikipedia.org/wiki/Global_Positioning_System"
     ],
-    "tags": ["relativity", "gravitation", "applied-physics"]
+    "tags": [
+      "relativity",
+      "gravitation",
+      "applied-physics"
+    ]
   },
   {
     "id": "science-0012",
@@ -187,7 +225,11 @@
     "sources": [
       "https://en.wikipedia.org/wiki/Refractive_index"
     ],
-    "tags": ["optics", "electromagnetism", "misconceptions"]
+    "tags": [
+      "optics",
+      "electromagnetism",
+      "misconceptions"
+    ]
   },
   {
     "id": "science-0013",
@@ -203,7 +245,10 @@
       "https://en.wikipedia.org/wiki/Rayleigh_scattering",
       "https://en.wikipedia.org/wiki/Diffuse_sky_radiation"
     ],
-    "tags": ["optics", "atmospheric-physics"]
+    "tags": [
+      "optics",
+      "atmospheric-physics"
+    ]
   },
   {
     "id": "science-0014",
@@ -219,7 +264,10 @@
       "https://en.wikipedia.org/wiki/Faraday%27s_law_of_induction",
       "https://en.wikipedia.org/wiki/Lenz%27s_law"
     ],
-    "tags": ["electromagnetism", "conservation-laws"]
+    "tags": [
+      "electromagnetism",
+      "conservation-laws"
+    ]
   },
   {
     "id": "science-0015",
@@ -235,7 +283,10 @@
       "https://en.wikipedia.org/wiki/Hydrogen_bond",
       "https://en.wikipedia.org/wiki/Ice"
     ],
-    "tags": ["chemistry", "chemical-bonding"]
+    "tags": [
+      "chemistry",
+      "chemical-bonding"
+    ]
   },
   {
     "id": "science-0016",
@@ -251,7 +302,11 @@
       "https://en.wikipedia.org/wiki/Catalysis",
       "https://en.wikipedia.org/wiki/Activation_energy"
     ],
-    "tags": ["chemistry", "kinetics", "thermodynamics"]
+    "tags": [
+      "chemistry",
+      "kinetics",
+      "thermodynamics"
+    ]
   },
   {
     "id": "science-0017",
@@ -267,7 +322,11 @@
       "https://en.wikipedia.org/wiki/Solvation",
       "https://en.wikipedia.org/wiki/Lattice_energy"
     ],
-    "tags": ["chemistry", "chemical-bonding", "thermodynamics"]
+    "tags": [
+      "chemistry",
+      "chemical-bonding",
+      "thermodynamics"
+    ]
   },
   {
     "id": "science-0018",
@@ -283,7 +342,10 @@
       "https://en.wikipedia.org/wiki/DNA_replication",
       "https://en.wikipedia.org/wiki/Okazaki_fragments"
     ],
-    "tags": ["molecular-biology", "genetics"]
+    "tags": [
+      "molecular-biology",
+      "genetics"
+    ]
   },
   {
     "id": "science-0019",
@@ -298,7 +360,11 @@
     "sources": [
       "https://en.wikipedia.org/wiki/Genetic_code"
     ],
-    "tags": ["molecular-biology", "evolution", "genetics"]
+    "tags": [
+      "molecular-biology",
+      "evolution",
+      "genetics"
+    ]
   },
   {
     "id": "science-0020",
@@ -314,7 +380,11 @@
       "https://en.wikipedia.org/wiki/Enzyme_catalysis",
       "https://en.wikipedia.org/wiki/Transition_state"
     ],
-    "tags": ["molecular-biology", "biochemistry", "kinetics"]
+    "tags": [
+      "molecular-biology",
+      "biochemistry",
+      "kinetics"
+    ]
   },
   {
     "id": "science-0021",
@@ -330,7 +400,11 @@
       "https://en.wikipedia.org/wiki/Heterozygote_advantage",
       "https://en.wikipedia.org/wiki/Sickle_cell_disease"
     ],
-    "tags": ["evolution", "genetics", "natural-selection"]
+    "tags": [
+      "evolution",
+      "genetics",
+      "natural-selection"
+    ]
   },
   {
     "id": "science-0022",
@@ -346,7 +420,11 @@
       "https://en.wikipedia.org/wiki/Antimicrobial_resistance",
       "https://en.wikipedia.org/wiki/Horizontal_gene_transfer"
     ],
-    "tags": ["evolution", "microbiology", "natural-selection"]
+    "tags": [
+      "evolution",
+      "microbiology",
+      "natural-selection"
+    ]
   },
   {
     "id": "science-0023",
@@ -362,7 +440,11 @@
       "https://en.wikipedia.org/wiki/Mitochondrial_DNA",
       "https://en.wikipedia.org/wiki/Mitochondrial_Eve"
     ],
-    "tags": ["genetics", "molecular-biology", "evolution"]
+    "tags": [
+      "genetics",
+      "molecular-biology",
+      "evolution"
+    ]
   },
   {
     "id": "science-0024",
@@ -377,7 +459,11 @@
     "sources": [
       "https://en.wikipedia.org/wiki/Hardy%E2%80%93Weinberg_principle"
     ],
-    "tags": ["genetics", "evolution", "statistics"]
+    "tags": [
+      "genetics",
+      "evolution",
+      "statistics"
+    ]
   },
   {
     "id": "science-0025",
@@ -392,7 +478,10 @@
     "sources": [
       "https://en.wikipedia.org/wiki/Action_potential"
     ],
-    "tags": ["neuroscience", "biophysics"]
+    "tags": [
+      "neuroscience",
+      "biophysics"
+    ]
   },
   {
     "id": "science-0026",
@@ -408,7 +497,10 @@
       "https://en.wikipedia.org/wiki/Slab_pull",
       "https://en.wikipedia.org/wiki/Plate_tectonics"
     ],
-    "tags": ["geology", "geophysics"]
+    "tags": [
+      "geology",
+      "geophysics"
+    ]
   },
   {
     "id": "science-0027",
@@ -424,7 +516,11 @@
       "https://en.wikipedia.org/wiki/Radiometric_dating",
       "https://en.wikipedia.org/wiki/Isochron_dating"
     ],
-    "tags": ["geology", "deep-time", "scientific-method"]
+    "tags": [
+      "geology",
+      "deep-time",
+      "scientific-method"
+    ]
   },
   {
     "id": "science-0028",
@@ -440,7 +536,10 @@
       "https://en.wikipedia.org/wiki/Hydrostatic_equilibrium",
       "https://en.wikipedia.org/wiki/Stellar_nucleosynthesis"
     ],
-    "tags": ["astrophysics", "nuclear-physics"]
+    "tags": [
+      "astrophysics",
+      "nuclear-physics"
+    ]
   },
   {
     "id": "science-0029",
@@ -456,7 +555,10 @@
       "https://en.wikipedia.org/wiki/Cosmic_microwave_background",
       "https://en.wikipedia.org/wiki/Recombination_(cosmology)"
     ],
-    "tags": ["cosmology", "astrophysics"]
+    "tags": [
+      "cosmology",
+      "astrophysics"
+    ]
   },
   {
     "id": "science-0030",
@@ -471,7 +573,10 @@
     "sources": [
       "https://en.wikipedia.org/wiki/Atmospheric_pressure"
     ],
-    "tags": ["estimation", "atmospheric-physics"]
+    "tags": [
+      "estimation",
+      "atmospheric-physics"
+    ]
   },
   {
     "id": "science-0031",
@@ -486,7 +591,10 @@
     "sources": [
       "https://en.wikipedia.org/wiki/Heat_pump_and_refrigeration_cycle"
     ],
-    "tags": ["thermodynamics", "energy-conservation"]
+    "tags": [
+      "thermodynamics",
+      "energy-conservation"
+    ]
   },
   {
     "id": "science-0032",
@@ -501,7 +609,11 @@
     "sources": [
       "https://en.wikipedia.org/wiki/Confounding"
     ],
-    "tags": ["statistics", "scientific-method", "causal-inference"]
+    "tags": [
+      "statistics",
+      "scientific-method",
+      "causal-inference"
+    ]
   },
   {
     "id": "science-0033",
@@ -516,7 +628,10 @@
     "sources": [
       "https://en.wikipedia.org/wiki/Archimedes%27_principle"
     ],
-    "tags": ["fluid-mechanics", "classical-mechanics"]
+    "tags": [
+      "fluid-mechanics",
+      "classical-mechanics"
+    ]
   },
   {
     "id": "science-0034",
@@ -531,7 +646,10 @@
     "sources": [
       "https://en.wikipedia.org/wiki/Avogadro_constant"
     ],
-    "tags": ["estimation", "chemistry"]
+    "tags": [
+      "estimation",
+      "chemistry"
+    ]
   },
   {
     "id": "science-0035",
@@ -546,7 +664,10 @@
     "sources": [
       "https://en.wikipedia.org/wiki/Buoyancy"
     ],
-    "tags": ["fluid-mechanics", "classical-mechanics"]
+    "tags": [
+      "fluid-mechanics",
+      "classical-mechanics"
+    ]
   },
   {
     "id": "science-0036",
@@ -562,7 +683,10 @@
       "https://en.wikipedia.org/wiki/Survivorship_bias",
       "https://en.wikipedia.org/wiki/Abraham_Wald"
     ],
-    "tags": ["statistics", "scientific-method"]
+    "tags": [
+      "statistics",
+      "scientific-method"
+    ]
   },
   {
     "id": "science-0037",
@@ -577,6 +701,369 @@
     "sources": [
       "https://en.wikipedia.org/wiki/Regression_toward_the_mean"
     ],
-    "tags": ["statistics", "scientific-method"]
+    "tags": [
+      "statistics",
+      "scientific-method"
+    ]
+  },
+  {
+    "id": "science-0038",
+    "type": "concept",
+    "domain": "science",
+    "topic": "doppler effect",
+    "title": "Why a passing siren drops in pitch",
+    "body": "As an ambulance races toward you, each successive wave crest leaves from a slightly closer point, so the crests arrive squeezed together, a higher frequency and a higher pitch. Once it passes and recedes, the crests are stretched apart and the pitch drops. The siren's own sound never changes; only the relative motion does. The same effect on light shifts a receding star's spectrum toward red. This is the Doppler effect: motion between source and observer compresses or stretches the waves that reach you.",
+    "prompt": "Why does an ambulance siren sound higher-pitched approaching and lower-pitched after it passes?",
+    "answer": "As the source approaches, each wave crest is emitted from a nearer point, so crests reach you bunched together at a higher frequency; as it recedes they are stretched to a lower frequency. The siren's emitted sound is unchanged, only the relative motion, which is the Doppler effect.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Doppler_effect"
+    ],
+    "tags": [
+      "waves",
+      "physics"
+    ]
+  },
+  {
+    "id": "science-0039",
+    "type": "concept",
+    "domain": "science",
+    "topic": "conservation of momentum",
+    "title": "Why a gun kicks back",
+    "body": "Fire a rifle and it slams into your shoulder. Before the shot, the gun-and-bullet system has zero total momentum, and momentum is conserved in a closed system, so it must still total zero afterward. The bullet leaves with large forward momentum, so the gun carries exactly equal momentum backward, the recoil. Because the gun is far heavier it moves much slower, but their momenta match. Rockets work the same way, throwing mass out the back. Nothing gains momentum one way without something gaining it the other.",
+    "prompt": "Why does firing a gun produce recoil, and what determines its speed?",
+    "answer": "The gun-and-bullet system starts with zero total momentum, and momentum is conserved, so the bullet's forward momentum must be matched by equal backward momentum in the gun. Because the gun is much heavier, it recoils far more slowly than the bullet flies, yet their momenta are equal.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Momentum"
+    ],
+    "tags": [
+      "mechanics",
+      "physics"
+    ]
+  },
+  {
+    "id": "science-0040",
+    "type": "concept",
+    "domain": "science",
+    "topic": "resonance",
+    "title": "Why timing beats force on a swing",
+    "body": "A child on a swing goes higher not from harder pushes but from pushes timed to its natural rhythm. Every oscillating system has a natural frequency, and driving it at exactly that frequency adds energy in step with the motion each cycle, so the amplitude builds. Push off-rhythm and some pushes fight the motion, wasting effort. This is resonance: it is why a wine glass can shatter at the right pitch and why soldiers break step on bridges. Matching the driving frequency to the natural one pumps energy in efficiently.",
+    "prompt": "Why does a swing go higher when pushed in time with its natural rhythm rather than simply harder?",
+    "answer": "Every oscillating system has a natural frequency, and driving it at that frequency adds energy in phase with the motion each cycle, so the amplitude grows. Off-rhythm pushes sometimes oppose the motion and waste energy; this build-up at the natural frequency is resonance.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Resonance"
+    ],
+    "tags": [
+      "waves",
+      "physics"
+    ]
+  },
+  {
+    "id": "science-0041",
+    "type": "concept",
+    "domain": "science",
+    "topic": "terminal velocity",
+    "title": "Why falling things stop speeding up",
+    "body": "A skydiver does not accelerate forever. As they fall faster, air resistance grows, and it grows until it exactly balances gravity. At that point the net force is zero, acceleration stops, and the speed holds steady at the terminal velocity. A parachute works by dramatically increasing drag, lowering the terminal velocity to a survivable value. A dense, streamlined object like a dart has little drag for its weight, so its terminal velocity is high. A growing resistive force balanced against a constant driving force sets a natural top speed.",
+    "prompt": "Why does a falling object stop accelerating and reach a steady terminal velocity?",
+    "answer": "Air drag increases with speed until it exactly equals the object's weight, making the net force zero so it no longer accelerates. That balance sets the terminal velocity, which is lower for high-drag shapes like parachutes and higher for dense, streamlined ones like darts.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Terminal_velocity"
+    ],
+    "tags": [
+      "mechanics",
+      "physics"
+    ]
+  },
+  {
+    "id": "science-0042",
+    "type": "concept",
+    "domain": "science",
+    "topic": "thermal radiation",
+    "title": "Why hot metal glows red then white",
+    "body": "Every object emits radiation just from having a temperature, and the spectrum depends only on how hot it is. At room temperature that glow is invisible infrared. Heat metal to about 500 degrees Celsius and the peak shifts into visible red; hotter still and it climbs through orange and yellow to a blue-white. The hotter the body, the shorter its peak wavelength, a rule called Wien's law. This is why a star's colour reveals its temperature. Temperature alone dictates the colour a glowing body radiates.",
+    "prompt": "Why does heated metal glow red first and then white-blue as it gets hotter?",
+    "answer": "Any object radiates a spectrum set by its temperature, and the peak wavelength shortens as it heats up, a relationship called Wien's law. So a warm object glows in invisible infrared, then red, then through yellow to blue-white, which is why a star's colour reveals its temperature.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Black-body_radiation"
+    ],
+    "tags": [
+      "thermodynamics",
+      "light"
+    ]
+  },
+  {
+    "id": "science-0043",
+    "type": "concept",
+    "domain": "science",
+    "topic": "capillary action",
+    "title": "How water climbs against gravity",
+    "body": "Dip a narrow glass tube in water and the water rises inside it, higher than the surface outside, with no pump. Water molecules are attracted to the glass more than to each other, so they climb the walls, and surface tension drags the rest of the surface up behind them. The pull continues until the weight of the raised column balances it. A narrower tube lifts water higher, because the wall's pull serves a smaller cross-section. This capillary action moves water through soil, paper towels, and plant stems.",
+    "prompt": "How does water rise up a narrow tube against gravity without a pump, and why does a thinner tube lift it higher?",
+    "answer": "Water is more attracted to the glass than to itself, so it climbs the walls while surface tension pulls the rest of the surface up behind it, until the raised column's weight balances the pull. A narrower tube raises water higher because the same wall attraction supports a smaller, lighter column.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Capillary_action"
+    ],
+    "tags": [
+      "fluids",
+      "chemistry"
+    ]
+  },
+  {
+    "id": "science-0044",
+    "type": "concept",
+    "domain": "science",
+    "topic": "acids and bases",
+    "title": "Why one pH step is a tenfold jump",
+    "body": "The pH scale runs from about 0 to 14, with 7 neutral, lower values acidic and higher ones basic. But it is not a linear ruler: pH is the negative logarithm of the hydrogen-ion concentration, so each whole step changes acidity tenfold. A solution at pH 4 has ten times the hydrogen ions of pH 5 and a hundred times that of pH 6. This is why lemon juice near pH 2 is vastly more acidic than coffee near pH 5. Logarithmic scales compress enormous ranges into small numbers.",
+    "prompt": "Why is a solution at pH 4 far more acidic than one at pH 6, not just slightly?",
+    "answer": "pH is the negative logarithm of hydrogen-ion concentration, so each unit is a tenfold change. pH 4 therefore has a hundred times the hydrogen-ion concentration of pH 6, so the logarithmic scale hides huge differences behind small numbers.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/PH"
+    ],
+    "tags": [
+      "chemistry",
+      "acids"
+    ]
+  },
+  {
+    "id": "science-0045",
+    "type": "concept",
+    "domain": "science",
+    "topic": "chemical equilibrium",
+    "title": "How a reaction pushes back when disturbed",
+    "body": "A reaction at equilibrium is not frozen; the forward and reverse reactions run at equal rates. Le Chatelier's principle says that if you disturb such a balance, by adding a reactant, raising the pressure, or changing the temperature, the system shifts to partly undo the change. Add more reactant and it consumes some by making more product. Squeeze a gas equilibrium and it moves toward the side with fewer molecules. This is how chemists tune conditions to favour a desired product, a system leaning against whatever push disturbs it.",
+    "prompt": "According to Le Chatelier's principle, how does a system at equilibrium respond when you disturb it?",
+    "answer": "It shifts in the direction that partially counteracts the disturbance. Adding a reactant makes the reaction produce more product to consume it, and raising the pressure on a gas equilibrium pushes it toward the side with fewer molecules, which lets chemists steer reactions toward a desired product.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Le_Chatelier%27s_principle"
+    ],
+    "tags": [
+      "chemistry",
+      "equilibrium"
+    ]
+  },
+  {
+    "id": "science-0046",
+    "type": "concept",
+    "domain": "science",
+    "topic": "redox reactions",
+    "title": "Why rust and fire are the same chemistry",
+    "body": "A redox reaction is a transfer of electrons: one substance loses them and is oxidized, another gains them and is reduced, always paired. Iron rusting and wood burning look nothing alike, yet both are a fuel handing electrons to oxygen. The difference is mostly speed. Combustion is oxidation fast enough to release heat and light; rust is oxidation crawling over months. Batteries harness the same electron flow, routing it through a wire to do work. Wherever oxygen pulls electrons from a fuel, it is redox at heart.",
+    "prompt": "What do rusting iron and burning wood have chemically in common?",
+    "answer": "Both are redox reactions in which a fuel hands electrons to oxygen, being oxidized while the oxygen is reduced. They differ mainly in speed: combustion is fast enough to release heat and light, while rusting is the same oxidation creeping along over months.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Redox"
+    ],
+    "tags": [
+      "chemistry",
+      "reactions"
+    ]
+  },
+  {
+    "id": "science-0047",
+    "type": "concept",
+    "domain": "science",
+    "topic": "allotropes",
+    "title": "Why diamond and graphite are both pure carbon",
+    "body": "Diamond is the hardest natural material; graphite is soft enough to smear on paper as pencil lead. Yet both are nothing but carbon atoms. The difference is entirely in how those atoms are bonded. In diamond each carbon links to four others in a rigid three-dimensional lattice; in graphite they form flat sheets that slide easily over one another. These different structural forms of one element are called allotropes, and their properties can be worlds apart. The identity of the atoms does not fix the material; the arrangement does.",
+    "prompt": "How can diamond and graphite have opposite properties when both are pure carbon?",
+    "answer": "They are allotropes, different structural arrangements of the same element. Diamond bonds each carbon to four others in a rigid 3D lattice, making it extremely hard, while graphite forms flat sheets that slide past each other, making it soft; the atoms are identical but the bonding differs.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Allotropy"
+    ],
+    "tags": [
+      "chemistry",
+      "materials"
+    ]
+  },
+  {
+    "id": "science-0048",
+    "type": "concept",
+    "domain": "science",
+    "topic": "convergent evolution",
+    "title": "Why unrelated animals arrive at the same design",
+    "body": "Birds and bats both fly with wings, but they did not inherit wings from a shared winged ancestor; their last common ancestor was a small ground animal. Each lineage evolved wings independently under the same pressure to take to the air. Likewise, the camera eye of an octopus resembles ours despite evolving on a completely separate branch. This is convergent evolution: similar problems drive similar solutions, so shared traits are not always evidence of shared ancestry. Form can testify to a common environment rather than a common origin.",
+    "prompt": "Why do birds and bats both have wings even though they didn't inherit them from a common winged ancestor?",
+    "answer": "This is convergent evolution: unrelated lineages facing the same pressure, here the demands of flight, independently evolve similar structures. Their shared ancestor lacked wings, so the resemblance reflects a common problem rather than common ancestry, as with the octopus and vertebrate eye.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Convergent_evolution"
+    ],
+    "tags": [
+      "evolution",
+      "biology"
+    ]
+  },
+  {
+    "id": "science-0049",
+    "type": "concept",
+    "domain": "science",
+    "topic": "osmosis",
+    "title": "Why a cell in pure water can burst",
+    "body": "Place a red blood cell in pure water and it swells and can rupture; place it in very salty water and it shrivels. The cause is osmosis: water crosses a semipermeable membrane, one that passes water but not dissolved solutes, moving from where solute is dilute to where it is concentrated. It flows until concentrations even out or pressure stops it. In pure water, the cell's salty interior draws water inward relentlessly. This is why freshwater and saltwater organisms need different machinery to hold their internal balance.",
+    "prompt": "Why does a red blood cell swell in pure water but shrivel in salty water?",
+    "answer": "By osmosis, water crosses the cell's semipermeable membrane from the side with dilute solute toward the side with concentrated solute. Pure water is more dilute than the cell's salty interior, so water floods in and can burst it, while very salty water pulls water out and shrivels it.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Osmosis"
+    ],
+    "tags": [
+      "biology",
+      "chemistry"
+    ]
+  },
+  {
+    "id": "science-0050",
+    "type": "concept",
+    "domain": "science",
+    "topic": "immune memory",
+    "title": "Why you catch measles only once",
+    "body": "The first time your body meets a pathogen, the immune response is slow, because it must find and multiply the few cells that recognize it. But after clearing the infection, the body keeps long-lived memory cells tuned to that invader. On a second encounter they respond within hours instead of days, crushing the infection before symptoms appear, so you seem immune. Vaccines exploit this by showing the immune system a harmless piece or weakened form of the pathogen, building memory without the disease. Immunity is memory of a past fight.",
+    "prompt": "Why does surviving a disease like measles usually make you immune, and how do vaccines use this?",
+    "answer": "After an infection the body retains memory cells specific to that pathogen, which on re-exposure respond far faster and stronger, stopping it before symptoms appear. Vaccines create the same memory by presenting a harmless or weakened form of the pathogen, so protection is built without the illness.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Immunological_memory"
+    ],
+    "tags": [
+      "biology",
+      "immunology"
+    ]
+  },
+  {
+    "id": "science-0051",
+    "type": "concept",
+    "domain": "science",
+    "topic": "photosynthesis",
+    "title": "Why leaves are green",
+    "body": "Leaves are green because of what they reject, not what they use. Chlorophyll, the pigment that captures light for photosynthesis, absorbs red and blue wavelengths strongly but reflects much of the green. The light a leaf does not absorb is the light we see, so foliage looks green. Photosynthesis uses the absorbed energy to build sugars from carbon dioxide and water, releasing oxygen. It is slightly ironic that green, abundant in sunlight, is the wavelength plants use least. A material's colour is the light it fails to absorb.",
+    "prompt": "Why do leaves look green, given that they use sunlight for photosynthesis?",
+    "answer": "Chlorophyll absorbs red and blue light strongly but reflects much of the green, and the light a leaf does not absorb is the colour we see, so leaves look green. Photosynthesis uses the absorbed red and blue energy to build sugars from carbon dioxide and water, releasing oxygen.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Photosynthesis"
+    ],
+    "tags": [
+      "biology",
+      "light"
+    ]
+  },
+  {
+    "id": "science-0052",
+    "type": "puzzle",
+    "domain": "science",
+    "topic": "olbers paradox",
+    "title": "Why is the night sky dark?",
+    "body": "Suppose the universe is infinite, unchanging, and evenly filled with stars. Then every line of sight, extended far enough, should eventually land on the surface of some star. If so, the whole night sky should blaze as bright as the Sun's surface, in every direction. Yet the night is dark. This is not a trivial oversight; it genuinely troubled astronomers for centuries. What is wrong with the assumptions, and why is the sky dark instead of ablaze?",
+    "prompt": "If an infinite, eternal universe were full of stars, why isn't the entire night sky blindingly bright?",
+    "answer": "The universe is not eternal: it has a finite age, so light from very distant stars has not had time to reach us, and only a finite number are visible. Its expansion also redshifts distant light out of the visible range, so the sky is dark rather than uniformly bright.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Olbers%27s_paradox"
+    ],
+    "tags": [
+      "astronomy",
+      "cosmology"
+    ]
+  },
+  {
+    "id": "science-0053",
+    "type": "puzzle",
+    "domain": "science",
+    "topic": "mirror reversal",
+    "title": "Why does a mirror swap left and right but not up and down?",
+    "body": "Raise your right hand at a mirror and your reflection raises what looks like its left. Text held up reads backward. Yet your head still appears on top and your feet on the bottom, so the mirror seems to flip left-right but leave up-down alone. Why would a mirror single out one axis and not the other? The puzzle is that this framing is misleading; the mirror does something simpler and more symmetric than swapping left and right. What is it actually reversing?",
+    "prompt": "Why does a mirror appear to reverse left and right but not up and down?",
+    "answer": "A mirror reverses neither; it flips only the axis pointing into the mirror, front to back. We describe our reflection as if we had turned around to face ourselves, and that mental rotation about the vertical axis is what converts the front-back flip into an apparent left-right swap.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Mirror_image"
+    ],
+    "tags": [
+      "optics",
+      "perception"
+    ]
+  },
+  {
+    "id": "science-0054",
+    "type": "puzzle",
+    "domain": "science",
+    "topic": "tea leaf paradox",
+    "title": "Why tea leaves gather in the center",
+    "body": "Stir a cup of tea with loose leaves and you might expect the swirling motion to fling the leaves outward to the rim, the way a spin cycle throws water out. Instead, once the tea slows, the leaves collect in a neat pile at the center of the cup's bottom. Centrifugal intuition predicts exactly the opposite. What is quietly moving the leaves inward along the bottom, against the outward push of the spin?",
+    "prompt": "Why do stirred tea leaves collect in the center of the cup rather than being flung to the rim?",
+    "answer": "Friction slows the water at the bottom, so its outward centrifugal push is weaker there than higher up. This imbalance sets up a secondary flow that spirals inward along the bottom, sweeping the leaves to the center; Einstein first explained this while analysing river-bank erosion.",
+    "difficulty": 3,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Tea_leaf_paradox"
+    ],
+    "tags": [
+      "fluids",
+      "physics"
+    ]
+  },
+  {
+    "id": "science-0055",
+    "type": "puzzle",
+    "domain": "science",
+    "topic": "lapse rate",
+    "title": "Why mountaintops are colder when they're closer to the Sun",
+    "body": "Climb a tall mountain and the air grows noticeably colder, dropping roughly 6 or 7 degrees Celsius per kilometre of altitude. This seems backward: the summit is closer to the Sun, so should it not be warmer? The distance to the Sun changes by a truly negligible fraction over a few kilometres, so that cannot be the answer. Something about how the atmosphere is heated, and how rising air behaves, makes height rather than nearness to the Sun the thing that matters. What cools the heights?",
+    "prompt": "Why does it get colder as you climb a mountain, even though you are moving closer to the Sun?",
+    "answer": "The few kilometres of altitude change the distance to the Sun by a negligible fraction, so that is irrelevant. Air is warmed mainly from the ground up, and rising air expands under lower pressure and cools, so temperature falls with height at roughly 6 to 7 degrees Celsius per kilometre.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Lapse_rate"
+    ],
+    "tags": [
+      "atmosphere",
+      "thermodynamics"
+    ]
+  },
+  {
+    "id": "science-0056",
+    "type": "puzzle",
+    "domain": "science",
+    "topic": "granular convection",
+    "title": "Why the big nuts rise to the top",
+    "body": "Open a tin of mixed nuts and the large Brazil nuts sit on top, the small ones below. Shaking should mix things, and denser objects usually sink, so you might expect the big nuts to work their way down. Instead, repeated shaking drives the largest pieces upward. This happens even when the big nuts are denser than the small ones, so it is not simply about weight. What is it about shaking a mixture of different-sized grains that lifts the big ones?",
+    "prompt": "Why does shaking a can of mixed nuts bring the largest Brazil nuts to the top?",
+    "answer": "Each shake opens small gaps beneath the big pieces, and only the smaller grains can trickle down into them, so the large ones are steadily ratcheted upward. Convection currents in the shaken grains reinforce this, and because the mechanism is geometric it works even when the big nuts are denser.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Granular_convection"
+    ],
+    "tags": [
+      "physics",
+      "granular-materials"
+    ]
+  },
+  {
+    "id": "science-0057",
+    "type": "puzzle",
+    "domain": "science",
+    "topic": "coriolis effect",
+    "title": "Does your sink drain the other way down under?",
+    "body": "A popular claim holds that water spirals down a drain counterclockwise in the Northern Hemisphere and clockwise in the Southern, thanks to Earth's rotation. The same rotation really does set the spin of hurricanes, which turn opposite ways in the two hemispheres. So it sounds plausible that your bathroom sink obeys the same rule. Does the hemisphere actually decide which way your sink drains, and if not, why does it govern cyclones but not sinks?",
+    "prompt": "Does the Coriolis effect really determine which way water drains from your sink in each hemisphere?",
+    "answer": "No. The Coriolis force is far too weak at the scale of a sink; the basin's shape and the water's leftover motion overwhelm it, so a sink can drain either way in either hemisphere. It governs cyclones only because those span hundreds of kilometres and persist for days, letting the tiny effect accumulate.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Coriolis_force"
+    ],
+    "tags": [
+      "physics",
+      "earth-science"
+    ]
   }
 ]
