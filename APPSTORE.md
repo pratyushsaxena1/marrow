@@ -24,7 +24,11 @@ bundle `com.pratyushs123.marrow`. Draft version **1.0** is in `PREPARE_FOR_SUBMI
   simulator, all processed with no errors). Review them and swap in polished/captioned
   versions later if you want. Note: the iPad shots have a faint gray arc in the bottom-right
   corner (a harmless simulator overlay) — cosmetic only; retake from a real iPad if it bugs you.
-- ✅ **Privacy & support pages** authored at `docs/privacy.html` and `docs/support.html`.
+- ✅ **Privacy & support pages** authored, hosted on GitHub Pages, and wired into the listing:
+  - Privacy: https://pratyushsaxena1.github.io/marrow/privacy.html
+  - Support: https://pratyushsaxena1.github.io/marrow/support.html
+- ✅ **Age rating** set to **4+** (all content questions = None/No).
+- ✅ **Pricing** is configured on the app.
 
 All pushed text lives on the **draft** — nothing is public, and you can edit any of it in
 App Store Connect before submitting. Review the description/keywords and change anything you
@@ -32,38 +36,28 @@ don't like.
 
 ---
 
-## Your steps (only you can do these)
+## Your steps (only you can do these) — this is all that's left
 
-### 1. Host the privacy policy and support pages, get two URLs
-Apple requires a **privacy policy URL** and a **support URL**, both live and public.
-I wrote both pages into `docs/`. Easiest host is GitHub Pages on your existing repo:
-
-1. Edit `docs/privacy.html` and `docs/support.html` — replace `you@example.com` with a real
-   contact address (search for the `TODO(you)` comments).
-2. Commit and push `docs/`.
-3. On GitHub: repo **Settings → Pages → Build and deployment → Source: Deploy from a branch**,
-   branch `main`, folder `/docs`, Save.
-4. After it publishes, your URLs will be:
-   - Privacy: `https://pratyushsaxena1.github.io/marrow/privacy.html`
-   - Support: `https://pratyushsaxena1.github.io/marrow/support.html`
-5. In App Store Connect: put the **privacy policy URL** under App → App Information →
-   Privacy Policy, and the **support URL** on the 1.0 version page.
-
-### 2. App Privacy questionnaire (App → App Privacy)
+### 1. App Privacy questionnaire (App → App Privacy)  ← the one required data-entry step
+This is the **only** listing field I could not set: Apple exposes **no API** for the privacy
+"nutrition label," so it must be done in the App Store Connect web UI. It takes ~1 minute.
 Marrow collects nothing and makes no network requests — verified in the code (local SQLite
-only, no analytics/ads/tracking). Answer:
-- "Do you or your third-party partners collect data from this app?" → **No**.
-- Then **Publish**. That produces a "Data Not Collected" privacy label.
+only, no analytics/ads/tracking). So:
+- Click **Get Started**, then answer "Do you or your third-party partners collect data from
+  this app?" → **No**.
+- Click **Publish**. That produces a "Data Not Collected" privacy label.
 
-(I did not push this via the API on purpose — it's your legal declaration, and it's one click.)
+### 2. (Glance) Confirm availability/territories
+Pricing is set, but double-check **Pricing and Availability** lists the territories you want
+(default is all). No action needed unless you want to restrict it.
 
-### 3. Age rating (App → App Information, or on the version page)
-Answer **None / No** to every content question. That yields a **4+** rating, which is
-correct for an educational text app. Save.
+### 3. Submit for Review
+On the **1.0** version page, click **Add for Review → Submit for Review**, and pick your
+release option (automatic on approval, or manual). This is the one irreversible outward step.
+Apple review typically takes ~24–48h.
 
-### 4. Screenshots — already done
-Real screenshots are uploaded to the draft (5 iPhone 6.9" + 3 iPad 13"). Nothing required
-here unless you want to replace them with polished/captioned marketing versions.
+Everything else (build, description, keywords, subtitle, category, content rights, export
+compliance, screenshots, privacy/support URLs, age rating) is already done on the draft.
 
 ### 5. Review the flagged risks before you submit (your call)
 These are carried over from the build notes and are real for a *public* release (they did
