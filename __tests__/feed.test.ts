@@ -122,6 +122,44 @@ describe("nextChunk", () => {
     expect(items.some((i) => i.kind === "review")).toBe(true);
   });
 
+  it("serves only cs new cards when filtered to domains=[cs]", () => {
+    const cards = manyCards();
+    const deps = {
+      corpus: fakeCorpus(cards), store: fakeStore([]), now: NOW, rng: mid, domains: ["cs"] as Domain[],
+    };
+    const items = nextChunk(deps, createSession(mid), 12);
+    const domains = items.flatMap((i) => (i.kind === "caught-up" ? [] : [i.card.domain]));
+    expect(domains.length).toBe(12);
+    expect(domains.every((d) => d === "cs")).toBe(true);
+  });
+
+  it("serves only cs reviews when filtered to domains=[cs], skipping other-domain dues", () => {
+    const cards = manyCards();
+    // math-0 is the most overdue, but the cs filter must skip it in favor of cs-0.
+    const due = [mkState("math-0", NOW - 9_000_000), mkState("cs-0", NOW - 1000)];
+    const seen = new Set(["math-0", "cs-0"]);
+    const deps = {
+      corpus: fakeCorpus(cards), store: fakeStore(due, seen), now: NOW, rng: mid,
+      domains: ["cs"] as Domain[],
+    };
+    const items = nextChunk(deps, createSession(mid), 20);
+    const reviews = items.flatMap((i) => (i.kind === "review" ? [i.card.id] : []));
+    expect(reviews.length).toBeGreaterThan(0);
+    expect(reviews.every((id) => id.startsWith("cs-"))).toBe(true);
+    expect(reviews).not.toContain("math-0");
+  });
+
+  it("treats an empty domains filter as all domains (no regression)", () => {
+    const cards = manyCards();
+    const deps = {
+      corpus: fakeCorpus(cards), store: fakeStore([]), now: NOW, rng: mid, domains: [] as Domain[],
+    };
+    const items = nextChunk(deps, createSession(mid), 8);
+    const domains = items.flatMap((i) => (i.kind === "caught-up" ? [] : [i.card.domain]));
+    expect(new Set(domains).size).toBe(4);
+    for (let i = 1; i < domains.length; i++) expect(domains[i]).not.toBe(domains[i - 1]);
+  });
+
   it("never pulls undue reviews forward to fill space", () => {
     const cards = [mkCard("cs-0", "cs")];
     const due = [mkState("future-1", NOW + 9_000_000)];

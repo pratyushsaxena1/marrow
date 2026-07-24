@@ -13,7 +13,18 @@ export type StorePort = {
   getSeenIds(): Set<string>;
 };
 
-export type FeedDeps = { corpus: CorpusPort; store: StorePort; now: number; rng: Rng };
+export type FeedDeps = {
+  corpus: CorpusPort;
+  store: StorePort;
+  now: number;
+  rng: Rng;
+  domains?: Domain[]; // undefined or empty array = all domains (no filter)
+};
+
+// The domains this session draws from. An absent or empty filter means all domains,
+// so the unfiltered path stays identical to the pre-filter behavior.
+const activeDomains = (deps: FeedDeps): Domain[] =>
+  deps.domains && deps.domains.length > 0 ? deps.domains : DOMAINS;
 
 const drawGap = (rng: Rng): number =>
   REVIEW_GAP_MIN + Math.floor(rng() * (REVIEW_GAP_MAX - REVIEW_GAP_MIN + 1));
@@ -32,21 +43,26 @@ function takeReview(deps: FeedDeps, s: Session): Card | undefined {
   if (s.reviewsServed >= REVIEW_CAP_PER_SESSION) return undefined;
   // Over-fetch so cards already served this session don't hide the rest of the queue.
   const due = deps.store.getDue(deps.now, REVIEW_CAP_PER_SESSION + s.servedIds.size + 1);
+  const domains = activeDomains(deps);
   for (const st of due) {
     if (s.servedIds.has(st.cardId)) continue;
     const card = deps.corpus.getCard(st.cardId);
-    if (card) return card;
+    // Skip due cards outside the selected domains. With no filter every domain is
+    // active, so this check is a no-op and existing behavior is preserved.
+    if (card && domains.includes(card.domain)) return card;
   }
   return undefined;
 }
 
 function takeNew(deps: FeedDeps, s: Session): Card | undefined {
   const seen = new Set([...deps.store.getSeenIds(), ...s.servedIds]);
-  for (let i = 0; i < DOMAINS.length; i++) {
-    const domain = DOMAINS[(s.domainCursor + i) % DOMAINS.length];
+  // Round-robin only within the selected domains (all four when unfiltered).
+  const domains = activeDomains(deps);
+  for (let i = 0; i < domains.length; i++) {
+    const domain = domains[(s.domainCursor + i) % domains.length];
     const pool = deps.corpus.getUnseen(seen, domain);
     if (pool.length === 0) continue;
-    s.domainCursor = (s.domainCursor + i + 1) % DOMAINS.length;
+    s.domainCursor = (s.domainCursor + i + 1) % domains.length;
     return pool[Math.floor(deps.rng() * pool.length)];
   }
   return undefined;

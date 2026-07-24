@@ -3,6 +3,7 @@ import financeRaw from "../../corpus/finance.json";
 import mathRaw from "../../corpus/math.json";
 import scienceRaw from "../../corpus/science.json";
 import { isCard } from "./schema";
+import { DOMAINS } from "../constants";
 import type { Card, Domain } from "../types";
 
 let cache: Card[] | null = null;
@@ -33,4 +34,13 @@ export function getUnseen(seenIds: Set<string>, domain?: Domain): Card[] {
 
 export function allIds(): string[] {
   return loadCorpus().map((c) => c.id);
+}
+
+// Corpus card count per domain, for the stats screen's per-domain totals. Seeded from
+// DOMAINS so every domain reports a number even if its file were empty.
+export function countByDomain(): Record<Domain, number> {
+  const counts = {} as Record<Domain, number>;
+  for (const d of DOMAINS) counts[d] = 0;
+  for (const c of loadCorpus()) counts[c.domain] += 1;
+  return counts;
 }

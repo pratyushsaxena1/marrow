@@ -13,6 +13,10 @@ CREATE TABLE IF NOT EXISTS card_state (
   lastSeenAt   INTEGER NOT NULL
 );
 CREATE INDEX IF NOT EXISTS idx_card_state_dueAt ON card_state(dueAt);
+CREATE TABLE IF NOT EXISTS settings (
+  key   TEXT PRIMARY KEY NOT NULL,
+  value TEXT NOT NULL
+);
 `;
 
 export type Store = {
@@ -20,6 +24,9 @@ export type Store = {
   putState(state: CardState): void;
   getDue(now: number, limit: number): CardState[];
   getSeenIds(): Set<string>;
+  getAllStates(): CardState[];
+  getSetting(key: string): string | null;
+  putSetting(key: string, value: string): void;
   reset(): void;
 };
 
@@ -78,6 +85,25 @@ export function openStore(): Store {
       const rows = db.getAllSync<{ cardId: string }>("SELECT cardId FROM card_state");
       return new Set(rows.map((r) => r.cardId));
     },
+    getAllStates() {
+      return db.getAllSync<CardState>("SELECT * FROM card_state");
+    },
+    getSetting(key) {
+      const row = db.getFirstSync<{ value: string }>(
+        "SELECT value FROM settings WHERE key = ?",
+        [key],
+      );
+      return row?.value ?? null;
+    },
+    putSetting(key, value) {
+      db.runSync(
+        `INSERT INTO settings (key, value) VALUES (?, ?)
+         ON CONFLICT(key) DO UPDATE SET value=excluded.value`,
+        [key, value],
+      );
+    },
+    // Scoped to card_state on purpose: settings such as onboarding completion are not
+    // user progress and should survive a data reset.
     reset() {
       db.execSync("DELETE FROM card_state");
     },
