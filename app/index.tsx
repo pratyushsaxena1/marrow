@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AppState, FlatList, useWindowDimensions, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Redirect, useRouter } from "expo-router";
+import { Redirect, useFocusEffect, useRouter } from "expo-router";
 import { createSession, nextChunk, type FeedDeps } from "../src/feed";
 import { openStore } from "../src/store";
 import { getCard, getUnseen } from "../src/corpus";
@@ -11,6 +11,7 @@ import { RevealCard } from "../src/ui/RevealCard";
 import { CaughtUpCard } from "../src/ui/CaughtUpCard";
 import { TopBar, TOP_BAR_HEIGHT } from "../src/ui/TopBar";
 import { DomainSheet } from "../src/ui/DomainSheet";
+import { TabBar, TAB_ROUTES, TAB_BAR_HEIGHT, type TabKey } from "../src/ui/TabBar";
 import { CHUNK_SIZE, DOMAINS, DOMAIN_LABELS_SHORT, SESSION_IDLE_MS } from "../src/constants";
 import type { Domain, FeedItem, Grade, Session } from "../src/types";
 
@@ -35,9 +36,9 @@ const labelForDomains = (domains: Domain[]): string =>
 export default function FeedScreen() {
   const { height: winHeight } = useWindowDimensions();
   const insets = useSafeAreaInsets();
-  // The top bar sits between the safe-area padding and the feed, so a full card is the
-  // window minus both insets and the bar. Paging snaps to this height.
-  const height = winHeight - insets.top - insets.bottom - TOP_BAR_HEIGHT;
+  // The top bar and the tab bar bracket the feed, so a full card is the window minus
+  // both insets and both bars. Paging snaps to this height.
+  const height = winHeight - insets.top - insets.bottom - TOP_BAR_HEIGHT - TAB_BAR_HEIGHT;
 
   const router = useRouter();
   const store = useMemo(() => openStore(), []);
@@ -51,6 +52,36 @@ export default function FeedScreen() {
     loadSelectedDomains(store.getSetting("selectedDomains")),
   );
   const [sheetOpen, setSheetOpen] = useState(false);
+
+  // Saved cards and the due count are also changed from the Library, the card detail
+  // screen and the quiz, so both are re-read whenever the feed comes back into focus.
+  const [saved, setSaved] = useState<Set<string>>(() => new Set(store.getBookmarks()));
+  const [dueCount, setDueCount] = useState(0);
+
+  const refreshDueCount = useCallback(() => {
+    const now = Date.now();
+    setDueCount(store.getAllStates().filter((s) => s.dueAt <= now).length);
+  }, [store]);
+
+  useFocusEffect(
+    useCallback(() => {
+      setSaved(new Set(store.getBookmarks()));
+      refreshDueCount();
+    }, [store, refreshDueCount]),
+  );
+
+  const toggleSave = useCallback(
+    (cardId: string) => {
+      const nowSaved = store.toggleBookmark(cardId, Date.now());
+      setSaved((prev) => {
+        const next = new Set(prev);
+        if (nowSaved) next.add(cardId);
+        else next.delete(cardId);
+        return next;
+      });
+    },
+    [store],
+  );
 
   const session = useRef<Session>(createSession(rng));
   const seeded = useRef<Set<string>>(new Set());
@@ -132,8 +163,12 @@ export default function FeedScreen() {
       const now = Date.now();
       const prev = store.getState(item.card.id) ?? initialState(item.card.id, now, rng);
       store.putState(review(prev, g, now, rng));
+      // Logged as well as stored: card_state holds only the latest snapshot, so the
+      // streak, activity chart and accuracy figures all read this append-only log.
+      store.logReview({ cardId: item.card.id, grade: g, at: now });
+      refreshDueCount();
     },
-    [store],
+    [store, refreshDueCount],
   );
 
   // Persist the chosen subjects and immediately rebuild the feed from them. The new
@@ -151,17 +186,31 @@ export default function FeedScreen() {
   const renderItem = useCallback(
     ({ item }: { item: FeedItem }) => {
       if (item.kind === "caught-up") return <CaughtUpCard height={height} />;
-      if (item.kind === "new-concept") return <ConceptCard card={item.card} height={height} />;
+      const open = () => router.push(`/card/${item.card.id}`);
+      if (item.kind === "new-concept") {
+        return (
+          <ConceptCard
+            card={item.card}
+            height={height}
+            saved={saved.has(item.card.id)}
+            onToggleSave={() => toggleSave(item.card.id)}
+            onOpen={open}
+          />
+        );
+      }
       return (
         <RevealCard
           card={item.card}
           height={height}
           showBody={item.kind === "new-puzzle"}
           onGrade={(g) => grade(item, g)}
+          saved={saved.has(item.card.id)}
+          onToggleSave={() => toggleSave(item.card.id)}
+          onOpen={open}
         />
       );
     },
-    [height, grade],
+    [height, grade, router, saved, toggleSave],
   );
 
   if (needsOnboarding) return <Redirect href="/onboarding" />;
@@ -173,8 +222,8 @@ export default function FeedScreen() {
     >
       <TopBar
         domainLabel={labelForDomains(selectedDomains)}
+        dueCount={dueCount}
         onPressDomains={() => setSheetOpen(true)}
-        onPressStats={() => router.push("/stats")}
       />
       <FlatList
         ref={listRef}
@@ -193,6 +242,15 @@ export default function FeedScreen() {
         viewabilityConfig={{ itemVisiblePercentThreshold: 60, minimumViewTime: 400 }}
         getItemLayout={(_, i) => ({ length: height, offset: height * i, index: i })}
       />
+      <View style={{ height: TAB_BAR_HEIGHT }}>
+        <TabBar
+          active="feed"
+          onSelect={(t: TabKey) => {
+            if (t !== "feed") router.replace(TAB_ROUTES[t]);
+          }}
+        />
+      </View>
+
       <DomainSheet
         visible={sheetOpen}
         selected={selectedDomains}

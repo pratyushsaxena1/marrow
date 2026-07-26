@@ -1,12 +1,21 @@
 import React, { useState } from "react";
 import { Text, Pressable, View } from "react-native";
 import { CardShell } from "./CardShell";
+import { CardActions } from "./CardActions";
 import { GradeButtons } from "./GradeButtons";
 import type { Card, Grade } from "../types";
 
 export function RevealCard(
-  { card, height, showBody, onGrade }:
-  { card: Card; height: number; showBody: boolean; onGrade: (g: Grade) => void },
+  { card, height, showBody, onGrade, saved, onToggleSave, onOpen }:
+  {
+    card: Card;
+    height: number;
+    showBody: boolean;
+    onGrade: (g: Grade) => void;
+    saved?: boolean;
+    onToggleSave?: () => void;
+    onOpen?: () => void;
+  },
 ) {
   const [revealed, setRevealed] = useState(false);
   const [graded, setGraded] = useState<Grade | null>(null);
@@ -18,7 +27,15 @@ export function RevealCard(
   };
 
   return (
-    <CardShell height={height} domain={card.domain}>
+    <CardShell
+      height={height}
+      domain={card.domain}
+      actions={
+        onToggleSave && onOpen ? (
+          <CardActions saved={saved ?? false} onToggleSave={onToggleSave} onOpen={onOpen} />
+        ) : null
+      }
+    >
       {showBody ? (
         <>
           <Text className="text-neutral-100 text-2xl font-semibold leading-tight mb-4">
