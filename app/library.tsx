@@ -75,13 +75,18 @@ export default function LibraryScreen() {
 
   const filtered = domains.length > 0 || status !== "all" || savedOnly || text.length > 0;
 
+  // The reading column exists to cap line length for prose. The Library is a list, and
+  // on a tablet it runs two-up across the full width, so capping the header and search
+  // field would leave them hanging over the left column only. Let them match the list.
+  const headerWidth = isWide ? undefined : column;
+
   return (
     <View
       className="flex-1 bg-neutral-950"
       style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}
     >
       <View style={{ paddingHorizontal: gutter }}>
-        <View style={column}>
+        <View style={headerWidth}>
           <View className="flex-row items-end justify-between pt-3 pb-4">
             <Text className="text-neutral-100 text-3xl font-semibold">Library</Text>
             <Pressable onPress={() => router.push("/settings")} hitSlop={10} className="py-1 pl-3">
@@ -148,7 +153,7 @@ export default function LibraryScreen() {
       </View>
 
       <View style={{ paddingHorizontal: gutter }}>
-        <View style={column} className="flex-row items-center justify-between py-2">
+        <View style={headerWidth} className="flex-row items-center justify-between py-2">
           <Text className="text-neutral-500 text-xs uppercase tracking-widest">
             {`${results.length} of ${cards.length} concepts`}
           </Text>
