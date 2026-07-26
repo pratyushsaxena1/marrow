@@ -1,6 +1,9 @@
 import * as SQLite from "expo-sqlite";
-import type { CardState } from "../types";
+import type { CardState, Grade, ReviewLogEntry } from "../types";
 
+// Every table is created IF NOT EXISTS, so an install carrying only the v1 tables
+// (card_state, settings) picks up review_log and bookmarks on next launch with its
+// existing progress intact. No destructive migration is needed.
 const DDL = `
 CREATE TABLE IF NOT EXISTS card_state (
   cardId       TEXT PRIMARY KEY NOT NULL,
@@ -17,6 +20,17 @@ CREATE TABLE IF NOT EXISTS settings (
   key   TEXT PRIMARY KEY NOT NULL,
   value TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS review_log (
+  id     INTEGER PRIMARY KEY AUTOINCREMENT,
+  cardId TEXT NOT NULL,
+  grade  TEXT NOT NULL,
+  at     INTEGER NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_review_log_at ON review_log(at);
+CREATE TABLE IF NOT EXISTS bookmarks (
+  cardId    TEXT PRIMARY KEY NOT NULL,
+  createdAt INTEGER NOT NULL
+);
 `;
 
 export type Store = {
@@ -27,6 +41,13 @@ export type Store = {
   getAllStates(): CardState[];
   getSetting(key: string): string | null;
   putSetting(key: string, value: string): void;
+  /** Appends one graded answer. Called alongside putState on every grade. */
+  logReview(entry: ReviewLogEntry): void;
+  /** Every logged answer at or after `since`, oldest first. */
+  getReviewLog(since: number): ReviewLogEntry[];
+  getBookmarks(): string[];
+  /** Flips the bookmark for a card and returns its new state. */
+  toggleBookmark(cardId: string, now: number): boolean;
   reset(): void;
 };
 
@@ -102,10 +123,42 @@ export function openStore(): Store {
         [key, value],
       );
     },
-    // Scoped to card_state on purpose: settings such as onboarding completion are not
-    // user progress and should survive a data reset.
+    logReview(entry) {
+      db.runSync("INSERT INTO review_log (cardId, grade, at) VALUES (?, ?, ?)", [
+        entry.cardId,
+        entry.grade,
+        entry.at,
+      ]);
+    },
+    getReviewLog(since) {
+      return db.getAllSync<{ cardId: string; grade: Grade; at: number }>(
+        "SELECT cardId, grade, at FROM review_log WHERE at >= ? ORDER BY at ASC",
+        [since],
+      );
+    },
+    getBookmarks() {
+      const rows = db.getAllSync<{ cardId: string }>(
+        "SELECT cardId FROM bookmarks ORDER BY createdAt DESC",
+      );
+      return rows.map((r) => r.cardId);
+    },
+    toggleBookmark(cardId, now) {
+      const existing = db.getFirstSync<{ cardId: string }>(
+        "SELECT cardId FROM bookmarks WHERE cardId = ?",
+        [cardId],
+      );
+      if (existing) {
+        db.runSync("DELETE FROM bookmarks WHERE cardId = ?", [cardId]);
+        return false;
+      }
+      db.runSync("INSERT INTO bookmarks (cardId, createdAt) VALUES (?, ?)", [cardId, now]);
+      return true;
+    },
+    // Clears learning progress and its history. Settings (onboarding completion, daily
+    // goal, subject filter) and bookmarks are user preferences and saved content rather
+    // than progress, so they deliberately survive a reset.
     reset() {
-      db.execSync("DELETE FROM card_state");
+      db.execSync("DELETE FROM card_state; DELETE FROM review_log;");
     },
   };
 }

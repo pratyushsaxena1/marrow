@@ -1,5 +1,5 @@
-import { DOMAINS } from "../constants";
-import type { CardState, Domain } from "../types";
+import { DAY_MS, DOMAINS } from "../constants";
+import type { CardState, Domain, ReviewLogEntry } from "../types";
 
 export type DomainStat = { seen: number; total: number };
 
@@ -40,3 +40,88 @@ export function computeStats(deps: StatsDeps): Stats {
 
   return { learned, mastered, dueToday, perDomain };
 }
+
+// ---------------------------------------------------------------------------
+// History-shaped figures, derived from review_log.
+//
+// card_state only keeps each card's latest snapshot, so it cannot answer "how many
+// reviews did I do on Tuesday". Everything below reads the append-only log instead.
+// Days are local days: a streak has to match the calendar the user is looking at, so
+// bucketing is done through Date's local getters rather than by dividing epoch ms.
+// ---------------------------------------------------------------------------
+
+/** Local midnight for the day containing `ts`. */
+export function startOfDay(ts: number): number {
+  const d = new Date(ts);
+  d.setHours(0, 0, 0, 0);
+  return d.getTime();
+}
+
+/** Local midnight `n` days before the day containing `ts`. Built by shifting the date
+ *  component rather than subtracting 24h, so DST transitions cannot drift the bucket. */
+function shiftDays(ts: number, n: number): number {
+  const d = new Date(ts);
+  d.setHours(0, 0, 0, 0);
+  d.setDate(d.getDate() - n);
+  return d.getTime();
+}
+
+export type DayBucket = { dayStart: number; count: number };
+
+/** Review counts for the last `days` local days, oldest first, ending with today.
+ *  Days with no activity are present with count 0 so the chart has a fixed width. */
+export function dailyCounts(log: ReviewLogEntry[], now: number, days: number): DayBucket[] {
+  const buckets: DayBucket[] = [];
+  const index = new Map<number, number>();
+  for (let i = days - 1; i >= 0; i--) {
+    const dayStart = shiftDays(now, i);
+    index.set(dayStart, buckets.length);
+    buckets.push({ dayStart, count: 0 });
+  }
+  for (const entry of log) {
+    const slot = index.get(startOfDay(entry.at));
+    if (slot !== undefined) buckets[slot].count += 1;
+  }
+  return buckets;
+}
+
+/** Reviews logged today, for the daily-goal ring. */
+export function reviewsToday(log: ReviewLogEntry[], now: number): number {
+  const today = startOfDay(now);
+  return log.filter((e) => startOfDay(e.at) === today).length;
+}
+
+/** Consecutive days with at least one review, ending today. A day that is still in
+ *  progress must not break the streak, so when today is empty the count starts at
+ *  yesterday instead: someone with a 5-day streak who has not opened the app yet this
+ *  morning still has a 5-day streak, and it only ends if they also skip today. */
+export function currentStreak(log: ReviewLogEntry[], now: number): number {
+  const active = new Set(log.map((e) => startOfDay(e.at)));
+  if (active.size === 0) return 0;
+
+  const today = startOfDay(now);
+  let cursor = active.has(today) ? today : shiftDays(now, 1);
+  if (!active.has(cursor)) return 0;
+
+  let streak = 0;
+  while (active.has(cursor)) {
+    streak += 1;
+    cursor = shiftDays(cursor, 1);
+  }
+  return streak;
+}
+
+export type Accuracy = { reviews: number; correct: number; pct: number };
+
+/** Share of graded answers marked "got". 0 rather than NaN when nothing is logged. */
+export function accuracy(log: ReviewLogEntry[]): Accuracy {
+  const reviews = log.length;
+  const correct = log.filter((e) => e.grade === "got").length;
+  return { reviews, correct, pct: reviews === 0 ? 0 : Math.round((correct / reviews) * 100) };
+}
+
+/** Earliest timestamp that could fall inside a window of `days` local days ending now.
+ *  Used to bound the review_log query. One extra day of slack absorbs any local-vs-UTC
+ *  offset so the oldest bucket is never clipped. */
+export const windowStart = (now: number, days: number): number =>
+  startOfDay(now) - (days + 1) * DAY_MS;

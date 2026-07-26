@@ -30,6 +30,17 @@ export type CardState = {
   lastSeenAt: number; // UTC epoch ms
 };
 
+/** A card's place in the learning cycle, derived from its CardState (or absence of one). */
+export type CardStatus = "new" | "learning" | "mastered";
+
+/** One graded answer, appended at review time. The log is the source of truth for
+ *  history-shaped figures (streak, activity, accuracy) that card_state cannot answer,
+ *  since card_state only keeps a card's latest snapshot. */
+export type ReviewLogEntry = { cardId: string; grade: Grade; at: number };
+
+/** One answered question inside a quiz run, held in memory until the run finishes. */
+export type QuizAnswer = { cardId: string; grade: Grade };
+
 export type FeedItem =
   | { kind: "new-concept"; card: Card }
   | { kind: "new-puzzle"; card: Card }
