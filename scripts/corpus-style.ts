@@ -52,44 +52,70 @@ const BANNED_PHRASES: RegExp[] = [
   /\bnot (?:just|merely|simply) [^.]{1,40}, but\b/i,
 ];
 
-// Rule 3: one spelling standard. The corpus was already ~90% British, so British
-// is the standard and American spellings are the leak to catch. Word-boundary
-// anchored on the American form, since the British form is what we want to keep.
+// Rule 3: one spelling standard. American throughout, so the British forms are the
+// leak to catch. Word-boundary anchored on the British form, since the American form
+// is what we want to keep.
 //
-// Deliberately NOT listed: "amortized" and "serializable". Both are entrenched
-// terms of art in CS ("amortized analysis", the SERIALIZABLE isolation level) whose
-// -z spelling is standard even in British-published texts, so normalising them would
-// make the corpus read as if it did not know the field. Every other -ize form is a
-// plain English word and gets the -ise treatment.
-const AMERICANISMS: RegExp[] = [
-  /\bcolors?\b/i,
-  /\bcolored\b/i,
-  /\bcoloring\b/i,
-  /\bbehaviors?\b/i,
-  /\bfavor(?:s|ed|ing|able)?\b/i,
-  /\blabeled\b/i,
-  /\bmodeled\b/i,
-  /\bcenters?\b/i,
-  /\bcentered\b/i,
-  /\banalyzed?\b/i,
-  /\banalyzing\b/i,
-  /\borganiz(?:e|es|ed|ing|ation)\b/i,
-  /\brecogniz(?:e|es|ed|ing)\b/i,
-  /\btraveled\b/i,
-  /\bmeters?\b/i,
-  /\bkilometers?\b/i,
-  /\bdefense\b/i,
-  /\bfulfill\b/i,
-  /\bfinaliz(?:e|es|ed|ing)\b/i,
-  /\brandomiz(?:e|es|ed|ing)\b/i,
-  /\bgeneraliz(?:e|es|ed|ing|ation)\b/i,
-  /\bsynchroniz(?:e|es|ed|ing|ation)\b/i,
-  /\bmaximiz(?:e|es|ed|ing)\b/i,
-  /\bminimiz(?:e|es|ed|ing)\b/i,
-  /\bspecializ(?:e|es|ed|ing)\b/i,
-  /\bnormaliz(?:e|es|ed|ing)\b/i,
-  /\boptimiz(?:e|es|ed|ing|ation|ations)\b/i,
-  /\boxidiz(?:e|es|ed|ing)\b/i,
+// The -ise/-ize split is the bulk of it, but note that a plain -ize rule would be
+// wrong in both directions: "analysis", "organism", "premise" and "exercise" are
+// spelled the same either way, and "advertise", "compromise" and "supervise" are -ise
+// in American English too. So this is an explicit list rather than a suffix rule.
+const BRITICISMS: RegExp[] = [
+  /\bcolours?\b/i,
+  /\bcoloured\b/i,
+  /\bcolouring\b/i,
+  /\bbehaviours?\b/i,
+  /\bfavour(?:s|ed|ing|able)?\b/i,
+  /\blabell(?:ed|ing)\b/i,
+  /\bmodell(?:ed|ing)\b/i,
+  /\bcentres?\b/i,
+  /\bcentred\b/i,
+  /\banalys(?:e|es|ed|ing|er)\b/i,
+  /\borganis(?:e|es|ed|ing|ation)\b/i,
+  /\brecognis(?:e|es|ed|ing)\b/i,
+  /\btravell(?:ed|ing)\b/i,
+  /\bmetres?\b/i,
+  /\bkilometres?\b/i,
+  /\bcentimetres?\b/i,
+  /\blitres?\b/i,
+  /\bdefence\b/i,
+  /\boffence\b/i,
+  /\blicence\b/i,
+  /\bfulfil\b/i,
+  /\bneighbour(?:s|ing|hood)?\b/i,
+  /\barmour(?:s|ed|ing)?\b/i,
+  /\bvapour\b/i,
+  /\blabour\b/i,
+  /\bgrey(?:scale)?\b/i,
+  /\bageing\b/i,
+  /\bjudgement\b/i,
+  /\bprogramme\b/i,
+  /\bpractis(?:e|ed|ing)\b/i,
+  /\bsceptic(?:al|ism)?\b/i,
+  /\bmanoeuvres?\b/i,
+  /\bfinalis(?:e|es|ed|ing)\b/i,
+  /\brandomis(?:e|es|ed|ing|ation)\b/i,
+  /\bgeneralis(?:e|es|ed|ing|ation)\b/i,
+  /\bsynchronis(?:e|es|ed|ing|ation)\b/i,
+  /\bmaximis(?:e|es|ed|ing)\b/i,
+  /\bminimis(?:e|es|ed|ing)\b/i,
+  /\bspecialis(?:e|es|ed|ing)\b/i,
+  /\bnormalis(?:e|es|ed|ing)\b/i,
+  /\boptimis(?:e|es|ed|ing|ation|ations)\b/i,
+  /\boxidis(?:e|es|ed|ing)\b/i,
+  /\bpenalis(?:e|es|ed|ing)\b/i,
+  /\bpolaris(?:e|es|ed|ing|ation)\b/i,
+  /\bionis(?:e|es|ed|ing|ation)\b/i,
+  /\bcrystallis(?:e|es|ed|ing|ation)\b/i,
+  /\bpolymeris(?:e|es|ed|ing)\b/i,
+  /\bdepolaris(?:e|es|ed|ing)\b/i,
+  /\bneutralis(?:e|es|ed|ing)\b/i,
+  /\bsanitis(?:e|es|ed|ing)\b/i,
+  /\blocalis(?:e|es|ed|ing)\b/i,
+  /\bfertilis(?:e|es|ed|ing|ation)\b/i,
+  /\bparameteris(?:e|es|ed|ing)\b/i,
+  /\bcancell(?:ed|ing)\b/i,
+  /\bsignall(?:ed|ing)\b/i,
 ];
 
 // Rule 4: characters allowed beyond ASCII. Maths needs a few symbols, and a few
@@ -134,9 +160,9 @@ function checkFile(file: string, cards: Card[]): void {
       if (m) note(file, "phrase", `${c.id}: banned phrase "${m[0]}"`);
     }
 
-    for (const re of AMERICANISMS) {
+    for (const re of BRITICISMS) {
       const m = text.match(re);
-      if (m) note(file, "spelling", `${c.id}: American spelling "${m[0]}", use British`);
+      if (m) note(file, "spelling", `${c.id}: British spelling "${m[0]}", use American`);
     }
 
     // Em and en dashes are excluded here because the dash rule above already reports

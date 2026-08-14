@@ -26,6 +26,9 @@ BG = (10, 10, 10, 255)          # neutral-950, the app's background
 INK = (245, 245, 245, 255)      # neutral-100, the app's primary ink
 ACCENT = (52, 211, 153, 255)    # emerald-400, the app's one accent
 TRANSPARENT = (0, 0, 0, 0)
+# Only for the monochrome variants, where the system recolors the mark and full white
+# gives it the most headroom. INK would be a needless 4% of contrast thrown away.
+WHITE = (255, 255, 255, 255)
 
 # Geometry, as fractions of the canvas edge.
 RING_OUTER = 0.335   # radius
@@ -101,9 +104,20 @@ def main():
     draw_mark(1024, TRANSPARENT, (229, 229, 229, 255), ACCENT).save(
         os.path.join(assets, "icon-dark.png")
     )
-    # Tinted icons are recolored wholesale by the system, so the two elements have to
-    # differ in luminance rather than hue or they merge into one flat blob.
-    draw_mark(1024, TRANSPARENT, INK, (138, 138, 138, 255)).save(
+    # The tinted variant feeds every monochrome appearance iOS derives: Tinted, and the
+    # Clear Light and Clear Dark modes added in iOS 26. Both elements are drawn at full
+    # white, and the structure is carried entirely by the transparent gap between the
+    # ring and the card.
+    #
+    # An earlier version split them by luminance instead, a near-white ring around a
+    # mid-grey card, on the theory that two same-colored shapes would merge. They do not
+    # merge: GAP leaves a transparent ring between them. What the split did do was break
+    # the icon on light backdrops, because the system draws this asset over a near-white
+    # tile in Clear Light, where a 245-luminance ring is invisible and only the grey card
+    # survives. The icon rendered as a grey blob floating on a white square. Anything
+    # that is part of the mark must therefore be the same full white, so the system's
+    # tint or glass treatment lands on the whole shape at once.
+    draw_mark(1024, TRANSPARENT, WHITE, WHITE).save(
         os.path.join(assets, "icon-tinted.png")
     )
 
@@ -113,7 +127,7 @@ def main():
         os.path.join(assets, "android-icon-foreground.png")
     )
     Image.new("RGBA", (512, 512), BG).save(os.path.join(assets, "android-icon-background.png"))
-    draw_mark(512, TRANSPARENT, INK, INK, scale=0.72).save(
+    draw_mark(512, TRANSPARENT, WHITE, WHITE, scale=0.72).save(
         os.path.join(assets, "android-icon-monochrome.png")
     )
 

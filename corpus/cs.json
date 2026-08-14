@@ -173,10 +173,10 @@
     "type": "concept",
     "domain": "cs",
     "topic": "register allocation",
-    "title": "Register allocation is graph colouring",
-    "body": "A compiler's intermediate code uses unlimited virtual registers, but a CPU has perhaps sixteen. Build a graph whose nodes are values and whose edges join any two values that are live at the same moment, since those two cannot share a register. Assigning registers is then colouring that graph with as many colours as the machine has registers. General graph colouring is NP-complete, so compilers use heuristics and spill to memory when colouring fails.",
+    "title": "Register allocation is graph coloring",
+    "body": "A compiler's intermediate code uses unlimited virtual registers, but a CPU has perhaps sixteen. Build a graph whose nodes are values and whose edges join any two values that are live at the same moment, since those two cannot share a register. Assigning registers is then coloring that graph with as many colors as the machine has registers. General graph coloring is NP-complete, so compilers use heuristics and spill to memory when coloring fails.",
     "prompt": "A compiler has unlimited virtual registers and a CPU has sixteen. What classic problem is it really solving?",
-    "answer": "Nodes are live values and an edge means two values are live at the same time, so they need different registers; a colouring with k colours, where k is the number of physical registers, is a valid allocation. When no colouring is found, the allocator spills a value to memory, removing its interferences, and retries.",
+    "answer": "Nodes are live values and an edge means two values are live at the same time, so they need different registers; a coloring with k colors, where k is the number of physical registers, is a valid allocation. When no coloring is found, the allocator spills a value to memory, removing its interferences, and retries.",
     "difficulty": 3,
     "sources": [
       "https://en.wikipedia.org/wiki/Register_allocation"
@@ -194,7 +194,7 @@
     "title": "Rename every variable once",
     "body": "In static single assignment form every variable is written exactly once, so any use points at one unambiguous definition. Code that reassigns is rewritten with fresh names, and where control flow merges, a phi function selects the value belonging to the incoming edge. The payoff is that def-use information now lives in the names themselves.",
     "prompt": "What does static single assignment form give a compiler by requiring every variable to be assigned exactly once?",
-    "answer": "It makes every use refer to a single unambiguous definition, so def-use chains are explicit in the names. Optimisations such as constant propagation and dead-code elimination can then read reaching definitions directly instead of computing them by dataflow analysis, with phi functions reconciling values where control flow merges.",
+    "answer": "It makes every use refer to a single unambiguous definition, so def-use chains are explicit in the names. Optimizations such as constant propagation and dead-code elimination can then read reaching definitions directly instead of computing them by dataflow analysis, with phi functions reconciling values where control flow merges.",
     "difficulty": 3,
     "sources": [
       "https://en.wikipedia.org/wiki/Static_single-assignment_form"
@@ -307,7 +307,7 @@
     "title": "What CAP actually forces you to choose",
     "body": "When a network partition splits a distributed system, a node cut off from its peers still receives a write and must decide. It can accept the write, risking that the other side serves a different value, which sacrifices consistency. Or it can refuse to answer until it can reach its peers, which sacrifices availability. There is no third option, because the node cannot tell a dead peer from an unreachable one.",
     "prompt": "What choice does the CAP theorem actually force on a distributed system, and why is 'pick two of three' a misreading?",
-    "answer": "During a partition, a node must either answer with possibly stale data, dropping consistency, or refuse to answer, dropping availability. Partition tolerance is not a design choice since networks partition regardless, so CAP describes behaviour during a partition rather than a free pick among three properties.",
+    "answer": "During a partition, a node must either answer with possibly stale data, dropping consistency, or refuse to answer, dropping availability. Partition tolerance is not a design choice since networks partition regardless, so CAP describes behavior during a partition rather than a free pick among three properties.",
     "difficulty": 3,
     "sources": [
       "https://en.wikipedia.org/wiki/CAP_theorem",
@@ -344,7 +344,7 @@
     "title": "A shared secret that never crosses the wire",
     "body": "Alice and Bob publicly agree on a large prime p and a base g. Alice picks a secret a and sends g^a mod p, and Bob picks a secret b and sends g^b mod p. Alice raises Bob's value to her a, Bob raises Alice's to his b, and both now hold g^(ab) mod p, a shared secret that was never transmitted. An eavesdropper sees only g, p, g^a and g^b.",
     "prompt": "In Diffie-Hellman, how do two parties agree on a shared secret over a channel an eavesdropper is reading?",
-    "answer": "Each sends g raised to their private exponent modulo p, then raises the received value to their own exponent, and both land on g^(ab) mod p, which never travelled. An eavesdropper would have to solve the discrete logarithm problem to recover an exponent, which is believed infeasible for large primes.",
+    "answer": "Each sends g raised to their private exponent modulo p, then raises the received value to their own exponent, and both land on g^(ab) mod p, which never traveled. An eavesdropper would have to solve the discrete logarithm problem to recover an exponent, which is believed infeasible for large primes.",
     "difficulty": 2,
     "sources": [
       "https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange",
@@ -400,7 +400,7 @@
     "domain": "cs",
     "topic": "rice's theorem",
     "title": "Every interesting question about programs is undecidable",
-    "body": "Rice's theorem says that any non-trivial property of the function a program computes is undecidable. Non-trivial means some programs have it and some do not, and a property of the computed function means it depends only on input-output behaviour rather than on the source text. So no analyser can decide, for arbitrary programs, whether one ever outputs zero. Syntactic questions, such as whether the source contains a loop, stay decidable.",
+    "body": "Rice's theorem says that any non-trivial property of the function a program computes is undecidable. Non-trivial means some programs have it and some do not, and a property of the computed function means it depends only on input-output behavior rather than on the source text. So no analyzer can decide, for arbitrary programs, whether one ever outputs zero. Syntactic questions, such as whether the source contains a loop, stay decidable.",
     "prompt": "What does Rice's theorem say is undecidable, and which kind of question about programs escapes it?",
     "answer": "Every non-trivial semantic property is undecidable: one that depends only on the function a program computes and that some but not all programs have. Syntactic properties of the source text, such as whether it contains a loop, are not semantic and remain perfectly decidable.",
     "difficulty": 3,
@@ -512,8 +512,8 @@
     "domain": "cs",
     "topic": "loop invariants",
     "title": "The last bean in the can",
-    "body": "A can holds some black beans and some white beans. Repeat this until one bean is left: pull out two beans at random. If they are the same colour, throw both away and drop in one black bean from a large spare pile. If they are different colours, throw the black one away and put the white one back. Each round removes exactly one bean, so the process always ends with a single bean.",
-    "prompt": "In the bean process where a same-coloured pair is replaced by one black bean and a mixed pair returns the white one, what determines the final bean's colour?",
+    "body": "A can holds some black beans and some white beans. Repeat this until one bean is left: pull out two beans at random. If they are the same color, throw both away and drop in one black bean from a large spare pile. If they are different colors, throw the black one away and put the white one back. Each round removes exactly one bean, so the process always ends with a single bean.",
+    "prompt": "In the bean process where a same-colored pair is replaced by one black bean and a mixed pair returns the white one, what determines the final bean's color?",
     "answer": "The parity of the starting number of white beans: the last bean is white exactly when that count was odd. Every move either leaves the white count unchanged or, in the two-whites case alone, drops it by two, so the parity of the white count is an invariant of the whole process.",
     "difficulty": 2,
     "sources": [],
@@ -546,7 +546,7 @@
     "topic": "race conditions",
     "title": "The account that pays twice",
     "body": "An account holds $100. Two withdrawal requests for $60 each arrive at the same moment and are handled by different threads. Each thread runs identical code: read the balance, check that it is at least $60, subtract $60, write the balance back. There is no lock and no transaction. It happens that both threads read the balance before either one writes, so the check passes in both.",
-    "prompt": "Two unsynchronised threads each read a $100 balance, verify it covers a $60 withdrawal, then subtract and write back: what is the final balance, and what is the flaw?",
+    "prompt": "Two unsynchronized threads each read a $100 balance, verify it covers a $60 withdrawal, then subtract and write back: what is the final balance, and what is the flaw?",
     "answer": "Both checks pass and both write $40, so $120 leaves an account that ends showing $40. The flaw is check-then-act: the balance is verified and then acted on as if still valid, but nothing holds it still between the read and the write, so the entire sequence must be made atomic.",
     "difficulty": 1,
     "sources": [],
@@ -805,7 +805,7 @@
     "title": "How UTF-8 finds character boundaries",
     "body": "UTF-8 encodes each character as one to four bytes, and a byte's high bits announce its role. A leading byte has a distinctive pattern, and every continuation byte begins with the bits 10. So from any position you can tell whether you are mid-character and back up at most three bytes to a boundary. Because the 128 ASCII characters map to single bytes identical to ASCII, old text is already valid UTF-8.",
     "prompt": "How does UTF-8 let you find character boundaries from an arbitrary byte position while staying compatible with ASCII?",
-    "answer": "Continuation bytes all begin with the bits 10 while leading bytes do not, so from any position you can back up at most three bytes to a character start, making the encoding self-synchronising. ASCII characters encode as single bytes identical to their ASCII values, so existing ASCII text is already valid UTF-8.",
+    "answer": "Continuation bytes all begin with the bits 10 while leading bytes do not, so from any position you can back up at most three bytes to a character start, making the encoding self-synchronizing. ASCII characters encode as single bytes identical to their ASCII values, so existing ASCII text is already valid UTF-8.",
     "difficulty": 1,
     "sources": [
       "https://en.wikipedia.org/wiki/UTF-8",
@@ -970,7 +970,7 @@
     "title": "One hundred prisoners and the boxes",
     "body": "A hundred prisoners are numbered. In a room sit a hundred boxes, each hiding a distinct prisoner's number in random order. One at a time, each prisoner may open fifty boxes, must find their own number, and cannot communicate or rearrange anything afterward. If everyone succeeds, all go free, and if even one fails, all are executed. Independent guessing gives a success probability effectively equal to zero. Yet a strategy frees them about a third of the time.",
     "prompt": "How can 100 prisoners, each opening only half the boxes to find their own number, all succeed about 31% of the time?",
-    "answer": "Each prisoner opens the box labelled with their own number, then the box labelled with the number found inside, following the cycle of the underlying random permutation. They all succeed unless some cycle exceeds 50 boxes, and at most one such long cycle can exist, so the whole group survives about 31% of the time instead of essentially never.",
+    "answer": "Each prisoner opens the box labeled with their own number, then the box labeled with the number found inside, following the cycle of the underlying random permutation. They all succeed unless some cycle exceeds 50 boxes, and at most one such long cycle can exist, so the whole group survives about 31% of the time instead of essentially never.",
     "difficulty": 3,
     "sources": [
       "https://en.wikipedia.org/wiki/100_prisoners_problem"
@@ -985,7 +985,7 @@
     "type": "puzzle",
     "domain": "cs",
     "topic": "bitwise operations",
-    "title": "The missing number, found by cancelling",
+    "title": "The missing number, found by canceling",
     "body": "An array holds every integer from 0 to n except one, in scrambled order: n numbers covering n+1 possible values, with one absent. You want the missing value. Summing all of them and subtracting works but can overflow for large n. There is a method using no arithmetic at all, only a single pass and one accumulator, leaning on an operation that undoes itself when applied twice.",
     "prompt": "Given all integers from 0 to n with exactly one missing, how do you find it in a single pass using no arithmetic and constant memory?",
     "answer": "XOR together all the array values and all the numbers 0 through n into one accumulator. Because XOR is its own inverse and is commutative, every present value cancels against its twin, leaving only the missing number, and it can never overflow.",
@@ -1006,7 +1006,7 @@
     "title": "Adding a server without reshuffling everything",
     "body": "A cache spreads keys across n servers by hashing each key and taking the result modulo n. It works, until you add or remove a server. Because n changes, nearly every key's hash-mod-n changes too, so almost the entire cache must move at once, hammering the backing store. You want a scheme where adding the nth server relocates only a small share of keys.",
     "prompt": "Why does modulo-based sharding force nearly all keys to move when a server is added, and how does consistent hashing avoid it?",
-    "answer": "With hash mod n, changing n alters almost every key's assignment, so the whole cache reshuffles. Consistent hashing instead places servers and keys on a shared ring and assigns each key to the next server clockwise, so adding a server steals only the keys between it and its neighbour, about a 1/n fraction.",
+    "answer": "With hash mod n, changing n alters almost every key's assignment, so the whole cache reshuffles. Consistent hashing instead places servers and keys on a shared ring and assigns each key to the next server clockwise, so adding a server steals only the keys between it and its neighbor, about a 1/n fraction.",
     "difficulty": 2,
     "sources": [
       "https://en.wikipedia.org/wiki/Consistent_hashing"
@@ -1242,9 +1242,9 @@
     "domain": "cs",
     "topic": "injection attacks",
     "title": "Data that the parser reads as instructions",
-    "body": "Building a query by pasting user input into a string means the database receives one blob of text and cannot tell which parts you wrote and which the user did. Input containing a quote and a semicolon becomes syntax. Escaping helps but is easy to get wrong across encodings. A parameterised query fixes it structurally: the SQL text is sent and parsed first, and the values arrive separately afterward, so they can never be read as syntax.",
-    "prompt": "Why does a parameterised query stop SQL injection where careful escaping still might not?",
-    "answer": "Because it separates the two channels rather than sanitising one. The query text is sent and parsed before any values arrive, so user input is only ever bound as data and can never be reinterpreted as syntax. Escaping tries to neutralise dangerous characters, which depends on getting every encoding case right.",
+    "body": "Building a query by pasting user input into a string means the database receives one blob of text and cannot tell which parts you wrote and which the user did. Input containing a quote and a semicolon becomes syntax. Escaping helps but is easy to get wrong across encodings. A parameterized query fixes it structurally: the SQL text is sent and parsed first, and the values arrive separately afterward, so they can never be read as syntax.",
+    "prompt": "Why does a parameterized query stop SQL injection where careful escaping still might not?",
+    "answer": "Because it separates the two channels rather than sanitizing one. The query text is sent and parsed before any values arrive, so user input is only ever bound as data and can never be reinterpreted as syntax. Escaping tries to neutralize dangerous characters, which depends on getting every encoding case right.",
     "difficulty": 2,
     "sources": [
       "https://en.wikipedia.org/wiki/SQL_injection",

@@ -64,7 +64,7 @@ existing card costs a user nothing.
   write what you can and report the shortfall.
 - **Do not invent URLs.** If you are not certain a page exists at a URL, do not cite
   it. Verify with the link sweep below before committing.
-- **Finance and economics is the highest-risk domain.** Maths and CS claims are
+- **Finance and economics is the highest-risk domain.** Math and CS claims are
   verifiable by derivation; economics contains genuinely contested claims that are easy
   to state with unearned confidence. Prefer mechanisms and definitions (how compounding
   works, what a bid-ask spread is, why bond prices and yields move inversely) over
@@ -115,20 +115,21 @@ it ("This is amortized analysis: pricing a rare expensive operation across the c
 ones") is fine once. It was a template across the corpus. Vary where the name lands, or
 leave it to the answer.
 
-**Spelling.** British throughout: colour, behaviour, centre, metre, analyse, organise,
-recognise, labelled, defence. The script catches the American forms. Two deliberate
-exceptions, both entrenched terms of art whose -z spelling is standard even in
-British-published texts: "amortized analysis" and the SERIALIZABLE isolation level.
-Normalising those would make the corpus read as though it did not know the field.
+**Spelling.** American throughout: color, behavior, center, meter, liter, analyze,
+organize, recognize, labeled, defense, optimization. The script catches the British
+forms. Note that it is an explicit list rather than an "-ise becomes -ize" rule,
+because such a rule is wrong in both directions: "analysis", "organism", "premise" and
+"exercise" are identical in both spellings, and "advertise", "compromise" and
+"supervise" keep the -ise in American English.
 
-**Characters.** ASCII plus a small allowlist of maths symbols, currency signs and
+**Characters.** ASCII plus a small allowlist of math symbols, currency signs and
 accents, all listed in the script. Straight quotes only. Use one convention for
 formulae within a card and do not mix a Unicode minus with an ASCII hyphen.
 
-**Difficulty.** At least **15% of each file at each of the three levels**. Labelling
+**Difficulty.** At least **15% of each file at each of the three levels**. Labeling
 almost everything a 2 is what happens when difficulty is assigned by reflex, and it
 leaves the app with no gentle on-ramp. Assign it honestly; if a file genuinely cannot
-reach the spread, say so rather than mislabelling a card.
+reach the spread, say so rather than mislabeling a card.
 
 **Sources.** No single host may exceed **80% of a file's sources**. Wikipedia is a
 legitimate reference and a reasonable fallback, but a corpus sourced entirely to one

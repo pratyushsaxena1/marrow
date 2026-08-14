@@ -484,7 +484,7 @@
     "domain": "finance",
     "topic": "minimum wage",
     "title": "The disagreement economists are best known for",
-    "body": "The competitive labour model predicts that a wage floor set above the market rate reduces employment. The monopsony model, where employers have wage-setting power, predicts a moderate floor can raise both wages and employment. Both are respectable theory. Card and Krueger's 1994 study of New Jersey fast food found no job losses, while Neumark and Wascher contested the data and found some. Decades of studies have not settled it.",
+    "body": "The competitive labor model predicts that a wage floor set above the market rate reduces employment. The monopsony model, where employers have wage-setting power, predicts a moderate floor can raise both wages and employment. Both are respectable theory. Card and Krueger's 1994 study of New Jersey fast food found no job losses, while Neumark and Wascher contested the data and found some. Decades of studies have not settled it.",
     "prompt": "Why do economists disagree about whether a minimum wage reduces employment?",
     "answer": "Because two credible models predict opposite things. The competitive model implies job losses, while the monopsony model allows a moderate floor to raise employment, and the empirical evidence is genuinely mixed, from Card and Krueger's null result to Neumark and Wascher's contrary findings. The effect likely depends on the floor's height relative to local wages.",
     "difficulty": 3,
@@ -505,9 +505,9 @@
     "domain": "finance",
     "topic": "comparative advantage",
     "title": "Being worse at everything and still gaining from trade",
-    "body": "Suppose one country is better at making both cloth and wine than another. It still gains by specialising. What matters is not who is better in absolute terms but what each must give up. If a barrel of wine costs the first country two bolts of cloth and costs the second only one, the second should make the wine, whatever its absolute productivity. Trading at any rate between those two opportunity costs leaves both consuming more of both goods.",
+    "body": "Suppose one country is better at making both cloth and wine than another. It still gains by specializing. What matters is not who is better in absolute terms but what each must give up. If a barrel of wine costs the first country two bolts of cloth and costs the second only one, the second should make the wine, whatever its absolute productivity. Trading at any rate between those two opportunity costs leaves both consuming more of both goods.",
     "prompt": "Why can a country that is worse at producing everything still gain from trade?",
-    "answer": "Because gains come from comparative, not absolute, advantage. Each country should specialise where its opportunity cost, meaning what it gives up to make a good, is lower. Trading at a rate between the two countries' opportunity costs leaves both consuming more than they could produce on their own.",
+    "answer": "Because gains come from comparative, not absolute, advantage. Each country should specialize where its opportunity cost, meaning what it gives up to make a good, is lower. Trading at a rate between the two countries' opportunity costs leaves both consuming more than they could produce on their own.",
     "difficulty": 1,
     "sources": [
       "https://en.wikipedia.org/wiki/Comparative_advantage"
@@ -642,9 +642,9 @@
     "domain": "finance",
     "topic": "information asymmetry",
     "title": "Adverse selection is not moral hazard",
-    "body": "Two problems get routinely confused. Adverse selection is hidden information before a deal: the sick buy more health insurance, so the pool an insurer actually gets is worse than the population. Moral hazard is hidden action after a deal: once insured, people lock the bike a little less carefully. The distinction is timing and what is hidden, a type versus a behaviour, and it dictates the remedy.",
+    "body": "Two problems get routinely confused. Adverse selection is hidden information before a deal: the sick buy more health insurance, so the pool an insurer actually gets is worse than the population. Moral hazard is hidden action after a deal: once insured, people lock the bike a little less carefully. The distinction is timing and what is hidden, a type versus a behavior, and it dictates the remedy.",
     "prompt": "What distinguishes adverse selection from moral hazard?",
-    "answer": "Adverse selection is hidden information before contracting: the counterparty's type is unknown, so worse risks self-select in. Moral hazard is hidden action after contracting: being covered changes behaviour. Screening and signalling address the first; deductibles and monitoring address the second.",
+    "answer": "Adverse selection is hidden information before contracting: the counterparty's type is unknown, so worse risks self-select in. Moral hazard is hidden action after contracting: being covered changes behavior. Screening and signaling address the first; deductibles and monitoring address the second.",
     "difficulty": 2,
     "sources": [
       "https://en.wikipedia.org/wiki/Adverse_selection",
@@ -722,7 +722,7 @@
     "domain": "finance",
     "topic": "opportunity cost",
     "title": "Costs that never show on a receipt",
-    "body": "Every choice made under scarcity forecloses alternatives, and its true cost is the best of those forgone options, not the money spent. Spending a Saturday building a deck yourself has a price even if you buy no labour: the most valuable thing you gave up that day. A firm holding cash in a vault forgoes the interest it could have earned. Because this cost leaves no invoice, decisions that look free often are not.",
+    "body": "Every choice made under scarcity forecloses alternatives, and its true cost is the best of those forgone options, not the money spent. Spending a Saturday building a deck yourself has a price even if you buy no labor: the most valuable thing you gave up that day. A firm holding cash in a vault forgoes the interest it could have earned. Because this cost leaves no invoice, decisions that look free often are not.",
     "prompt": "You spend a free Saturday building a deck yourself and pay nobody. In what sense was it still expensive?",
     "answer": "You paid the opportunity cost: the value of the best alternative use of that day, which need not be monetary. Every choice under scarcity forecloses others, so a decision can be costly even when no invoice is issued and no money changes hands.",
     "difficulty": 1,
@@ -758,7 +758,7 @@
     "domain": "finance",
     "topic": "price elasticity",
     "title": "When raising the price lowers the takings",
-    "body": "Price elasticity of demand measures how much quantity sold responds to a price change: the percent change in units per one percent change in price. If demand is inelastic, buyers barely cut back when prices rise, so a higher price increases total revenue. If demand is elastic, buyers flee, and a price rise lowers revenue while a cut raises it. A seller's revenue-maximising move depends entirely on which regime it is in.",
+    "body": "Price elasticity of demand measures how much quantity sold responds to a price change: the percent change in units per one percent change in price. If demand is inelastic, buyers barely cut back when prices rise, so a higher price increases total revenue. If demand is elastic, buyers flee, and a price rise lowers revenue while a cut raises it. A seller's revenue-maximizing move depends entirely on which regime it is in.",
     "prompt": "How does the price elasticity of demand determine whether raising a price increases or decreases total revenue?",
     "answer": "Elasticity is the percent change in quantity demanded per one percent change in price. When demand is inelastic, quantity barely falls, so a higher price raises revenue; when demand is elastic, quantity falls sharply, so a higher price lowers revenue.",
     "difficulty": 2,
@@ -776,7 +776,7 @@
     "domain": "finance",
     "topic": "externalities",
     "title": "The cost the price leaves out",
-    "body": "An externality is a cost or benefit landing on someone who was not party to a transaction. A factory that pollutes imposes cleanup and health costs on neighbours, but those costs never enter its price, so it produces more than is socially efficient. A vaccine protects others too, and its private buyer ignores that benefit, so the market underprovides it. Prices coordinate well only when they capture all the costs and benefits.",
+    "body": "An externality is a cost or benefit landing on someone who was not party to a transaction. A factory that pollutes imposes cleanup and health costs on neighbors, but those costs never enter its price, so it produces more than is socially efficient. A vaccine protects others too, and its private buyer ignores that benefit, so the market underprovides it. Prices coordinate well only when they capture all the costs and benefits.",
     "prompt": "Why does a polluting factory produce too much, and a vaccine too little, without anyone behaving irrationally?",
     "answer": "An externality is a cost or benefit falling on a third party outside the transaction, so the market price omits it. Markets overproduce goods with negative externalities like pollution and underproduce those with positive externalities like vaccination, because buyers and sellers ignore the effects on others.",
     "difficulty": 2,
@@ -794,8 +794,8 @@
     "domain": "finance",
     "topic": "public goods",
     "title": "Why markets underfund the lighthouse",
-    "body": "A public good is both non-excludable, meaning you cannot easily stop non-payers from using it, and non-rivalrous, meaning one person's use does not diminish another's. National defence and a lighthouse fit: everyone benefits whether or not they paid. That invites free-riding, since each person hopes others foot the bill, so voluntary contributions fall short and the market underprovides the good.",
-    "prompt": "Why do private markets tend to underprovide public goods like national defence?",
+    "body": "A public good is both non-excludable, meaning you cannot easily stop non-payers from using it, and non-rivalrous, meaning one person's use does not diminish another's. National defense and a lighthouse fit: everyone benefits whether or not they paid. That invites free-riding, since each person hopes others foot the bill, so voluntary contributions fall short and the market underprovides the good.",
+    "prompt": "Why do private markets tend to underprovide public goods like national defense?",
     "answer": "A public good is non-excludable and non-rivalrous, so people can benefit without paying and one person's use does not reduce another's. That lets everyone free-ride in hope others will pay, so voluntary provision falls short, which is why such goods are typically funded through taxation.",
     "difficulty": 1,
     "sources": [
@@ -833,7 +833,7 @@
     "title": "Who really pays a tax",
     "body": "Whether a tax is legally collected from the buyer or the seller barely matters to who ultimately bears it. What decides the burden is the relative elasticity of supply and demand. The more inelastic side, the one less able to walk away, absorbs more of the tax. Tax cigarettes, whose buyers are addicted and unresponsive to price, and consumers pay most of it regardless of who writes the cheque.",
     "prompt": "Does it matter whether a tax is legally charged to buyers or to sellers, and what actually decides who bears it?",
-    "answer": "The legal side that remits the tax barely affects the real burden; what matters is the relative elasticity of supply and demand. The more inelastic side, less able to change its behaviour, bears more of the tax regardless of who writes the cheque.",
+    "answer": "The legal side that remits the tax barely affects the real burden; what matters is the relative elasticity of supply and demand. The more inelastic side, less able to change its behavior, bears more of the tax regardless of who writes the cheque.",
     "difficulty": 3,
     "sources": [
       "https://en.wikipedia.org/wiki/Tax_incidence"
@@ -979,7 +979,7 @@
     "title": "The pasture everyone ruins",
     "body": "A hundred herders share one open pasture that can sustain a fixed number of animals. Each herder reasons that adding one more cow brings them the full profit of that animal, while the cost of slightly overgrazing is spread across all hundred. So every herder adds cows, the pasture is stripped bare, and all of them end up worse off than if the herd had been capped. Each acted rationally in their own interest.",
     "prompt": "Why do herders sharing an open pasture overgraze it into ruin even though each is acting rationally?",
-    "answer": "Each herder captures the full benefit of an added animal but shares the cost of overgrazing with everyone, so the private calculation always favours adding more. Because all face the same incentive the shared resource is depleted; the fix requires limiting access or making each bear the true social cost.",
+    "answer": "Each herder captures the full benefit of an added animal but shares the cost of overgrazing with everyone, so the private calculation always favors adding more. Because all face the same incentive the shared resource is depleted; the fix requires limiting access or making each bear the true social cost.",
     "difficulty": 1,
     "sources": [
       "https://en.wikipedia.org/wiki/Tragedy_of_the_commons",
@@ -1071,7 +1071,7 @@
     "title": "A bet avoided because the odds are hidden",
     "body": "An urn holds 90 balls. Exactly 30 are red, and the other 60 are an unknown mix of black and yellow. You can bet on red, a known one-in-three chance, or on black, whose chance is unknown but could reach two-thirds. Most people bet on red. Offered instead a bet on red-or-yellow versus black-or-yellow, most switch to the black side.",
     "prompt": "In the Ellsberg urn, why is preferring the known-odds bet in one framing but the unknown-odds bet in another inconsistent?",
-    "answer": "Preferring red over black implies you treat black as scarce, yet preferring black-or-yellow over red-or-yellow implies you treat black as plentiful, and no single belief about the black count supports both. People are exhibiting ambiguity aversion, favouring known probabilities over unknown ones even at a cost.",
+    "answer": "Preferring red over black implies you treat black as scarce, yet preferring black-or-yellow over red-or-yellow implies you treat black as plentiful, and no single belief about the black count supports both. People are exhibiting ambiguity aversion, favoring known probabilities over unknown ones even at a cost.",
     "difficulty": 3,
     "sources": [
       "https://en.wikipedia.org/wiki/Ellsberg_paradox"

@@ -88,8 +88,9 @@ The ASC API key is at `~/.appstoreconnect/private_keys/AuthKey_Q3L48UB69U.p8`
 
 ## Standing risks for a public release
 
-- **Card accuracy.** The 230 cards were written from model knowledge and the source URLs were
-  not all link-checked. Finance is the highest-risk domain. Your name is on these claims
-  publicly, so a human accuracy pass is worth doing.
+- **Card accuracy.** The 270 cards were written from model knowledge. Every source URL now
+  resolves (`npm run check-links` is part of the content workflow), but a URL resolving is not
+  the same as the claim matching what is on the page. Finance is the highest-risk domain. Your
+  name is on these claims publicly, so a human accuracy pass is still worth doing.
 - **Guideline 4.2.** Both 1.0 rejections came from an iPad. Any future version that thins out
   what there is to *do* in the app risks the same finding. Test on an iPad before submitting.
