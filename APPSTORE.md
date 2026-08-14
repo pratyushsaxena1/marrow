@@ -11,7 +11,16 @@ bundle `com.pratyushs123.marrow`.
 | Version | Build | State | Notes |
 | --- | --- | --- | --- |
 | 1.0 | 8 | `READY_FOR_SALE` | Shipped 2026-07-26 after two Guideline 4.2 rejections. |
-| 1.1 | 9 | `WAITING_FOR_REVIEW` | Submitted 2026-08-14. UI rework, redrawn icon, captioned screenshots. |
+| 1.1 | 9 | `READY_FOR_SALE` | Shipped 2026-08-14. UI rework, redrawn icon, captioned screenshots. |
+| 1.2 | 12 | `WAITING_FOR_REVIEW` | Submitted 2026-08-14. 40 new cards (270 total), all 230 existing cards revised, American spelling, tinted-icon fix. |
+
+**Keep this table current.** It said 1.1 was `WAITING_FOR_REVIEW` when 1.1 had in
+fact shipped, which sent a later session down the path of trying to swap the build on
+a released version. A released version cannot be edited: check the real state with the
+API before planning an update.
+
+Builds 10 and 11 were uploaded for 1.2 and superseded before submission. Dead builds in
+the list are harmless but can be expired in App Store Connect if you want them gone.
 
 ## Settings that persist across versions
 
@@ -73,6 +82,23 @@ new icon only reaches the store as part of a new build.
 
 `scripts/make-icons.py` renders every asset from one description of the mark, including the
 iOS dark and tinted variants. Rerun it after any palette change.
+
+**The tinted variant must keep its opaque background.** `expo prebuild` flattens that one
+asset's alpha onto white while leaving the dark variant's transparency alone, so a
+transparent tinted source ships as a white tile with little or nothing on it. Two versions
+went out that way. After changing any icon, check what prebuild actually emitted rather than
+trusting the source:
+
+```bash
+python3 -c "from PIL import Image; im=Image.open('ios/marrow/Images.xcassets/AppIcon.appiconset/App-Icon-tinted-1024x1024@1x.png'); print(im.mode, im.convert('RGBA').getpixel((5,5)))"
+```
+
+It should print a near-black corner, not `(255, 255, 255, 255)`. Note that `expo run:ios`
+does not regenerate these once `ios/` exists; delete the pngs and run `expo prebuild` to
+force it. EAS always prebuilds fresh, so cloud builds pick up the source correctly.
+
+To check the result on a device, the appearance modes live under a long press on the home
+screen, then Edit, then Customize, which offers Default / Dark / Clear / Tinted.
 
 ## API notes
 
