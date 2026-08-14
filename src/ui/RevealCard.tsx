@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { Text, Pressable, View } from "react-native";
+import { Text, View } from "react-native";
 import { CardShell } from "./CardShell";
 import { CardActions } from "./CardActions";
 import { GradeButtons } from "./GradeButtons";
+import { Button } from "./Button";
+import { FadeIn } from "./FadeIn";
 import type { Card, Grade } from "../types";
 
 export function RevealCard(
@@ -30,6 +32,9 @@ export function RevealCard(
     <CardShell
       height={height}
       domain={card.domain}
+      // Revealing can push the answer past the bottom of the page on a long card; the
+      // shell scrolls down to it so the reveal is never invisible.
+      scrollSignal={revealed ? 1 : 0}
       actions={
         onToggleSave && onOpen ? (
           <CardActions saved={saved ?? false} onToggleSave={onToggleSave} onOpen={onOpen} />
@@ -49,16 +54,19 @@ export function RevealCard(
 
       {revealed ? (
         <View>
-          <Text className="text-neutral-400 text-lg leading-relaxed mt-6">{card.answer}</Text>
+          <FadeIn>
+            <Text className="text-neutral-400 text-lg leading-relaxed mt-6">{card.answer}</Text>
+          </FadeIn>
           <GradeButtons onGrade={handleGrade} graded={graded} />
         </View>
       ) : (
-        <Pressable
+        <Button
+          label="Reveal"
+          variant="secondary"
+          haptic="tick"
           onPress={() => setRevealed(true)}
-          className="border border-neutral-700 rounded-2xl py-4 items-center mt-8"
-        >
-          <Text className="text-neutral-300 text-base font-medium">Reveal</Text>
-        </Pressable>
+          style={{ marginTop: 32 }}
+        />
       )}
     </CardShell>
   );

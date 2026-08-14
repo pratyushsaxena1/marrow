@@ -6,7 +6,11 @@ import Constants from "expo-constants";
 import { openStore } from "../src/store";
 import { loadCorpus } from "../src/corpus";
 import { Chip } from "../src/ui/Chip";
+import { Icon } from "../src/ui/Icon";
 import { ScreenHeader } from "../src/ui/ScreenHeader";
+import { SectionLabel } from "../src/ui/SectionLabel";
+import { COLORS } from "../src/ui/theme";
+import { tick, warn } from "../src/ui/haptics";
 import { useLayout } from "../src/ui/layout";
 import { DAILY_GOAL_DEFAULT, DAILY_GOAL_OPTIONS } from "../src/constants";
 
@@ -33,6 +37,7 @@ export default function SettingsScreen() {
   };
 
   const confirmReset = () => {
+    warn();
     Alert.alert(
       "Reset progress?",
       "This clears every card's review schedule and your review history. Saved cards and this screen's settings are kept. This cannot be undone.",
@@ -74,9 +79,7 @@ export default function SettingsScreen() {
         <View style={column}>
           <ScreenHeader title="Settings" onBack={() => router.back()} />
 
-          <Text className="text-neutral-500 text-xs uppercase tracking-widest mb-3">
-            Daily review goal
-          </Text>
+          <SectionLabel>Daily review goal</SectionLabel>
           <Text className="text-neutral-400 text-sm leading-relaxed mb-4">
             The target the Progress screen measures each day against. It does not limit how
             much you can review.
@@ -87,15 +90,13 @@ export default function SettingsScreen() {
             ))}
           </View>
 
-          <Text className="text-neutral-500 text-xs uppercase tracking-widest mb-3">Library</Text>
+          <SectionLabel>Library</SectionLabel>
           <View className="bg-neutral-900 rounded-3xl px-5 py-4 mb-10">
             <Row label="Concepts available" value={String(total)} />
             <Row label="Saved cards" value={String(savedCount)} />
           </View>
 
-          <Text className="text-neutral-500 text-xs uppercase tracking-widest mb-3">
-            Learning data
-          </Text>
+          <SectionLabel>Learning data</SectionLabel>
           <ActionRow label="Replay the intro" onPress={replayOnboarding} />
           <ActionRow
             label="Clear saved cards"
@@ -116,9 +117,7 @@ export default function SettingsScreen() {
           />
           <ActionRow label="Reset all progress" destructive onPress={confirmReset} />
 
-          <Text className="text-neutral-500 text-xs uppercase tracking-widest mt-10 mb-3">
-            About
-          </Text>
+          <SectionLabel className="mt-10 mb-3">About</SectionLabel>
           <ActionRow label="Support" onPress={() => open(SUPPORT_URL)} />
           <ActionRow label="Privacy policy" onPress={() => open(PRIVACY_URL)} />
 
@@ -140,6 +139,9 @@ function Row({ label, value }: { label: string; value: string }) {
   );
 }
 
+/** A row that does something when tapped. The trailing chevron is what separates these
+ *  from the read-only rows above them, which otherwise look identical. Destructive rows
+ *  drop the chevron: red already says enough, and a chevron reads as "go somewhere". */
 function ActionRow(
   { label, onPress, destructive, disabled }:
   { label: string; onPress: () => void; destructive?: boolean; disabled?: boolean },
@@ -151,12 +153,19 @@ function ActionRow(
       : "text-neutral-100";
   return (
     <Pressable
-      onPress={onPress}
+      onPress={() => {
+        if (!destructive) tick();
+        onPress();
+      }}
       disabled={disabled}
       accessibilityRole="button"
-      className="py-4 border-b border-neutral-900 active:opacity-60"
+      accessibilityState={{ disabled: disabled ?? false }}
+      className="flex-row items-center justify-between py-4 border-b border-neutral-900 active:opacity-60"
     >
       <Text className={`text-base ${tone}`}>{label}</Text>
+      {destructive || disabled ? null : (
+        <Icon name="chevron-right" size={13} color={COLORS.textDim} />
+      )}
     </Pressable>
   );
 }

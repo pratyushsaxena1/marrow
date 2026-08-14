@@ -1,5 +1,6 @@
 import React from "react";
 import { Pressable, Text, View } from "react-native";
+import { tick } from "./haptics";
 
 // Screens subtract this from the available height so a full-bleed feed card still
 // snaps to a whole page above the bar.
@@ -83,7 +84,12 @@ export function TabBar({ active, onSelect }: { active: TabKey; onSelect: (tab: T
         return (
           <Pressable
             key={tab.key}
-            onPress={() => onSelect(tab.key)}
+            onPress={() => {
+              // Silent when it changes nothing: a haptic for landing on the tab you are
+              // already looking at reads as a malfunction.
+              if (!isActive) tick();
+              onSelect(tab.key);
+            }}
             accessibilityRole="button"
             accessibilityState={{ selected: isActive }}
             accessibilityLabel={tab.label}

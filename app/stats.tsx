@@ -15,6 +15,11 @@ import {
 } from "../src/stats";
 import { weekdayInitial } from "../src/format";
 import { TabBar, TAB_ROUTES, TAB_BAR_HEIGHT, type TabKey } from "../src/ui/TabBar";
+import { SectionLabel } from "../src/ui/SectionLabel";
+import { Icon } from "../src/ui/Icon";
+import { COLORS } from "../src/ui/theme";
+// Aliased: this screen already has a `tick` of its own, the focus-refresh counter.
+import { tick as hapticTick } from "../src/ui/haptics";
 import { useLayout } from "../src/ui/layout";
 import { ACTIVITY_DAYS, DAILY_GOAL_DEFAULT, DOMAINS, DOMAIN_LABELS } from "../src/constants";
 import type { Domain } from "../src/types";
@@ -66,8 +71,17 @@ export default function ProgressScreen() {
         <View style={column}>
           <View className="flex-row items-end justify-between mb-8">
             <Text className="text-neutral-100 text-3xl font-semibold">Progress</Text>
-            <Pressable onPress={() => router.push("/settings")} hitSlop={10} className="py-1 pl-3">
+            <Pressable
+              onPress={() => {
+                hapticTick();
+                router.push("/settings");
+              }}
+              hitSlop={10}
+              accessibilityRole="button"
+              className="flex-row items-center gap-1 py-1 pl-3 active:opacity-60"
+            >
               <Text className="text-neutral-400 text-sm font-medium">Settings</Text>
+              <Icon name="chevron-right" size={12} color={COLORS.textFaint} />
             </Pressable>
           </View>
 
@@ -99,20 +113,18 @@ export default function ProgressScreen() {
           <View className="flex-row gap-3 mb-4">
             <StatTile label="Day streak" value={data.streak} />
             <StatTile label="Learned" value={data.stats.learned} />
-            {isWide ? <StatTile label="Mastered" value={data.stats.mastered} /> : null}
+            {isWide ? <StatTile label="Mastered" value={data.stats.mastered} accent /> : null}
             {isWide ? <StatTile label="Due now" value={data.stats.dueToday} /> : null}
           </View>
 
           <View className="flex-row gap-3 mb-10">
-            {isWide ? null : <StatTile label="Mastered" value={data.stats.mastered} />}
+            {isWide ? null : <StatTile label="Mastered" value={data.stats.mastered} accent />}
             {isWide ? null : <StatTile label="Due now" value={data.stats.dueToday} />}
             {isWide ? <StatTile label="Recall accuracy" value={accuracyValue} /> : null}
             {isWide ? <StatTile label="Reviews logged" value={data.accuracy.reviews} /> : null}
           </View>
 
-          <Text className="text-neutral-500 text-xs uppercase tracking-widest mb-4">
-            {`Last ${ACTIVITY_DAYS} days`}
-          </Text>
+          <SectionLabel className="mb-4">{`Last ${ACTIVITY_DAYS} days`}</SectionLabel>
           <ActivityChart buckets={data.buckets} />
 
           {isWide ? null : (
@@ -122,7 +134,7 @@ export default function ProgressScreen() {
             </View>
           )}
 
-          <Text className="text-neutral-500 text-xs uppercase tracking-widest mb-4">By subject</Text>
+          <SectionLabel className="mb-4">By subject</SectionLabel>
           {DOMAINS.map((d) => (
             <SubjectRow
               key={d}
@@ -146,49 +158,114 @@ export default function ProgressScreen() {
   );
 }
 
-const CHART_HEIGHT = 72;
+// A day is one cell, a week one row, so four weeks make a block the eye can take in at
+// once. The window ends today, in the bottom-right corner.
+//
+// This replaces a row of 28 thin bars. Bars encode magnitude against a baseline, which
+// needs height to read; at 28 columns each was a few points wide, and on the ordinary
+// week where most days are zero the chart collapsed into a dotted line that looked
+// broken rather than quiet. A grid encodes the same magnitude as intensity, so an empty
+// stretch still reads as a filled calendar with nothing in it.
+const WEEK_LENGTH = 7;
 
-// A bar per day, scaled against the busiest day in the window so a quiet stretch still
-// reads. Empty days keep a 2pt stub rather than vanishing, which keeps the calendar's
-// shape intact and makes gaps visible instead of invisible.
+// Cells are wider than they are tall rather than square. A square cell across a phone's
+// full column is over 40pt, which makes four weeks taller than everything above it and
+// turns a summary into the centrepiece of the screen. This keeps the block roughly a
+// third of that height while still filling the column.
+const CELL_HEIGHT = 26;
+
+// One hue, four steps, darkest to lightest, over the page background. Zero is a
+// neutral so "no reviews" never looks like the bottom of the accent ramp.
+const EMPTY_CELL = "#1a1a1a";
+const LEVELS = ["rgba(52,211,153,0.28)", "rgba(52,211,153,0.5)", "rgba(52,211,153,0.75)", COLORS.accent];
+
+/** Which of the four steps a day's count lands on, measured against the busiest day in
+ *  the window. Relative rather than absolute: ten reviews is a heavy day for one person
+ *  and a light one for another, and either way the busiest day should be the brightest. */
+function levelFor(count: number, peak: number): string | null {
+  if (count === 0) return null;
+  const step = Math.ceil((count / peak) * LEVELS.length);
+  return LEVELS[Math.min(LEVELS.length, Math.max(1, step)) - 1];
+}
+
 function ActivityChart({ buckets }: { buckets: DayBucket[] }) {
   const peak = buckets.reduce((m, b) => Math.max(m, b.count), 0);
+  const total = buckets.reduce((sum, b) => sum + b.count, 0);
+  const weeks: DayBucket[][] = [];
+  for (let i = 0; i < buckets.length; i += WEEK_LENGTH) {
+    weeks.push(buckets.slice(i, i + WEEK_LENGTH));
+  }
 
   return (
     <View className="mb-10">
-      <View style={{ height: CHART_HEIGHT }} className="flex-row items-end gap-[3px]">
-        {buckets.map((b) => (
-          <View
-            key={b.dayStart}
-            className={
-              b.count > 0 ? "flex-1 rounded-sm bg-neutral-100" : "flex-1 rounded-sm bg-neutral-800"
-            }
-            style={{ height: peak === 0 ? 2 : Math.max(2, (b.count / peak) * CHART_HEIGHT) }}
-          />
-        ))}
-      </View>
-      <View className="flex-row gap-[3px] mt-2">
-        {buckets.map((b, i) => (
+      {/* The window does not start on a fixed weekday, so the column headings are read
+          off the first week's own dates rather than assumed. */}
+      <View className="flex-row gap-1.5 mb-1.5">
+        {buckets.slice(0, WEEK_LENGTH).map((b) => (
           <View key={b.dayStart} className="flex-1 items-center">
-            <Text className="text-neutral-600 text-[9px]">
-              {i % 7 === 0 ? weekdayInitial(b.dayStart) : ""}
-            </Text>
+            <Text className="text-neutral-600 text-[10px]">{weekdayInitial(b.dayStart)}</Text>
           </View>
         ))}
       </View>
+
+      <View
+        className="gap-1.5"
+        accessibilityLabel={`${total} reviews over the last ${buckets.length} days`}
+      >
+        {weeks.map((week) => (
+          <View key={week[0].dayStart} className="flex-row gap-1.5">
+            {week.map((day) => (
+              <View
+                key={day.dayStart}
+                style={{
+                  flex: 1,
+                  height: CELL_HEIGHT,
+                  borderRadius: 5,
+                  backgroundColor: levelFor(day.count, peak) ?? EMPTY_CELL,
+                }}
+              />
+            ))}
+          </View>
+        ))}
+      </View>
+
       {peak === 0 ? (
-        <Text className="text-neutral-500 text-sm mt-3">
+        <Text className="text-neutral-500 text-sm mt-4 leading-relaxed">
           No reviews logged yet. Grade a card in the feed or run a quiz to start the chart.
         </Text>
-      ) : null}
+      ) : (
+        <View className="flex-row items-center justify-end gap-1.5 mt-3">
+          <Text className="text-neutral-600 text-[10px] mr-0.5">Less</Text>
+          <View style={{ width: 10, height: 10, borderRadius: 3, backgroundColor: EMPTY_CELL }} />
+          {LEVELS.map((color) => (
+            <View
+              key={color}
+              style={{ width: 10, height: 10, borderRadius: 3, backgroundColor: color }}
+            />
+          ))}
+          <Text className="text-neutral-600 text-[10px] ml-0.5">More</Text>
+        </View>
+      )}
     </View>
   );
 }
 
-function StatTile({ label, value }: { label: string; value: number | string }) {
+/** `accent` is spent on the one figure that represents something achieved rather than
+ *  something outstanding, so the color keeps its meaning across the app. */
+function StatTile(
+  { label, value, accent }: { label: string; value: number | string; accent?: boolean },
+) {
   return (
     <View className="flex-1 bg-neutral-900 rounded-2xl px-3 py-5 items-center">
-      <Text className="text-neutral-100 text-3xl font-semibold">{value}</Text>
+      <Text
+        className={
+          accent && value !== 0
+            ? "text-emerald-400 text-3xl font-semibold"
+            : "text-neutral-100 text-3xl font-semibold"
+        }
+      >
+        {value}
+      </Text>
       <Text className="text-neutral-500 text-xs mt-1 text-center">{label}</Text>
     </View>
   );
@@ -202,8 +279,11 @@ function SubjectRow({ domain, seen, total }: { domain: Domain; seen: number; tot
         <Text className="text-neutral-200 text-base">{DOMAIN_LABELS[domain]}</Text>
         <Text className="text-neutral-500 text-sm">{`${seen} / ${total}`}</Text>
       </View>
-      <View className="h-2 rounded-full bg-neutral-800 overflow-hidden">
-        <View className="h-2 rounded-full bg-neutral-100" style={{ width: `${pct}%` }} />
+      <View className="h-2 rounded-full bg-neutral-900 overflow-hidden">
+        <View
+          className={pct >= 100 ? "h-2 rounded-full bg-emerald-400" : "h-2 rounded-full bg-neutral-100"}
+          style={{ width: `${Math.max(pct > 0 ? 2 : 0, pct)}%` }}
+        />
       </View>
     </View>
   );

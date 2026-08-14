@@ -4,6 +4,10 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import { openStore } from "../src/store";
 import { loadCorpus } from "../src/corpus";
+import { Button } from "../src/ui/Button";
+import { FadeIn } from "../src/ui/FadeIn";
+import { SectionLabel } from "../src/ui/SectionLabel";
+import { tick } from "../src/ui/haptics";
 import { useLayout } from "../src/ui/layout";
 
 type Panel = { kicker: string; title: string; body: string };
@@ -76,13 +80,15 @@ export default function OnboardingScreen() {
       }}
     >
       <View className="flex-1 justify-center" style={column}>
-        <Text className="text-neutral-500 text-xs uppercase tracking-widest mb-4">
-          {current.kicker}
-        </Text>
-        <Text className="text-neutral-100 text-4xl font-semibold leading-tight mb-5">
-          {current.title}
-        </Text>
-        <Text className="text-neutral-300 text-lg leading-relaxed">{current.body}</Text>
+        {/* Keyed on the panel so each one animates in as its own arrival rather than
+            the text swapping in place. */}
+        <FadeIn key={panel}>
+          <SectionLabel className="mb-4">{current.kicker}</SectionLabel>
+          <Text className="text-neutral-100 text-4xl font-semibold leading-tight mb-5">
+            {current.title}
+          </Text>
+          <Text className="text-neutral-300 text-lg leading-relaxed">{current.body}</Text>
+        </FadeIn>
       </View>
 
       <View className="pb-2" style={column}>
@@ -90,17 +96,21 @@ export default function OnboardingScreen() {
           <Dots active={panel} count={PANELS.length} />
         </View>
 
-        <Pressable
+        <Button
+          label={isLast ? "Start learning" : "Next"}
+          haptic={isLast ? "knock" : "tick"}
           onPress={() => (isLast ? finish() : setPanel((p) => p + 1))}
-          className="bg-neutral-100 rounded-2xl py-4 items-center"
-        >
-          <Text className="text-neutral-900 text-base font-medium">
-            {isLast ? "Start learning" : "Next"}
-          </Text>
-        </Pressable>
+        />
 
         {isLast ? null : (
-          <Pressable onPress={finish} className="py-4 items-center mt-2">
+          <Pressable
+            onPress={() => {
+              tick();
+              finish();
+            }}
+            accessibilityRole="button"
+            className="py-4 items-center mt-2 active:opacity-60"
+          >
             <Text className="text-neutral-500 text-base font-medium">Skip</Text>
           </Pressable>
         )}

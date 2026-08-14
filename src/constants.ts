@@ -10,6 +10,15 @@ export const DOMAIN_LABELS: Record<Domain, string> = {
   math: "Math",
   science: "Science",
 };
+/** The fuller names, used where a single subject is the heading of a whole page and
+ *  has room to breathe: the kicker on a feed card. Kept here beside the others so the
+ *  app has one vocabulary for its four subjects rather than a map per component. */
+export const DOMAIN_LABELS_LONG: Record<Domain, string> = {
+  cs: "Computer Science",
+  finance: "Finance & Economics",
+  math: "Mathematics",
+  science: "Science",
+};
 export const DOMAIN_LABELS_SHORT: Record<Domain, string> = {
   cs: "CS",
   finance: "Finance",
@@ -41,6 +50,10 @@ export const DAILY_GOAL_OPTIONS = [5, 10, 20, 40] as const;
 
 /** Days shown in the Progress screen's activity chart. Four weeks reads as a grid. */
 export const ACTIVITY_DAYS = 28;
+
+/** Pause between grading a feed card and the feed scrolling on to the next one. Long
+ *  enough to read the "Got it" / "Missed it" confirmation, short enough not to stall. */
+export const FEED_ADVANCE_DELAY_MS = 450;
 
 /** Reading measure. Text columns stop widening past this so an iPad does not stretch
  *  a sentence across 1000pt, and centred content keeps a phone-like line length. */

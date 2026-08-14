@@ -6,11 +6,15 @@ import type { CardStatus } from "../types";
 // Because being due is the most actionable thing about a card, it wins the pill.
 export type PillKind = CardStatus | "due";
 
+// Three greys and one accent, ordered by how much attention each deserves. Due is the
+// only state asking for action, so it gets the solid white pill; mastered is the only
+// state worth celebrating, so it gets the accent; new and learning are quiet greys
+// that differ in weight rather than hue.
 const STYLES: Record<PillKind, { label: string; box: string; text: string }> = {
-  new: { label: "New", box: "bg-neutral-800", text: "text-neutral-400" },
-  learning: { label: "Learning", box: "bg-amber-500/15", text: "text-amber-400" },
-  mastered: { label: "Mastered", box: "bg-emerald-500/15", text: "text-emerald-400" },
-  due: { label: "Due now", box: "bg-sky-500/15", text: "text-sky-400" },
+  new: { label: "New", box: "bg-neutral-900", text: "text-neutral-500" },
+  learning: { label: "Learning", box: "bg-neutral-800", text: "text-neutral-300" },
+  mastered: { label: "Mastered", box: "bg-emerald-400/10", text: "text-emerald-400" },
+  due: { label: "Due now", box: "bg-neutral-100", text: "text-neutral-900" },
 };
 
 export function StatusPill({ kind }: { kind: PillKind }) {
