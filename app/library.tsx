@@ -7,6 +7,9 @@ import { openStore } from "../src/store";
 import { searchCards, statusOf, type Query, type StatusFilter } from "../src/search";
 import { CardRow } from "../src/ui/CardRow";
 import { Chip } from "../src/ui/Chip";
+import { Icon } from "../src/ui/Icon";
+import { COLORS } from "../src/ui/theme";
+import { tick } from "../src/ui/haptics";
 import { pillFor } from "../src/ui/StatusPill";
 import { TabBar, TAB_ROUTES, TAB_BAR_HEIGHT, type TabKey } from "../src/ui/TabBar";
 import { useLayout } from "../src/ui/layout";
@@ -89,13 +92,24 @@ export default function LibraryScreen() {
         <View style={headerWidth}>
           <View className="flex-row items-end justify-between pt-3 pb-4">
             <Text className="text-neutral-100 text-3xl font-semibold">Library</Text>
-            <Pressable onPress={() => router.push("/settings")} hitSlop={10} className="py-1 pl-3">
+            <Pressable
+              onPress={() => {
+                tick();
+                router.push("/settings");
+              }}
+              hitSlop={10}
+              accessibilityRole="button"
+              className="flex-row items-center gap-1 py-1 pl-3 active:opacity-60"
+            >
               <Text className="text-neutral-400 text-sm font-medium">Settings</Text>
+              <Icon name="chevron-right" size={12} color={COLORS.textFaint} />
             </Pressable>
           </View>
 
           <View className="flex-row items-center bg-neutral-900 rounded-2xl px-4 h-12 mb-3">
-            <Text className="text-neutral-500 text-base mr-2">{"⌕"}</Text>
+            <View className="mr-2.5">
+              <Icon name="search" size={16} color={COLORS.textFaint} />
+            </View>
             <TextInput
               value={text}
               onChangeText={setText}
@@ -122,7 +136,7 @@ export default function LibraryScreen() {
           contentContainerStyle={{ paddingHorizontal: gutter, gap: 8, paddingVertical: 4 }}
           ListHeaderComponent={
             <View className="flex-row gap-2">
-              <Chip label="★ Saved" selected={savedOnly} onPress={() => setSavedOnly((v) => !v)} />
+              <Chip label="Saved" selected={savedOnly} onPress={() => setSavedOnly((v) => !v)} />
             </View>
           }
           renderItem={({ item }) => (
@@ -158,7 +172,15 @@ export default function LibraryScreen() {
             {`${results.length} of ${cards.length} concepts`}
           </Text>
           {filtered ? (
-            <Pressable onPress={clearFilters} hitSlop={8}>
+            <Pressable
+              onPress={() => {
+                tick();
+                clearFilters();
+              }}
+              hitSlop={8}
+              accessibilityRole="button"
+              className="active:opacity-60"
+            >
               <Text className="text-neutral-400 text-xs font-medium">Clear</Text>
             </Pressable>
           ) : null}

@@ -10,6 +10,11 @@ import { difficultyLabel, nextReviewLabel } from "../../src/format";
 import { GradeButtons } from "../../src/ui/GradeButtons";
 import { SaveButton } from "../../src/ui/SaveButton";
 import { ScreenHeader } from "../../src/ui/ScreenHeader";
+import { SectionLabel } from "../../src/ui/SectionLabel";
+import { Button, IconButton } from "../../src/ui/Button";
+import { FadeIn } from "../../src/ui/FadeIn";
+import { Icon } from "../../src/ui/Icon";
+import { COLORS } from "../../src/ui/theme";
 import { StatusPill, pillFor } from "../../src/ui/StatusPill";
 import { useLayout } from "../../src/ui/layout";
 import { DOMAIN_LABELS } from "../../src/constants";
@@ -75,12 +80,7 @@ export default function CardDetailScreen() {
         <Text className="text-neutral-400 text-base leading-relaxed mb-8">
           This card is no longer part of the library.
         </Text>
-        <Pressable
-          onPress={() => router.back()}
-          className="bg-neutral-100 rounded-2xl py-4 items-center"
-        >
-          <Text className="text-neutral-900 text-base font-medium">Go back</Text>
-        </Pressable>
+        <Button label="Go back" onPress={() => router.back()} />
       </View>
     );
   }
@@ -99,10 +99,8 @@ export default function CardDetailScreen() {
             title={card.topic}
             onBack={() => router.back()}
             right={
-              <View className="flex-row items-center gap-1">
-                <Pressable onPress={onShare} hitSlop={10} accessibilityLabel="Share" className="px-2">
-                  <Text className="text-neutral-400 text-xl">{"↑"}</Text>
-                </Pressable>
+              <View className="flex-row items-center -mr-2">
+                <IconButton name="share" size={19} onPress={onShare} label="Share" />
                 <SaveButton
                   saved={saved}
                   size="lg"
@@ -112,40 +110,39 @@ export default function CardDetailScreen() {
             }
           />
 
-          <Text className="text-neutral-500 text-xs uppercase tracking-widest mb-3">
+          <SectionLabel>
             {`${DOMAIN_LABELS[card.domain]} · ${difficultyLabel(card.difficulty)}`}
-          </Text>
+          </SectionLabel>
           <Text className="text-neutral-100 text-3xl font-semibold leading-tight mb-5">
             {card.title}
           </Text>
           <Text className="text-neutral-300 text-lg leading-relaxed mb-8">{card.body}</Text>
 
           <View className="bg-neutral-900 rounded-3xl p-5 mb-8">
-            <Text className="text-neutral-500 text-xs uppercase tracking-widest mb-3">
-              Test yourself
-            </Text>
+            <SectionLabel>Test yourself</SectionLabel>
             <Text className="text-neutral-100 text-xl font-medium leading-snug">{card.prompt}</Text>
 
             {revealed ? (
               <View>
-                <Text className="text-neutral-400 text-base leading-relaxed mt-4">
-                  {card.answer}
-                </Text>
+                <FadeIn>
+                  <Text className="text-neutral-400 text-base leading-relaxed mt-4">
+                    {card.answer}
+                  </Text>
+                </FadeIn>
                 <GradeButtons onGrade={onGrade} graded={graded} />
               </View>
             ) : (
-              <Pressable
+              <Button
+                label="Reveal answer"
+                variant="secondary"
+                haptic="tick"
                 onPress={() => setRevealed(true)}
-                className="border border-neutral-700 rounded-2xl py-3.5 items-center mt-5"
-              >
-                <Text className="text-neutral-300 text-base font-medium">Reveal answer</Text>
-              </Pressable>
+                style={{ marginTop: 20 }}
+              />
             )}
           </View>
 
-          <Text className="text-neutral-500 text-xs uppercase tracking-widest mb-3">
-            Your schedule
-          </Text>
+          <SectionLabel>Your schedule</SectionLabel>
           <View className="bg-neutral-900 rounded-3xl p-5 mb-8">
             <View className="flex-row items-center justify-between mb-4">
               <StatusPill kind={pillFor(statusOf(state ?? undefined), isDue)} />
@@ -165,7 +162,7 @@ export default function CardDetailScreen() {
 
           {card.tags.length > 0 ? (
             <>
-              <Text className="text-neutral-500 text-xs uppercase tracking-widest mb-3">Tags</Text>
+              <SectionLabel>Tags</SectionLabel>
               <View className="flex-row flex-wrap gap-2 mb-8">
                 {card.tags.map((t) => (
                   <View key={t} className="px-3 py-1.5 rounded-full bg-neutral-900">
@@ -178,9 +175,7 @@ export default function CardDetailScreen() {
 
           {card.sources.length > 0 ? (
             <>
-              <Text className="text-neutral-500 text-xs uppercase tracking-widest mb-3">
-                Read further
-              </Text>
+              <SectionLabel>Read further</SectionLabel>
               <View className="mb-8">
                 {card.sources.map((url) => (
                   <Pressable
@@ -190,11 +185,13 @@ export default function CardDetailScreen() {
                         // A source that will not open is not worth interrupting reading for.
                       });
                     }}
-                    className="py-3 border-b border-neutral-900"
+                    accessibilityRole="link"
+                    className="flex-row items-center gap-3 py-3.5 border-b border-neutral-900 active:opacity-60"
                   >
-                    <Text className="text-sky-400 text-base" numberOfLines={1}>
+                    <Text className="text-neutral-300 text-base flex-1" numberOfLines={1}>
                       {url.replace(/^https:\/\//, "")}
                     </Text>
+                    <Icon name="share" size={13} color={COLORS.textDim} />
                   </Pressable>
                 ))}
               </View>
@@ -203,22 +200,24 @@ export default function CardDetailScreen() {
 
           {neighbours.length > 0 ? (
             <>
-              <Text className="text-neutral-500 text-xs uppercase tracking-widest mb-3">
-                Related concepts
-              </Text>
+              <SectionLabel>Related concepts</SectionLabel>
               <View>
                 {neighbours.map((n) => (
                   <Pressable
                     key={n.id}
                     onPress={() => router.push(`/card/${n.id}`)}
-                    className="py-3.5 border-b border-neutral-900 active:opacity-60"
+                    accessibilityRole="button"
+                    className="flex-row items-center gap-3 py-3.5 border-b border-neutral-900 active:opacity-60"
                   >
-                    <Text className="text-neutral-500 text-[11px] uppercase tracking-widest mb-1">
-                      {n.topic}
-                    </Text>
-                    <Text className="text-neutral-200 text-base leading-snug" numberOfLines={2}>
-                      {n.title}
-                    </Text>
+                    <View className="flex-1">
+                      <Text className="text-neutral-500 text-[11px] uppercase tracking-widest mb-1">
+                        {n.topic}
+                      </Text>
+                      <Text className="text-neutral-200 text-base leading-snug" numberOfLines={2}>
+                        {n.title}
+                      </Text>
+                    </View>
+                    <Icon name="chevron-right" size={14} color={COLORS.textDim} />
                   </Pressable>
                 ))}
               </View>

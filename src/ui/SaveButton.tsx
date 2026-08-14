@@ -1,27 +1,23 @@
 import React from "react";
-import { Pressable, Text } from "react-native";
+import { IconButton } from "./Button";
+import { COLORS } from "./theme";
 
-/** Bookmark toggle. Filled star means saved; the outline means not yet. */
+/** Save toggle. A filled bookmark means saved, a dim one means not; the shape stays
+ *  put either way, so the row never reflows as it is tapped. Bookmark rather than star
+ *  because that is what the store has always called these. */
 export function SaveButton(
-  { saved, onPress, size = "base" }: { saved: boolean; onPress: () => void; size?: "base" | "lg" },
+  { saved, onPress, size = "base", background }:
+  { saved: boolean; onPress: () => void; size?: "base" | "lg"; background?: string },
 ) {
   return (
-    <Pressable
+    <IconButton
+      name="bookmark"
       onPress={onPress}
-      hitSlop={10}
-      accessibilityRole="button"
-      accessibilityState={{ selected: saved }}
-      accessibilityLabel={saved ? "Remove from saved" : "Save this card"}
-      className="px-1 py-1"
-    >
-      <Text
-        className={
-          (saved ? "text-amber-400 " : "text-neutral-500 ") +
-          (size === "lg" ? "text-2xl" : "text-lg")
-        }
-      >
-        {saved ? "★" : "☆"}
-      </Text>
-    </Pressable>
+      label={saved ? "Remove from saved" : "Save this card"}
+      selected={saved}
+      size={size === "lg" ? 20 : 18}
+      color={saved ? COLORS.text : COLORS.iconGhost}
+      background={background}
+    />
   );
 }

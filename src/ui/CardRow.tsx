@@ -1,12 +1,14 @@
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 import { StatusPill, type PillKind } from "./StatusPill";
+import { Icon } from "./Icon";
+import { COLORS } from "./theme";
 import { DOMAIN_LABELS_SHORT } from "../constants";
 import type { Card } from "../types";
 
 /** One row in the Library list: subject and topic above, the concept title below, and
- *  the card's learning state on the right. Saved cards get a star so the Library and
- *  the saved filter agree without needing a separate screen. */
+ *  the card's learning state on the right. Saved cards get a bookmark so the Library
+ *  and the saved filter agree without needing a separate screen. */
 export function CardRow(
   { card, pill, saved, onPress }:
   { card: Card; pill: PillKind; saved: boolean; onPress: () => void },
@@ -28,7 +30,7 @@ export function CardRow(
         </View>
         <View className="items-end gap-1.5">
           <StatusPill kind={pill} />
-          {saved ? <Text className="text-amber-400 text-xs">★</Text> : null}
+          {saved ? <Icon name="bookmark" size={14} color={COLORS.textDim} /> : null}
         </View>
       </View>
     </Pressable>

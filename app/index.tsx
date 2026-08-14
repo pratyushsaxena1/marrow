@@ -12,7 +12,13 @@ import { CaughtUpCard } from "../src/ui/CaughtUpCard";
 import { TopBar, TOP_BAR_HEIGHT } from "../src/ui/TopBar";
 import { DomainSheet } from "../src/ui/DomainSheet";
 import { TabBar, TAB_ROUTES, TAB_BAR_HEIGHT, type TabKey } from "../src/ui/TabBar";
-import { CHUNK_SIZE, DOMAINS, DOMAIN_LABELS_SHORT, SESSION_IDLE_MS } from "../src/constants";
+import {
+  CHUNK_SIZE,
+  DOMAINS,
+  DOMAIN_LABELS_SHORT,
+  FEED_ADVANCE_DELAY_MS,
+  SESSION_IDLE_MS,
+} from "../src/constants";
 import type { Domain, FeedItem, Grade, Session } from "../src/types";
 
 const rng = () => Math.random();
@@ -171,6 +177,28 @@ export default function FeedScreen() {
     [store, refreshDueCount],
   );
 
+  // Once a card is graded the page is finished, so the feed carries the reader on to the
+  // next one rather than making them swipe. The short delay leaves the confirmation on
+  // screen; a second grade before it fires replaces the pending scroll.
+  const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(
+    () => () => {
+      if (advanceTimer.current) clearTimeout(advanceTimer.current);
+    },
+    [],
+  );
+
+  const advanceFrom = useCallback(
+    (index: number) => {
+      if (advanceTimer.current) clearTimeout(advanceTimer.current);
+      advanceTimer.current = setTimeout(() => {
+        advanceTimer.current = null;
+        listRef.current?.scrollToOffset({ offset: (index + 1) * height, animated: true });
+      }, FEED_ADVANCE_DELAY_MS);
+    },
+    [height],
+  );
+
   // Persist the chosen subjects and immediately rebuild the feed from them. The new
   // domains are threaded straight into deps so the restart does not race the state update.
   const applyDomains = useCallback(
@@ -184,7 +212,7 @@ export default function FeedScreen() {
   );
 
   const renderItem = useCallback(
-    ({ item }: { item: FeedItem }) => {
+    ({ item, index }: { item: FeedItem; index: number }) => {
       if (item.kind === "caught-up") return <CaughtUpCard height={height} />;
       const open = () => router.push(`/card/${item.card.id}`);
       if (item.kind === "new-concept") {
@@ -203,14 +231,17 @@ export default function FeedScreen() {
           card={item.card}
           height={height}
           showBody={item.kind === "new-puzzle"}
-          onGrade={(g) => grade(item, g)}
+          onGrade={(g) => {
+            grade(item, g);
+            advanceFrom(index);
+          }}
           saved={saved.has(item.card.id)}
           onToggleSave={() => toggleSave(item.card.id)}
           onOpen={open}
         />
       );
     },
-    [height, grade, router, saved, toggleSave],
+    [advanceFrom, height, grade, router, saved, toggleSave],
   );
 
   if (needsOnboarding) return <Redirect href="/onboarding" />;

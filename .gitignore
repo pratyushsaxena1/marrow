@@ -32,6 +32,9 @@ yarn-error.*
 # local env files
 .env*.local
 
+# python (the icon and screenshot generators)
+__pycache__/
+
 # typescript
 *.tsbuildinfo
 

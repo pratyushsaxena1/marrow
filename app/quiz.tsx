@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
@@ -7,6 +7,12 @@ import { openStore } from "../src/store";
 import { buildQuiz, summarize } from "../src/quiz";
 import { initialState, review } from "../src/scheduler";
 import { Chip } from "../src/ui/Chip";
+import { Button } from "../src/ui/Button";
+import { FadeIn } from "../src/ui/FadeIn";
+import { Icon } from "../src/ui/Icon";
+import { SectionLabel } from "../src/ui/SectionLabel";
+import { COLORS } from "../src/ui/theme";
+import { celebrate } from "../src/ui/haptics";
 import { TabBar, TAB_ROUTES, TAB_BAR_HEIGHT, type TabKey } from "../src/ui/TabBar";
 import { useLayout } from "../src/ui/layout";
 import {
@@ -35,6 +41,7 @@ export default function QuizScreen() {
   const [domains, setDomains] = useState<Domain[]>([]);
   const [size, setSize] = useState<number>(QUIZ_SIZE_DEFAULT);
   const [phase, setPhase] = useState<Phase>({ name: "setup" });
+  const scroller = useRef<ScrollView>(null);
 
   const toggleDomain = (d: Domain) =>
     setDomains((prev) => (prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d]));
@@ -62,10 +69,17 @@ export default function QuizScreen() {
       store.putState(review(prev, grade, now, rng));
       store.logReview({ cardId: card.id, grade, at: now });
 
+      // Answering a long question leaves the page scrolled down, and the next question
+      // would otherwise open mid-scroll with its own opening lines above the fold.
+      scroller.current?.scrollTo({ y: 0, animated: false });
+
       setPhase((p) => {
         if (p.name !== "running") return p;
         const answers = [...p.answers, { cardId: card.id, grade }];
-        return p.index + 1 >= p.cards.length
+        const finished = p.index + 1 >= p.cards.length;
+        // Finishing a run is the one moment in the app worth a celebratory haptic.
+        if (finished) celebrate();
+        return finished
           ? { name: "results", answers }
           : { name: "running", cards: p.cards, index: p.index + 1, answers };
       });
@@ -121,6 +135,7 @@ export default function QuizScreen() {
       style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}
     >
       <ScrollView
+        ref={scroller}
         className="flex-1"
         contentContainerStyle={{ paddingHorizontal: gutter, paddingTop: 12, paddingBottom: 32 }}
         keyboardShouldPersistTaps="handled"
@@ -159,7 +174,7 @@ function Setup(
         answer updates your schedule, just like the feed.
       </Text>
 
-      <Text className="text-neutral-500 text-xs uppercase tracking-widest mb-3">Subjects</Text>
+      <SectionLabel>Subjects</SectionLabel>
       <View className="flex-row flex-wrap gap-2 mb-8">
         {DOMAINS.map((d) => (
           <Chip
@@ -171,7 +186,7 @@ function Setup(
         ))}
       </View>
 
-      <Text className="text-neutral-500 text-xs uppercase tracking-widest mb-3">Questions</Text>
+      <SectionLabel>Questions</SectionLabel>
       <View className="flex-row gap-2 mb-8">
         {QUIZ_SIZES.map((n) => (
           <Chip key={n} label={String(n)} selected={size === n} onPress={() => onSetSize(n)} />
@@ -184,25 +199,11 @@ function Setup(
           : `${available} concepts available in your selection.`}
       </Text>
 
-      <Pressable
+      <Button
+        label={`Start ${Math.min(size, available)}-question quiz`}
         onPress={onStart}
         disabled={available === 0}
-        className={
-          available === 0
-            ? "bg-neutral-800 rounded-2xl py-4 items-center"
-            : "bg-neutral-100 rounded-2xl py-4 items-center"
-        }
-      >
-        <Text
-          className={
-            available === 0
-              ? "text-neutral-500 text-base font-medium"
-              : "text-neutral-900 text-base font-medium"
-          }
-        >
-          {`Start ${Math.min(size, available)}-question quiz`}
-        </Text>
-      </Pressable>
+      />
     </View>
   );
 }
@@ -228,41 +229,42 @@ function Running(
         </Pressable>
       </View>
 
+      {/* The bar tracks where you are, not what you have finished, so question one
+          already shows a sliver. A bar pinned at literal zero on the first question
+          reads as a component that has not loaded. */}
       <View className="h-1.5 rounded-full bg-neutral-900 overflow-hidden mb-8">
         <View
           className="h-1.5 rounded-full bg-neutral-100"
-          style={{ width: `${Math.round((index / total) * 100)}%` }}
+          style={{ width: `${Math.round(((index + 1) / total) * 100)}%` }}
         />
       </View>
 
-      <Text className="text-neutral-500 text-xs uppercase tracking-widest mb-3">{card.topic}</Text>
+      <SectionLabel>{card.topic}</SectionLabel>
       <Text className="text-neutral-100 text-2xl font-medium leading-snug mb-2">{card.prompt}</Text>
 
       {revealed ? (
         <View>
-          <Text className="text-neutral-400 text-lg leading-relaxed mt-4">{card.answer}</Text>
+          <FadeIn>
+            <Text className="text-neutral-400 text-lg leading-relaxed mt-4">{card.answer}</Text>
+          </FadeIn>
           <View className="flex-row gap-3 mt-8">
-            <Pressable
+            <Button
+              label="Missed it"
+              variant="secondary"
               onPress={() => onAnswer(card, "missed")}
-              className="flex-1 border border-neutral-700 rounded-2xl py-4 items-center"
-            >
-              <Text className="text-neutral-300 text-base font-medium">Missed it</Text>
-            </Pressable>
-            <Pressable
-              onPress={() => onAnswer(card, "got")}
-              className="flex-1 bg-neutral-100 rounded-2xl py-4 items-center"
-            >
-              <Text className="text-neutral-900 text-base font-medium">Got it</Text>
-            </Pressable>
+              style={{ flex: 1 }}
+            />
+            <Button label="Got it" onPress={() => onAnswer(card, "got")} style={{ flex: 1 }} />
           </View>
         </View>
       ) : (
-        <Pressable
+        <Button
+          label="Reveal answer"
+          variant="secondary"
+          haptic="tick"
           onPress={() => setRevealed(true)}
-          className="border border-neutral-700 rounded-2xl py-4 items-center mt-8"
-        >
-          <Text className="text-neutral-300 text-base font-medium">Reveal answer</Text>
-        </Pressable>
+          style={{ marginTop: 32 }}
+        />
       )}
     </View>
   );
@@ -286,18 +288,18 @@ function Results(
     <View>
       <Text className="text-neutral-100 text-3xl font-semibold pt-3 mb-8">{verdict}</Text>
 
-      <View className="bg-neutral-900 rounded-3xl p-6 items-center mb-8">
-        <Text className="text-neutral-100 text-6xl font-semibold">{`${summary.pct}%`}</Text>
-        <Text className="text-neutral-400 text-base mt-2">
-          {`${summary.correct} of ${summary.total} correct`}
-        </Text>
-      </View>
+      <FadeIn style={{ marginBottom: 32 }}>
+        <View className="bg-neutral-900 rounded-3xl p-6 items-center">
+          <Text className="text-neutral-100 text-6xl font-semibold">{`${summary.pct}%`}</Text>
+          <Text className="text-neutral-400 text-base mt-2">
+            {`${summary.correct} of ${summary.total} correct`}
+          </Text>
+        </View>
+      </FadeIn>
 
       {summary.missed.length > 0 ? (
         <>
-          <Text className="text-neutral-500 text-xs uppercase tracking-widest mb-3">
-            Worth revisiting
-          </Text>
+          <SectionLabel>Worth revisiting</SectionLabel>
           <View className="mb-8">
             {summary.missed.map((id) => {
               const card = getCard(id);
@@ -306,27 +308,28 @@ function Results(
                 <Pressable
                   key={id}
                   onPress={() => onOpenCard(id)}
-                  className="py-3.5 border-b border-neutral-900 active:opacity-60"
+                  accessibilityRole="button"
+                  className="flex-row items-center gap-3 py-3.5 border-b border-neutral-900 active:opacity-60"
                 >
-                  <Text className="text-neutral-500 text-[11px] uppercase tracking-widest mb-1">
-                    {card.topic}
-                  </Text>
-                  <Text className="text-neutral-200 text-base leading-snug" numberOfLines={2}>
-                    {card.title}
-                  </Text>
+                  <View className="flex-1">
+                    <Text className="text-neutral-500 text-[11px] uppercase tracking-widest mb-1">
+                      {card.topic}
+                    </Text>
+                    <Text className="text-neutral-200 text-base leading-snug" numberOfLines={2}>
+                      {card.title}
+                    </Text>
+                  </View>
+                  <Icon name="chevron-right" size={14} color={COLORS.textDim} />
                 </Pressable>
               );
             })}
           </View>
 
-          <Pressable
+          <Button
+            label={`Retry ${summary.missed.length} missed`}
             onPress={() => onRetryMissed(summary.missed)}
-            className="bg-neutral-100 rounded-2xl py-4 items-center mb-3"
-          >
-            <Text className="text-neutral-900 text-base font-medium">
-              {`Retry ${summary.missed.length} missed`}
-            </Text>
-          </Pressable>
+            style={{ marginBottom: 12 }}
+          />
         </>
       ) : (
         <Text className="text-neutral-400 text-base leading-relaxed mb-8">
@@ -334,12 +337,7 @@ function Results(
         </Text>
       )}
 
-      <Pressable
-        onPress={onNewQuiz}
-        className="border border-neutral-700 rounded-2xl py-4 items-center"
-      >
-        <Text className="text-neutral-300 text-base font-medium">New quiz</Text>
-      </Pressable>
+      <Button label="New quiz" variant="secondary" onPress={onNewQuiz} />
     </View>
   );
 }

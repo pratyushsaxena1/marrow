@@ -21,9 +21,27 @@ bundle `com.pratyushs123.marrow`. Draft version **1.0** is in `PREPARE_FOR_SUBMI
 - ✅ **Export compliance** already handled in `app.json`
   (`ITSAppUsesNonExemptEncryption: false`) — no encryption docs needed.
 - ✅ **Screenshots uploaded**: 5 iPhone 6.9" + 3 iPad 13" (real app screens, captured on
-  simulator, all processed with no errors). Review them and swap in polished/captioned
-  versions later if you want. Note: the iPad shots have a faint gray arc in the bottom-right
-  corner (a harmless simulator overlay) — cosmetic only; retake from a real iPad if it bugs you.
+  simulator, all processed with no errors). **Superseded** by the captioned set in
+  `store/screenshots/`, which needs uploading in their place: 5 iPhone 6.9" (1320x2868) and
+  5 iPad 13" (2064x2752), each a caption over a real screen, and free of the gray simulator
+  arc the old iPad shots had.
+
+  To regenerate them after a UI change:
+  1. Boot an iPhone 17 Pro Max and an iPad Pro 13"; install a Release build on each.
+  2. Launch once so the database exists, then seed it with a month of review history, or the
+     Progress screen photographs empty. The seeding snippet lives in the session notes; it
+     writes `review_log`, `card_state` and `bookmarks` rows directly into
+     `Documents/SQLite/marrow.db` inside the app's data container.
+  3. `xcrun simctl status_bar <udid> override --time "9:41" --batteryState discharging
+     --batteryLevel 100 --wifiBars 3` for a clean status bar.
+  4. Capture five raw screens per device into a folder as `01.png` … `05.png`, in the order
+     of `CAPTIONS` in `scripts/make-screenshots.py`.
+  5. `python3 scripts/make-screenshots.py <raw-dir> <out-dir> --device iphone|ipad`.
+- ✅ **App icon** redrawn: a card held inside a ring, in the app's own palette, replacing
+  the blue chevron that matched nothing in the UI. `scripts/make-icons.py` renders every
+  asset from one description of the mark, including the iOS dark and tinted variants that
+  the old icon did not have. Rerun it after any palette change.
+
 - ✅ **Privacy & support pages** authored, hosted on GitHub Pages, and wired into the listing:
   - Privacy: https://pratyushsaxena1.github.io/marrow/privacy.html
   - Support: https://pratyushsaxena1.github.io/marrow/support.html

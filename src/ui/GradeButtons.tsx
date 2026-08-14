@@ -1,36 +1,36 @@
 import React from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text } from "react-native";
+import { Button } from "./Button";
+import { FadeIn } from "./FadeIn";
 import type { Grade } from "../types";
 
+/** The two-way judgement under a revealed answer, and the confirmation that replaces
+ *  it. The confirmation keeps the pair's footprint so the page does not jump as it
+ *  swaps, and states the choice made rather than going blank. */
 export function GradeButtons(
   { onGrade, graded }: { onGrade: (g: Grade) => void; graded?: Grade | null },
 ) {
   if (graded) {
     return (
-      <View className="mt-8">
-        <View className="rounded-2xl py-4 items-center bg-neutral-100">
-          <Text className="text-neutral-900 text-base font-medium">
+      <FadeIn style={{ marginTop: 32 }}>
+        <View className="rounded-2xl py-4 items-center border border-neutral-800">
+          <Text className="text-neutral-400 text-base font-medium">
             {graded === "got" ? "Got it" : "Missed it"}
           </Text>
         </View>
-      </View>
+      </FadeIn>
     );
   }
 
   return (
     <View className="flex-row gap-3 mt-8">
-      <Pressable
+      <Button
+        label="Missed it"
+        variant="secondary"
         onPress={() => onGrade("missed")}
-        className="flex-1 border border-neutral-700 rounded-2xl py-4 items-center"
-      >
-        <Text className="text-neutral-300 text-base font-medium">Missed it</Text>
-      </Pressable>
-      <Pressable
-        onPress={() => onGrade("got")}
-        className="flex-1 bg-neutral-100 rounded-2xl py-4 items-center"
-      >
-        <Text className="text-neutral-900 text-base font-medium">Got it</Text>
-      </Pressable>
+        style={{ flex: 1 }}
+      />
+      <Button label="Got it" onPress={() => onGrade("got")} style={{ flex: 1 }} />
     </View>
   );
 }
