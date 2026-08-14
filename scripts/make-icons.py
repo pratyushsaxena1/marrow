@@ -104,20 +104,23 @@ def main():
     draw_mark(1024, TRANSPARENT, (229, 229, 229, 255), ACCENT).save(
         os.path.join(assets, "icon-dark.png")
     )
-    # The tinted variant feeds every monochrome appearance iOS derives: Tinted, and the
-    # Clear Light and Clear Dark modes added in iOS 26. Both elements are drawn at full
-    # white, and the structure is carried entirely by the transparent gap between the
-    # ring and the card.
+    # The tinted variant feeds the monochrome appearances: Tinted, and the Clear Light
+    # and Clear Dark modes added in iOS 26. Unlike the dark variant it is drawn on an
+    # OPAQUE background, which looks wrong on paper and is the only thing that works.
     #
-    # An earlier version split them by luminance instead, a near-white ring around a
-    # mid-grey card, on the theory that two same-colored shapes would merge. They do not
-    # merge: GAP leaves a transparent ring between them. What the split did do was break
-    # the icon on light backdrops, because the system draws this asset over a near-white
-    # tile in Clear Light, where a 245-luminance ring is invisible and only the grey card
-    # survives. The icon rendered as a grey blob floating on a white square. Anything
-    # that is part of the mark must therefore be the same full white, so the system's
-    # tint or glass treatment lands on the whole shape at once.
-    draw_mark(1024, TRANSPARENT, WHITE, WHITE).save(
+    # `expo prebuild` flattens this asset's alpha channel onto WHITE when it generates
+    # ios/.../AppIcon.appiconset. The dark slot keeps its transparency; the tinted slot
+    # does not. So whatever is transparent here arrives at the device as white, and iOS
+    # renders a high-luminance tinted asset as a nearly blank tile.
+    #
+    # Two versions were shipped before this was understood. A near-white ring around a
+    # mid-grey card flattened to a white tile with a grey card floating on it and no
+    # ring. Making both elements white flattened to a solid white tile with nothing on
+    # it at all. Both were verified on an iOS 26.2 simulator against four candidate
+    # designs; only an opaque background survives the flattening, because there is no
+    # alpha left to flatten. Do not "clean this up" by making the background
+    # transparent to match the dark variant.
+    draw_mark(1024, BG, WHITE, WHITE).save(
         os.path.join(assets, "icon-tinted.png")
     )
 
