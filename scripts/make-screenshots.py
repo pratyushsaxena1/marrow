@@ -33,7 +33,7 @@ CANVAS = {
 # What each shot is being asked to prove. Short enough to read while scrolling a
 # listing, and specific enough to be a claim rather than a mood.
 CAPTIONS = [
-    ("One idea at a time", "A vertical feed of 230 concepts across computer science, finance, math and science."),
+    ("One idea at a time", "A vertical feed of 270 concepts across computer science, finance, math and science."),
     ("Recall it, don't just read it", "Every few cards, one comes back as a question. Answer before you scroll on."),
     ("Quiz what you are about to forget", "A focused run drawn from your own schedule, not from a fixed deck."),
     ("Search the whole library", "Filter by subject or by what you have learned, mastered, or not yet seen."),

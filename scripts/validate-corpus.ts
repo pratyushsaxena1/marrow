@@ -3,7 +3,7 @@ import * as path from "path";
 import { validateCorpus } from "../src/corpus/schema";
 import { DOMAINS } from "../src/constants";
 
-const EXPECTED: Record<string, number> = { cs: 58, math: 58, finance: 57, science: 57 };
+const EXPECTED: Record<string, number> = { cs: 68, math: 68, finance: 67, science: 67 };
 
 let failed = false;
 for (const domain of DOMAINS) {

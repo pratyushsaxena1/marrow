@@ -26,6 +26,9 @@ BG = (10, 10, 10, 255)          # neutral-950, the app's background
 INK = (245, 245, 245, 255)      # neutral-100, the app's primary ink
 ACCENT = (52, 211, 153, 255)    # emerald-400, the app's one accent
 TRANSPARENT = (0, 0, 0, 0)
+# Only for the monochrome variants, where the system recolors the mark and full white
+# gives it the most headroom. INK would be a needless 4% of contrast thrown away.
+WHITE = (255, 255, 255, 255)
 
 # Geometry, as fractions of the canvas edge.
 RING_OUTER = 0.335   # radius
@@ -101,9 +104,23 @@ def main():
     draw_mark(1024, TRANSPARENT, (229, 229, 229, 255), ACCENT).save(
         os.path.join(assets, "icon-dark.png")
     )
-    # Tinted icons are recolored wholesale by the system, so the two elements have to
-    # differ in luminance rather than hue or they merge into one flat blob.
-    draw_mark(1024, TRANSPARENT, INK, (138, 138, 138, 255)).save(
+    # The tinted variant feeds the monochrome appearances: Tinted, and the Clear Light
+    # and Clear Dark modes added in iOS 26. Unlike the dark variant it is drawn on an
+    # OPAQUE background, which looks wrong on paper and is the only thing that works.
+    #
+    # `expo prebuild` flattens this asset's alpha channel onto WHITE when it generates
+    # ios/.../AppIcon.appiconset. The dark slot keeps its transparency; the tinted slot
+    # does not. So whatever is transparent here arrives at the device as white, and iOS
+    # renders a high-luminance tinted asset as a nearly blank tile.
+    #
+    # Two versions were shipped before this was understood. A near-white ring around a
+    # mid-grey card flattened to a white tile with a grey card floating on it and no
+    # ring. Making both elements white flattened to a solid white tile with nothing on
+    # it at all. Both were verified on an iOS 26.2 simulator against four candidate
+    # designs; only an opaque background survives the flattening, because there is no
+    # alpha left to flatten. Do not "clean this up" by making the background
+    # transparent to match the dark variant.
+    draw_mark(1024, BG, WHITE, WHITE).save(
         os.path.join(assets, "icon-tinted.png")
     )
 
@@ -113,7 +130,7 @@ def main():
         os.path.join(assets, "android-icon-foreground.png")
     )
     Image.new("RGBA", (512, 512), BG).save(os.path.join(assets, "android-icon-background.png"))
-    draw_mark(512, TRANSPARENT, INK, INK, scale=0.72).save(
+    draw_mark(512, TRANSPARENT, WHITE, WHITE, scale=0.72).save(
         os.path.join(assets, "android-icon-monochrome.png")
     )
 

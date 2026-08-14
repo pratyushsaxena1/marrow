@@ -4,9 +4,9 @@
     "type": "concept",
     "domain": "cs",
     "topic": "amortized analysis",
-    "title": "Why appending to a dynamic array is O(1)",
-    "body": "A dynamic array that is full allocates a bigger buffer and copies everything over. That copy is O(n), so a single append can be slow. But if the array doubles its capacity each time, the expensive copies get exponentially rarer as it grows. Summing the copy work across n appends gives a geometric series that totals less than 2n. Spread over n operations, each append costs constant time on average. This is amortized analysis: pricing a rare expensive operation across the many cheap ones that share it.",
-    "prompt": "Why is appending to a doubling dynamic array O(1) amortized despite occasional O(n) copies?",
+    "title": "Appending to a dynamic array is O(1)",
+    "body": "A dynamic array that is full allocates a bigger buffer and copies everything over. That copy is O(n), so a single append can be slow. But if the array doubles its capacity each time, the expensive copies get exponentially rarer as it grows. Summing the copy work across n appends gives a geometric series that totals less than 2n, so each append costs constant time on average.",
+    "prompt": "Appending to a dynamic array occasionally copies the whole thing. Why is it still constant time on average?",
     "answer": "Doubling makes resizes exponentially rare, so total copy work across n appends sums to a geometric series bounded by 2n. Divided across n operations, that averages to constant time per append.",
     "difficulty": 2,
     "sources": [
@@ -23,7 +23,7 @@
     "domain": "cs",
     "topic": "hash tables",
     "title": "Why hash tables slow down before they are full",
-    "body": "An open-addressed hash table stores entries directly in a slot array, and on a collision it probes forward until it finds a free slot. Once occupied slots start touching, they merge into runs, and every key landing anywhere inside a run must walk to its end. Longer runs swallow more incoming keys, which lengthens them further. The expected probe count therefore climbs steeply as the load factor approaches one, long before the array is actually full, which is why implementations resize at a threshold well under capacity.",
+    "body": "An open-addressed hash table stores entries directly in a slot array, and on a collision it probes forward until it finds a free slot. Once occupied slots start touching, they merge into runs, and every key landing anywhere inside a run must walk to its end. Longer runs swallow more incoming keys, which lengthens them further. The expected probe count therefore climbs steeply well before the array is actually full.",
     "prompt": "In an open-addressed hash table using linear probing, why do lookups get slow well before the array is full?",
     "answer": "Occupied slots coalesce into long runs, an effect called primary clustering, and any key hashing into a run must probe to its end. Longer runs capture more keys, so probe cost climbs steeply as the load factor nears one, which is why tables resize at a threshold below full.",
     "difficulty": 2,
@@ -40,8 +40,8 @@
     "type": "concept",
     "domain": "cs",
     "topic": "probabilistic data structures",
-    "title": "The one-sided error of a Bloom filter",
-    "body": "A Bloom filter is a bit array plus k independent hash functions. Inserting an element sets the k bits its hashes point to. To test membership, check those k bits: if any is zero the element was definitely never inserted, because insertion only ever sets bits and nothing clears them. If all k are set, the element is probably present, but those bits could have been set by other elements. So it has false positives but no false negatives, buying space savings by giving up exactness in one direction.",
+    "title": "A Bloom filter's one-sided error",
+    "body": "A Bloom filter is a bit array plus k independent hash functions. Inserting an element sets the k bits its hashes point to. To test membership, check those k bits. If any is zero the element was definitely never inserted, because insertion only ever sets bits and nothing clears them. If all k are set, the element is probably present, but those bits could have been set by other elements.",
     "prompt": "Why can a Bloom filter report false positives but never false negatives?",
     "answer": "Insertion only sets bits and nothing ever clears them, so every bit belonging to a stored element is guaranteed set, and a zero bit proves absence. But the k bits for an element that was never inserted can all have been set by other insertions, which produces a false positive.",
     "difficulty": 2,
@@ -59,9 +59,9 @@
     "type": "concept",
     "domain": "cs",
     "topic": "cache locality",
-    "title": "Why traversal order changes a loop's speed",
-    "body": "Memory does not move between RAM and cache one byte at a time; it moves in fixed blocks called cache lines, typically 64 bytes. A C array is laid out row by row, so scanning along a row touches consecutive addresses and one line fetch serves the next sixteen four-byte elements. Scanning down a column instead strides across whole rows, so nearly every access lands on a different line. The two loops do identical arithmetic, but the column version can request many times more memory traffic.",
-    "prompt": "Why is scanning a row-major 2D array by rows often far faster than scanning it by columns, given identical arithmetic?",
+    "title": "Traversal order changes a loop's speed",
+    "body": "Memory does not move between RAM and cache one byte at a time. It moves in fixed blocks called cache lines, typically 64 bytes. A C array is laid out row by row, so scanning along a row touches consecutive addresses and one line fetch serves the next sixteen four-byte elements. Scanning down a column instead strides across whole rows, so nearly every access lands on a different line.",
+    "prompt": "Two loops over the same 2D array do identical arithmetic, and one is several times slower. What separates them?",
     "answer": "Caches fetch fixed-size lines, typically 64 bytes, and row-major layout puts a row's elements at consecutive addresses, so one line serves many elements. Column traversal strides across rows and touches a new line almost every access, pulling far more memory through the hierarchy.",
     "difficulty": 2,
     "sources": [
@@ -80,7 +80,7 @@
     "domain": "cs",
     "topic": "virtual memory",
     "title": "The cache that makes virtual memory affordable",
-    "body": "Every address a program uses is virtual, and hardware must translate it to a physical address through a page table held in memory. Done literally, each load would require several extra memory accesses just to walk that table, making the translation slower than the access it enables. So the processor keeps a small associative cache of recent translations called the TLB. Because programs touch few pages over any short window, hit rates are very high and translation is nearly free; a miss triggers a full page walk.",
+    "body": "Every address a program uses is virtual, and hardware must translate it to a physical address through a page table held in memory. Done literally, each load would require several extra memory accesses just to walk that table, making the translation slower than the access it enables. So the processor keeps a small associative cache of recent translations called the TLB, and because programs touch few pages over any short window, hit rates are very high.",
     "prompt": "What is the TLB for, and why does it make virtual address translation nearly free in practice?",
     "answer": "The TLB caches recent virtual-to-physical page translations so the processor rarely walks the in-memory page table, which would cost several extra memory accesses per load. Locality means a program uses few pages at a time, so hit rates are high and misses are rare.",
     "difficulty": 2,
@@ -99,7 +99,7 @@
     "domain": "cs",
     "topic": "atomicity",
     "title": "One statement, three instructions",
-    "body": "The statement x++ looks like a single action but compiles to three: load x into a register, add one, store it back. If two threads run it concurrently on a shared x, both can load the same value 7, both compute 8, and both store 8. Two increments happened; one vanished. Nothing in the source hints at the gap, and even a single-core machine can produce it, because the scheduler may preempt between any two instructions.",
+    "body": "The statement x++ looks like a single action but compiles to three: load x into a register, add one, store it back. If two threads run it concurrently on a shared x, both can load the same value 7, both compute 8, and both store 8. Two increments happened and one vanished. Even a single-core machine can produce it, because the scheduler may preempt between any two instructions.",
     "prompt": "Why can two threads each running x++ on a shared variable end up producing only one increment?",
     "answer": "x++ is a non-atomic read-modify-write: load, add, store. Both threads can read the same old value before either stores, so both write back the same result and one increment is lost. Preventing it requires an atomic instruction or a lock covering the whole sequence.",
     "difficulty": 1,
@@ -116,8 +116,8 @@
     "type": "concept",
     "domain": "cs",
     "topic": "deadlock",
-    "title": "Why a global lock order kills deadlock",
-    "body": "Deadlock needs four conditions to hold at once: resources are held exclusively, a thread holds one resource while waiting for another, resources cannot be forcibly taken back, and there is a cycle of threads each waiting on the next. All four are necessary, so removing any single one makes deadlock impossible. That is why imposing a global order on locks works: if every thread always takes lock A before lock B, no cycle of waits can ever form.",
+    "title": "A global lock order kills deadlock",
+    "body": "Deadlock needs four conditions to hold at once: resources are held exclusively, a thread holds one resource while waiting for another, resources cannot be forcibly taken back, and there is a cycle of threads each waiting on the next. All four are necessary, so removing any single one makes deadlock impossible. Imposing a global order on locks removes the cycle: if every thread always takes lock A before lock B, no cycle of waits can form.",
     "prompt": "Why does forcing every thread to acquire locks in one consistent global order prevent deadlock?",
     "answer": "Deadlock requires all four Coffman conditions to hold simultaneously, one of which is a circular wait. A global lock order makes a cycle impossible, since a cycle would need some thread holding a higher-ordered lock while waiting for a lower one, so deadlock cannot arise.",
     "difficulty": 2,
@@ -135,13 +135,14 @@
     "type": "concept",
     "domain": "cs",
     "topic": "congestion control",
-    "title": "Why TCP climbs gently and falls hard",
-    "body": "TCP has no way to ask the network how much bandwidth is free, so it probes. In congestion avoidance a sender adds roughly one segment per round trip, creeping upward until a packet is dropped, then halves its window. This additive-increase, multiplicative-decrease rule is what makes competing flows converge on a fair share: the gentle climb hands every flow the same absolute gain, while the sharp cut is proportional, so whichever flow is using more loses more.",
-    "prompt": "Why does TCP increase its congestion window additively but cut it multiplicatively on loss?",
+    "title": "TCP climbs gently and falls hard",
+    "body": "TCP has no way to ask the network how much bandwidth is free, so it probes. In congestion avoidance a sender adds roughly one segment per round trip, creeping upward until a packet is dropped, then halves its window. That asymmetry is what makes competing flows converge on a fair share: the gentle climb hands every flow the same absolute gain, while the sharp cut is proportional, so whichever flow is using more loses more.",
+    "prompt": "TCP grows its window one segment at a time but halves it on a single loss. What does that asymmetry buy?",
     "answer": "The asymmetry drives competing flows toward fairness: additive increase gives every flow the same absolute gain, while multiplicative decrease takes a proportional cut, so a flow using more bandwidth loses more of it. Repeated cycles converge on an equal share, and the sharp cut also relieves congestion quickly.",
     "difficulty": 2,
     "sources": [
-      "https://en.wikipedia.org/wiki/TCP_congestion_control"
+      "https://en.wikipedia.org/wiki/TCP_congestion_control",
+      "https://www.rfc-editor.org/rfc/rfc5681.html"
     ],
     "tags": [
       "networking",
@@ -154,13 +155,13 @@
     "type": "concept",
     "domain": "cs",
     "topic": "tcp handshake",
-    "title": "Why two messages cannot open a connection",
-    "body": "A TCP connection is two independent byte streams, one in each direction, and each direction is tracked by a sequence number its sender chooses at random. Before data flows, each side must learn the other's starting number and know that its own number was received. The client's SYN carries its number; the server's SYN-ACK acknowledges that and carries the server's own; the client's ACK confirms it. Stopping after two messages would leave the server unsure whether its number ever arrived.",
+    "title": "Two messages cannot open a connection",
+    "body": "A TCP connection is two independent byte streams, one in each direction, and each direction is tracked by a sequence number its sender chooses at random. Before data flows, each side must learn the other's starting number and know that its own number was received. The client's SYN carries its number, the server's SYN-ACK acknowledges that and carries its own, and the client's ACK confirms it.",
     "prompt": "Why does TCP need three messages to open a connection rather than two?",
     "answer": "Each direction has its own randomly chosen initial sequence number that must be both sent and acknowledged. Two messages can only confirm the client's number, so the third ACK exists to tell the server that its own initial sequence number was received.",
     "difficulty": 2,
     "sources": [
-      "https://en.wikipedia.org/wiki/Transmission_Control_Protocol"
+      "https://www.rfc-editor.org/rfc/rfc9293.html"
     ],
     "tags": [
       "networking",
@@ -172,10 +173,10 @@
     "type": "concept",
     "domain": "cs",
     "topic": "register allocation",
-    "title": "Register allocation is graph colouring",
-    "body": "A compiler's intermediate code uses unlimited virtual registers, but a CPU has perhaps sixteen. Build a graph whose nodes are values and whose edges join any two values that are live at the same moment, since those two cannot share a register. Assigning registers is then colouring that graph with as many colours as the machine has registers. General graph colouring is NP-complete, so compilers use heuristics; when colouring fails, some value is spilled to memory and the attempt is repeated.",
-    "prompt": "How does a compiler turn register allocation into graph colouring, and what does it do when the graph will not colour?",
-    "answer": "Nodes are live values and an edge means two values are live at the same time, so they need different registers; a colouring with k colours, where k is the number of physical registers, is a valid allocation. When no colouring is found, the allocator spills a value to memory, removing its interferences, and retries.",
+    "title": "Register allocation is graph coloring",
+    "body": "A compiler's intermediate code uses unlimited virtual registers, but a CPU has perhaps sixteen. Build a graph whose nodes are values and whose edges join any two values that are live at the same moment, since those two cannot share a register. Assigning registers is then coloring that graph with as many colors as the machine has registers. General graph coloring is NP-complete, so compilers use heuristics and spill to memory when coloring fails.",
+    "prompt": "A compiler has unlimited virtual registers and a CPU has sixteen. What classic problem is it really solving?",
+    "answer": "Nodes are live values and an edge means two values are live at the same time, so they need different registers; a coloring with k colors, where k is the number of physical registers, is a valid allocation. When no coloring is found, the allocator spills a value to memory, removing its interferences, and retries.",
     "difficulty": 3,
     "sources": [
       "https://en.wikipedia.org/wiki/Register_allocation"
@@ -190,10 +191,10 @@
     "type": "concept",
     "domain": "cs",
     "topic": "compiler intermediate representation",
-    "title": "Why compilers rename every variable once",
-    "body": "In static single assignment form every variable is written exactly once, so any use points at one unambiguous definition. Code that reassigns is rewritten with fresh names, and where control flow merges, a phi function selects the value belonging to the incoming edge. The payoff is that def-use information now lives in the names themselves: constant propagation, dead-code elimination and value numbering no longer need a separate dataflow analysis to work out which assignment reached this point.",
+    "title": "Rename every variable once",
+    "body": "In static single assignment form every variable is written exactly once, so any use points at one unambiguous definition. Code that reassigns is rewritten with fresh names, and where control flow merges, a phi function selects the value belonging to the incoming edge. The payoff is that def-use information now lives in the names themselves.",
     "prompt": "What does static single assignment form give a compiler by requiring every variable to be assigned exactly once?",
-    "answer": "It makes every use refer to a single unambiguous definition, so def-use chains are explicit in the names. Optimisations such as constant propagation and dead-code elimination can then read reaching definitions directly instead of computing them by dataflow analysis, with phi functions reconciling values where control flow merges.",
+    "answer": "It makes every use refer to a single unambiguous definition, so def-use chains are explicit in the names. Optimizations such as constant propagation and dead-code elimination can then read reaching definitions directly instead of computing them by dataflow analysis, with phi functions reconciling values where control flow merges.",
     "difficulty": 3,
     "sources": [
       "https://en.wikipedia.org/wiki/Static_single-assignment_form"
@@ -209,7 +210,7 @@
     "domain": "cs",
     "topic": "type inference",
     "title": "Type checking without annotations",
-    "body": "Languages in the ML family let you write a function with no type annotations and still reject type errors at compile time. The inference algorithm walks the expression generating equations between unknown types: this argument's type equals that parameter's type, this branch's type equals that branch's. It then solves the system by unification. If the equations are solvable, the solution is the principal type, the most general type of which every other valid type for the term is an instance.",
+    "body": "Languages in the ML family let you write a function with no type annotations and still reject type errors at compile time. The inference algorithm walks the expression generating equations between unknown types: this argument's type equals that parameter's type, this branch's type equals that branch's. It then solves the system by unification. If the equations are solvable, the solution is the principal type.",
     "prompt": "How can Hindley-Milner type inference type-check a function that carries no annotations at all?",
     "answer": "It generates type equations from the expression's structure and solves them by unification. A solution yields the principal type, the most general type the term admits, and unsolvable constraints are exactly the type errors, so annotations are never required for the check to work.",
     "difficulty": 3,
@@ -227,12 +228,13 @@
     "domain": "cs",
     "topic": "variance",
     "title": "The hole in Java's array types",
-    "body": "Java treats String[] as a subtype of Object[]. That looks harmless until you write it out: assign a String[] to an Object[] variable, then store an Integer through it. The compiler sees a store of an Object into an Object[] and accepts it, but the array is really a String[]. Java plugs the hole at runtime instead, checking every array store against the array's actual element type and throwing ArrayStoreException, so the guarantee is bought with a check on each write.",
+    "body": "Java treats String[] as a subtype of Object[]. That looks harmless until you write it out. Assign a String[] to an Object[] variable, then store an Integer through it. The compiler sees a store of an Object into an Object[] and accepts it, but the array is really a String[]. Java plugs the hole at runtime instead, checking every array store against the array's actual element type and throwing ArrayStoreException.",
     "prompt": "Why is Java's rule that String[] is a subtype of Object[] unsound, and what stops it from corrupting memory?",
     "answer": "Covariant arrays let you alias a String[] as an Object[] and store an Integer through it, which the compiler accepts, so the static types can lie. Java recovers safety by checking the element type on every array store at runtime and throwing ArrayStoreException, paying a per-write check for a static hole.",
     "difficulty": 2,
     "sources": [
-      "https://en.wikipedia.org/wiki/Covariance_and_contravariance_(computer_science)"
+      "https://en.wikipedia.org/wiki/Covariance_and_contravariance_(computer_science)",
+      "https://docs.oracle.com/javase/specs/jls/se21/html/jls-10.html"
     ],
     "tags": [
       "type-systems",
@@ -245,8 +247,8 @@
     "type": "concept",
     "domain": "cs",
     "topic": "crash recovery",
-    "title": "Why the log is written before the data",
-    "body": "A database cannot update several data pages atomically, because a crash can land between two disk writes. Write-ahead logging solves this by recording the intended change in a sequential log and forcing that record to disk before the data pages themselves are touched. Recovery then replays the log, redoing changes from transactions that committed and undoing those that did not. Durability comes cheaply because one sequential append and flush costs far less than scattering random page writes across the disk.",
+    "title": "The log is written before the data",
+    "body": "A database cannot update several data pages atomically, because a crash can land between two disk writes. Write-ahead logging records the intended change in a sequential log and forces that record to disk before the data pages themselves are touched. Recovery then replays the log, redoing changes from transactions that committed and undoing those that did not.",
     "prompt": "How does write-ahead logging give a database atomicity and durability across a crash?",
     "answer": "The intended change is appended to a sequential log and flushed to disk before any data page is modified, so recovery always finds a record of what was meant to happen: it redoes committed transactions and undoes uncommitted ones. The sequential append is also much cheaper than forcing random page writes.",
     "difficulty": 2,
@@ -265,7 +267,7 @@
     "domain": "cs",
     "topic": "concurrency control",
     "title": "Why two-phase locking is serializable",
-    "body": "Two-phase locking splits a transaction into a growing phase, in which it may acquire locks but release none, and a shrinking phase, in which it may release but never acquire. The instant of its last acquisition is its lock point. Order all transactions by their lock points and you get a serial order equivalent to whatever actually ran, which is exactly why the rule guarantees serializable schedules. Holding every lock until commit additionally stops other transactions from reading uncommitted data.",
+    "body": "Two-phase locking splits a transaction into a growing phase, in which it may acquire locks but release none, and a shrinking phase, in which it may release but never acquire. The instant of its last acquisition is its lock point. Order all transactions by their lock points and you get a serial order equivalent to whatever actually ran. Holding every lock until commit additionally stops other transactions from reading uncommitted data.",
     "prompt": "Why does two-phase locking guarantee that a concurrent schedule is serializable?",
     "answer": "Because no lock is acquired after any is released, each transaction has a single lock point, and ordering transactions by their lock points yields a serial schedule equivalent to the real execution. Any two conflicting transactions must therefore appear in that same consistent order.",
     "difficulty": 3,
@@ -283,8 +285,8 @@
     "type": "concept",
     "domain": "cs",
     "topic": "database indexing",
-    "title": "Why disk indexes are wide, not deep",
-    "body": "A balanced binary tree over a million keys is about twenty levels deep, and on disk each level is a separate random read. A B-tree fixes this by making every node as wide as a disk block: hundreds of keys and hundreds of children fetched in one read. Depth becomes a logarithm in base hundreds rather than base two, so the same million keys sit roughly three levels down. The tree is shaped by the cost of a block read, not by the cost of a comparison.",
+    "title": "Disk indexes are wide, not deep",
+    "body": "A balanced binary tree over a million keys is about twenty levels deep, and on disk each level is a separate random read. A B-tree fixes this by making every node as wide as a disk block: hundreds of keys and hundreds of children fetched in one read. Depth becomes a logarithm in base hundreds rather than base two, so the same million keys sit roughly three levels down.",
     "prompt": "Why do disk-based databases index with B-trees instead of balanced binary search trees?",
     "answer": "The dominant cost is random block reads, not comparisons. A B-tree node fills an entire block with hundreds of keys, so its fanout is hundreds and its depth is a logarithm in a large base: roughly three levels for a million keys, against about twenty for a binary tree.",
     "difficulty": 2,
@@ -303,12 +305,13 @@
     "domain": "cs",
     "topic": "cap theorem",
     "title": "What CAP actually forces you to choose",
-    "body": "When a network partition splits a distributed system, a node cut off from its peers still receives a write and must decide. It can accept the write, risking that the other side serves a different value, which sacrifices consistency. Or it can refuse to answer until it can reach its peers, which sacrifices availability. There is no third option, because the node cannot tell a dead peer from an unreachable one. The theorem is not a menu of three: partitions are imposed by the network, not chosen.",
+    "body": "When a network partition splits a distributed system, a node cut off from its peers still receives a write and must decide. It can accept the write, risking that the other side serves a different value, which sacrifices consistency. Or it can refuse to answer until it can reach its peers, which sacrifices availability. There is no third option, because the node cannot tell a dead peer from an unreachable one.",
     "prompt": "What choice does the CAP theorem actually force on a distributed system, and why is 'pick two of three' a misreading?",
-    "answer": "During a partition, a node must either answer with possibly stale data, dropping consistency, or refuse to answer, dropping availability. Partition tolerance is not a design choice since networks partition regardless, so CAP describes behaviour during a partition rather than a free pick among three properties.",
-    "difficulty": 2,
+    "answer": "During a partition, a node must either answer with possibly stale data, dropping consistency, or refuse to answer, dropping availability. Partition tolerance is not a design choice since networks partition regardless, so CAP describes behavior during a partition rather than a free pick among three properties.",
+    "difficulty": 3,
     "sources": [
-      "https://en.wikipedia.org/wiki/CAP_theorem"
+      "https://en.wikipedia.org/wiki/CAP_theorem",
+      "https://www.rfc-editor.org/rfc/rfc7231.html"
     ],
     "tags": [
       "distributed-systems",
@@ -320,9 +323,9 @@
     "type": "concept",
     "domain": "cs",
     "topic": "consensus",
-    "title": "Why consensus counts to a majority",
-    "body": "Replicated systems commit a value only once a majority of nodes acknowledge it. The reason is a counting fact: any two subsets of a set of nodes that each contain more than half the members must share at least one node. So a later majority cannot be assembled without touching some node that already saw the earlier decision, and that node can report it. This overlap is what lets protocols like Paxos and Raft survive a minority failing, or a leader changing, without losing a committed value.",
-    "prompt": "Why do consensus protocols require a majority quorum rather than any fixed number of nodes?",
+    "title": "Consensus counts to a majority",
+    "body": "Replicated systems commit a value only once a majority of nodes acknowledge it. The reason is a counting fact: any two subsets of a set of nodes that each contain more than half the members must share at least one node. So a later majority cannot be assembled without touching some node that already saw the earlier decision, and that node can report it.",
+    "prompt": "Why is a majority the magic number for committing a value, rather than any other fixed count of nodes?",
     "answer": "Any two subsets that each hold more than half the nodes must intersect, so every future quorum contains at least one node that witnessed the last committed decision and can report it. That guaranteed overlap is what preserves committed values across leader changes and minority failures.",
     "difficulty": 3,
     "sources": [
@@ -339,12 +342,13 @@
     "domain": "cs",
     "topic": "key exchange",
     "title": "A shared secret that never crosses the wire",
-    "body": "Alice and Bob publicly agree on a large prime p and a base g. Alice picks a secret a and sends g^a mod p; Bob picks a secret b and sends g^b mod p. Alice raises Bob's value to her a, Bob raises Alice's to his b, and both now hold g^(ab) mod p, a shared secret that was never transmitted. An eavesdropper sees only g, p, g^a and g^b, and recovering an exponent from those is the discrete logarithm problem, believed hard for large p.",
+    "body": "Alice and Bob publicly agree on a large prime p and a base g. Alice picks a secret a and sends g^a mod p, and Bob picks a secret b and sends g^b mod p. Alice raises Bob's value to her a, Bob raises Alice's to his b, and both now hold g^(ab) mod p, a shared secret that was never transmitted. An eavesdropper sees only g, p, g^a and g^b.",
     "prompt": "In Diffie-Hellman, how do two parties agree on a shared secret over a channel an eavesdropper is reading?",
-    "answer": "Each sends g raised to their private exponent modulo p, then raises the received value to their own exponent, and both land on g^(ab) mod p, which never travelled. An eavesdropper would have to solve the discrete logarithm problem to recover an exponent, which is believed infeasible for large primes.",
+    "answer": "Each sends g raised to their private exponent modulo p, then raises the received value to their own exponent, and both land on g^(ab) mod p, which never traveled. An eavesdropper would have to solve the discrete logarithm problem to recover an exponent, which is believed infeasible for large primes.",
     "difficulty": 2,
     "sources": [
-      "https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange"
+      "https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange",
+      "https://www.rfc-editor.org/rfc/rfc2631.html"
     ],
     "tags": [
       "cryptography",
@@ -357,12 +361,13 @@
     "domain": "cs",
     "topic": "password storage",
     "title": "What a salt buys and what it does not",
-    "body": "Hashing passwords is not enough on its own, because an attacker can precompute the hashes of billions of likely passwords once and then look up every stolen hash instantly. A salt is a distinct random value stored beside each hash and mixed into it, so the same password produces a different hash for every user. The precomputed table is now worthless, since it would have to be rebuilt for each salt. Salting does not slow down guessing a single password, though.",
+    "body": "Hashing passwords is not enough on its own, because an attacker can precompute the hashes of billions of likely passwords once and then look up every stolen hash instantly. A salt is a distinct random value stored beside each hash and mixed into it, so the same password produces a different hash for every user. The precomputed table is now worthless, since it would have to be rebuilt for each salt.",
     "prompt": "What attack does salting a password hash defeat, and what does it fail to defend against?",
     "answer": "It defeats precomputation: a unique per-user salt means one rainbow table cannot cover all users, because the table would need rebuilding for every salt. It does not slow an attacker guessing one specific password, which requires a deliberately expensive hash such as bcrypt, scrypt or Argon2.",
-    "difficulty": 2,
+    "difficulty": 1,
     "sources": [
-      "https://en.wikipedia.org/wiki/Salt_(cryptography)"
+      "https://en.wikipedia.org/wiki/Salt_(cryptography)",
+      "https://pages.nist.gov/800-63-3/sp800-63b.html"
     ],
     "tags": [
       "cryptography",
@@ -376,12 +381,13 @@
     "domain": "cs",
     "topic": "halting problem",
     "title": "The program that outsmarts every halting checker",
-    "body": "Suppose a program H exists that reads any program P and input x and always returns correctly whether P halts on x. Build D as follows: given a program P, D runs H on P with P as its own input; if H says it halts, D loops forever, otherwise D halts immediately. Now ask what D does when given D. If D halts, H said it loops, so D loops. If D loops, H said it halts, so D halts. Both branches contradict, so H cannot exist.",
+    "body": "Suppose a program H exists that reads any program P and input x and always returns correctly whether P halts on x. Build D as follows: given a program P, D runs H on P with P as its own input, and if H says it halts, D loops forever, otherwise D halts immediately. Now ask what D does when given D. If D halts, H said it loops, so D loops. Both branches contradict.",
     "prompt": "How does the diagonal argument show that no program can decide whether an arbitrary program halts?",
     "answer": "Assume a perfect halting decider H exists, then build a program D that consults H about a program run on itself and does the opposite of the answer. Running D on D contradicts itself either way, so the assumed H cannot exist and halting is undecidable.",
     "difficulty": 2,
     "sources": [
-      "https://en.wikipedia.org/wiki/Halting_problem"
+      "https://en.wikipedia.org/wiki/Halting_problem",
+      "https://plato.stanford.edu/entries/turing-machine/"
     ],
     "tags": [
       "computability",
@@ -394,12 +400,13 @@
     "domain": "cs",
     "topic": "rice's theorem",
     "title": "Every interesting question about programs is undecidable",
-    "body": "Rice's theorem says that any non-trivial property of the function a program computes is undecidable. Non-trivial means some programs have it and some do not, and a property of the computed function means it depends only on input-output behaviour rather than on the source text. So no analyser can decide, for arbitrary programs, whether one ever outputs zero, or whether two programs compute the same function. Syntactic questions, such as whether the source contains a loop, are not covered and stay decidable.",
+    "body": "Rice's theorem says that any non-trivial property of the function a program computes is undecidable. Non-trivial means some programs have it and some do not, and a property of the computed function means it depends only on input-output behavior rather than on the source text. So no analyzer can decide, for arbitrary programs, whether one ever outputs zero. Syntactic questions, such as whether the source contains a loop, stay decidable.",
     "prompt": "What does Rice's theorem say is undecidable, and which kind of question about programs escapes it?",
     "answer": "Every non-trivial semantic property is undecidable: one that depends only on the function a program computes and that some but not all programs have. Syntactic properties of the source text, such as whether it contains a loop, are not semantic and remain perfectly decidable.",
     "difficulty": 3,
     "sources": [
-      "https://en.wikipedia.org/wiki/Rice%27s_theorem"
+      "https://en.wikipedia.org/wiki/Rice%27s_theorem",
+      "https://plato.stanford.edu/entries/computability/"
     ],
     "tags": [
       "computability",
@@ -411,13 +418,14 @@
     "type": "concept",
     "domain": "cs",
     "topic": "np-completeness",
-    "title": "Why one fast algorithm would topple thousands",
-    "body": "A problem is NP-complete when it lies in NP and every problem in NP can be transformed into it by a polynomial-time reduction. That second condition makes it a universal target: a polynomial algorithm for any single NP-complete problem could be composed with each reduction to solve every problem in NP in polynomial time, proving P equals NP. Cook and Levin proved that satisfiability has this property, and thousands of problems joined the class afterwards by reduction rather than from scratch.",
+    "title": "One fast algorithm would topple thousands",
+    "body": "A problem is NP-complete when it lies in NP and every problem in NP can be transformed into it by a polynomial-time reduction. That second condition makes it a universal target. A polynomial algorithm for any single NP-complete problem could be composed with each reduction to solve every problem in NP in polynomial time, proving P equals NP. Cook and Levin proved that satisfiability has this property.",
     "prompt": "What makes a problem NP-complete, and why would solving one in polynomial time settle P versus NP?",
     "answer": "It is in NP and every NP problem reduces to it in polynomial time. So a polynomial algorithm for it, composed with each reduction, would solve all of NP in polynomial time and give P equals NP. Cook and Levin established the first such problem, satisfiability.",
     "difficulty": 2,
     "sources": [
-      "https://en.wikipedia.org/wiki/NP-completeness"
+      "https://en.wikipedia.org/wiki/NP-completeness",
+      "https://www.claymath.org/millennium/p-vs-np/"
     ],
     "tags": [
       "complexity",
@@ -430,7 +438,7 @@
     "domain": "cs",
     "topic": "sorting lower bounds",
     "title": "The floor under every comparison sort",
-    "body": "Any sorting algorithm that only compares elements is really a decision tree: each comparison is a node with two outcomes, and each leaf is one of the possible orderings it can output. To sort correctly the tree must have a distinct leaf for every one of the n! permutations, since two permutations reaching the same leaf would receive the same answer and one would be wrong. A binary tree with n! leaves has height at least log2(n!), which Stirling's approximation puts at order n log n.",
+    "body": "Any sorting algorithm that only compares elements is really a decision tree: each comparison is a node with two outcomes, and each leaf is one of the possible orderings it can output. To sort correctly the tree must have a distinct leaf for every one of the n! permutations, since two permutations reaching the same leaf would receive the same answer and one would be wrong. A binary tree with n! leaves has height at least log2(n!).",
     "prompt": "Why can no comparison-based sorting algorithm beat n log n comparisons in the worst case?",
     "answer": "Its comparisons form a binary decision tree that needs a distinct leaf for each of the n! input permutations, so its height, which is the worst-case number of comparisons, is at least log2(n!). Stirling's approximation shows that quantity is of order n log n.",
     "difficulty": 3,
@@ -448,13 +456,14 @@
     "type": "concept",
     "domain": "cs",
     "topic": "floating point",
-    "title": "Why 0.1 plus 0.2 misses 0.3",
-    "body": "A double stores a number as a binary fraction, so it can represent exactly only values whose denominators are powers of two. One tenth in binary is 0.000110011001100... repeating forever, exactly as one third repeats in decimal, so it must be rounded to fit 53 significand bits. Two tenths is rounded too. Adding the two rounded values and rounding the sum lands on a double very slightly above the closest double to 0.3, which is why the equality test fails.",
-    "prompt": "Why does 0.1 + 0.2 not equal 0.3 in binary floating-point arithmetic?",
+    "title": "0.1 plus 0.2 misses 0.3",
+    "body": "A double stores a number as a binary fraction, so it can represent exactly only values whose denominators are powers of two. One tenth in binary is 0.000110011001100 repeating forever, exactly as one third repeats in decimal, so it must be rounded to fit 53 significand bits. Two tenths is rounded too, and adding the two rounded values lands slightly above the closest double to 0.3.",
+    "prompt": "Adding 0.1 and 0.2 in most languages does not give 0.3. What has gone wrong?",
     "answer": "Neither 0.1 nor 0.2 is exactly representable in binary, since their denominators are not powers of two, so each is stored already rounded. Adding the two rounded values and rounding the result gives a double slightly larger than the nearest double to 0.3, so the comparison fails.",
-    "difficulty": 2,
+    "difficulty": 1,
     "sources": [
-      "https://en.wikipedia.org/wiki/Floating-point_arithmetic"
+      "https://en.wikipedia.org/wiki/Floating-point_arithmetic",
+      "https://docs.python.org/3/tutorial/floatingpoint.html"
     ],
     "tags": [
       "floating-point",
@@ -467,10 +476,10 @@
     "domain": "cs",
     "topic": "garbage collection",
     "title": "The garbage reference counting cannot see",
-    "body": "Reference counting frees an object the moment its count of incoming references hits zero, which gives prompt and predictable reclamation. But consider two objects that point at each other while nothing else points at either. Each still holds a reference to the other, so both counts stay at one and neither is ever freed, even though no live code can reach them. Counts measure references, not reachability from the roots, and cycles are exactly where those two notions come apart.",
+    "body": "Reference counting frees an object the moment its count of incoming references hits zero, which gives prompt and predictable reclamation. But consider two objects that point at each other while nothing else points at either. Each still holds a reference to the other, so both counts stay at one and neither is ever freed, even though no live code can reach them.",
     "prompt": "Why does pure reference counting fail to reclaim objects that form a cycle?",
     "answer": "Objects in a cycle keep each other's counts above zero, so no count reaches zero even after the whole cycle becomes unreachable. Reference counting tracks incoming references rather than reachability from the roots, so it needs a tracing collector or weak references to reclaim cycles.",
-    "difficulty": 2,
+    "difficulty": 1,
     "sources": [
       "https://en.wikipedia.org/wiki/Reference_counting"
     ],
@@ -484,8 +493,8 @@
     "type": "puzzle",
     "domain": "cs",
     "topic": "amortized analysis",
-    "title": "The cost of counting",
-    "body": "A binary counter starts at zero. Each increment flips the trailing run of 1 bits to 0 and then flips the first 0 to 1. Sometimes that is a single flip: 1000 becomes 1001. Sometimes it is many: 0111 becomes 1000, four flips. A counter with k bits can cost k flips on one increment. You perform n increments starting from zero and want the total number of bit flips, not the worst case for one increment.",
+    "title": "Counting is cheaper than it looks",
+    "body": "A binary counter starts at zero. Each increment flips the trailing run of 1 bits to 0 and then flips the first 0 to 1. Sometimes that is a single flip, as 1000 becomes 1001. Sometimes it is many, as 0111 becomes 1000, four flips. A counter with k bits can cost k flips on one increment. You perform n increments starting from zero and want the total number of bit flips.",
     "prompt": "Across n increments of a binary counter starting from zero, what is the average number of bit flips per increment?",
     "answer": "Fewer than two, so an increment is O(1) amortized. Bit i flips only once every 2^i increments, so the total is at most n times (1 + 1/2 + 1/4 + ...), which is under 2n; the rare expensive increments are exactly rare enough to pay for themselves.",
     "difficulty": 2,
@@ -503,8 +512,8 @@
     "domain": "cs",
     "topic": "loop invariants",
     "title": "The last bean in the can",
-    "body": "A can holds some black beans and some white beans. Repeat this until one bean is left: pull out two beans at random. If they are the same colour, throw both away and drop in one black bean from a large spare pile. If they are different colours, throw the black one away and put the white one back. Each round removes exactly one bean from the can, so the process always ends with a single bean. You are told only how many white beans it started with.",
-    "prompt": "In the bean process where a same-coloured pair is replaced by one black bean and a mixed pair returns the white one, what determines the final bean's colour?",
+    "body": "A can holds some black beans and some white beans. Repeat this until one bean is left: pull out two beans at random. If they are the same color, throw both away and drop in one black bean from a large spare pile. If they are different colors, throw the black one away and put the white one back. Each round removes exactly one bean, so the process always ends with a single bean.",
+    "prompt": "In the bean process where a same-colored pair is replaced by one black bean and a mixed pair returns the white one, what determines the final bean's color?",
     "answer": "The parity of the starting number of white beans: the last bean is white exactly when that count was odd. Every move either leaves the white count unchanged or, in the two-whites case alone, drops it by two, so the parity of the white count is an invariant of the whole process.",
     "difficulty": 2,
     "sources": [],
@@ -519,9 +528,9 @@
     "domain": "cs",
     "topic": "search strategies",
     "title": "Two eggs, one hundred floors",
-    "body": "You have two identical eggs and a 100-floor building. There is a threshold floor F, between 0 and 100, such that an egg dropped from any floor above F breaks, while from F or below it survives unharmed and can be reused. A broken egg is gone. You must determine F exactly. With one egg you would climb one floor at a time; with unlimited eggs binary search would take seven drops. Find the strategy minimising the worst-case number of drops.",
+    "body": "You have two identical eggs and a 100-floor building. There is a threshold floor F, between 0 and 100, such that an egg dropped from any floor above F breaks, while from F or below it survives unharmed and can be reused. A broken egg is gone. With one egg you would climb one floor at a time, and with unlimited eggs binary search would take seven drops.",
     "prompt": "With two eggs and a 100-floor building, what is the minimum worst-case number of drops needed to find the exact breaking floor?",
-    "answer": "Fourteen. Drop the first egg at floor 14, then 27, 39, 50, and so on, shrinking each gap by one; the key is that every extra drop already spent on the first egg shortens the linear search the second egg must do, so all paths cost 14, and 14+13+...+1 = 105 covers all 100 floors.",
+    "answer": "Fourteen. Drop the first egg at floor 14, then 27, then 39, then 50, shrinking each gap by one. Every extra drop already spent on the first egg shortens the linear search the second egg must do, so all paths cost 14, and 14+13+...+1 = 105 covers all 100 floors.",
     "difficulty": 3,
     "sources": [],
     "tags": [
@@ -537,7 +546,7 @@
     "topic": "race conditions",
     "title": "The account that pays twice",
     "body": "An account holds $100. Two withdrawal requests for $60 each arrive at the same moment and are handled by different threads. Each thread runs identical code: read the balance, check that it is at least $60, subtract $60, write the balance back. There is no lock and no transaction. It happens that both threads read the balance before either one writes, so the check passes in both.",
-    "prompt": "Two unsynchronised threads each read a $100 balance, verify it covers a $60 withdrawal, then subtract and write back: what is the final balance, and what is the flaw?",
+    "prompt": "Two unsynchronized threads each read a $100 balance, verify it covers a $60 withdrawal, then subtract and write back: what is the final balance, and what is the flaw?",
     "answer": "Both checks pass and both write $40, so $120 leaves an account that ends showing $40. The flaw is check-then-act: the balance is verified and then acted on as if still valid, but nothing holds it still between the read and the write, so the entire sequence must be made atomic.",
     "difficulty": 1,
     "sources": [],
@@ -552,12 +561,13 @@
     "domain": "cs",
     "topic": "memory models",
     "title": "Both threads print zero",
-    "body": "Two threads share variables x and y, both initially zero, with no locks, atomics or fences anywhere. Thread A executes x = 1 and then prints y. Thread B executes y = 1 and then prints x. Interleave those four statements into any single global order you like and you will find that at least one thread must see the other's 1, so printing 0 and 0 looks impossible. Run it on real x86 hardware and 0 and 0 does occur.",
+    "body": "Two threads share variables x and y, both initially zero, with no locks, atomics or fences anywhere. Thread A executes x = 1 and then prints y. Thread B executes y = 1 and then prints x. Interleave those four statements into any single global order you like and at least one thread must see the other's 1, so printing 0 and 0 looks impossible. Run it on real x86 hardware and 0 and 0 does occur.",
     "prompt": "Two threads each set their own variable to 1 and then print the other's, both starting at zero with no fences: how can both print 0 on real hardware?",
     "answer": "Each core parks its store in a private store buffer before it reaches cache, and its own following load can complete while that store is still sitting in the buffer, so both loads read the stale 0. This is StoreLoad reordering, which x86's TSO memory model permits; only a fence or a locked atomic instruction forbids it.",
     "difficulty": 3,
     "sources": [
-      "https://en.wikipedia.org/wiki/Memory_ordering"
+      "https://en.wikipedia.org/wiki/Memory_ordering",
+      "https://en.cppreference.com/w/cpp/atomic/memory_order"
     ],
     "tags": [
       "concurrency",
@@ -571,7 +581,7 @@
     "domain": "cs",
     "topic": "data compression",
     "title": "The compressor that cannot exist",
-    "body": "Someone advertises a lossless compressor: a program C with an inverse D such that D(C(s)) equals s for every input s, and C(s) is always strictly shorter than s. Consider only the inputs of exactly n bits. There are 2^n of them. Every output must be a bit string of length at most n-1, and the total count of such strings, over all lengths from 0 to n-1 and including the empty string, is 2^n - 1.",
+    "body": "Someone advertises a lossless compressor: a program C with an inverse D such that D(C(s)) equals s for every input s, and C(s) is always strictly shorter than s. Consider only the inputs of exactly n bits. There are 2^n of them. Every output must be a bit string of length at most n-1, and the count of such strings, over all lengths from 0 to n-1, is 2^n - 1.",
     "prompt": "Why can no lossless compressor make every possible input strictly shorter?",
     "answer": "It is a counting argument: the 2^n inputs of length n must map into only 2^n - 1 strings shorter than n, so by the pigeonhole principle two distinct inputs collide on one output. The decompressor cannot recover both from it, contradicting losslessness, so any real compressor must expand some inputs.",
     "difficulty": 2,
@@ -590,7 +600,7 @@
     "domain": "cs",
     "topic": "birthday problem",
     "title": "How soon do random IDs collide",
-    "body": "A system issues identifiers by picking a uniformly random 64-bit number for each new object. There are roughly 1.8 x 10^19 possible values, so a collision feels impossibly remote. But a collision only needs some pair among the issued ids to match, and the number of pairs among m ids grows like m squared, not like m. For a space of N equally likely values, the point where a collision becomes more likely than not sits near the square root of N.",
+    "body": "A system issues identifiers by picking a uniformly random 64-bit number for each new object. There are roughly 1.8 x 10^19 possible values, so a collision feels impossibly remote. But a collision only needs some pair among the issued ids to match, and the number of pairs among m ids grows like m squared, not like m.",
     "prompt": "Roughly how many uniformly random 64-bit identifiers must be issued before a duplicate is more likely than not, and why is it so few?",
     "answer": "About five billion, which is roughly 2^32, the square root of the 2^64 space. A collision depends on the number of pairs of ids rather than the count of ids, and pairs grow quadratically, so the probability of some match crosses one half near the square root of N.",
     "difficulty": 2,
@@ -609,10 +619,10 @@
     "domain": "cs",
     "topic": "cycle detection",
     "title": "A cycle found with two pointers",
-    "body": "A singly linked list may end in a cycle: some node's next pointer jumps back to an earlier node instead of to null. You must decide whether a cycle exists using only a constant amount of extra memory, so marking visited nodes or storing them in a set is not allowed, and you may not modify the list. You hold the head pointer and may follow next pointers as often as you like.",
+    "body": "A singly linked list may end in a cycle, where some node's next pointer jumps back to an earlier node instead of to null. You must decide whether a cycle exists using only a constant amount of extra memory, so marking visited nodes or storing them in a set is not allowed, and you may not modify the list.",
     "prompt": "How can you detect a cycle in a singly linked list using only constant extra memory, and why is the method guaranteed to work?",
     "answer": "Advance one pointer one node per step and a second two nodes per step: if they ever meet there is a cycle, and if the fast one reaches null there is not. Once both are inside the cycle the fast pointer closes the gap by exactly one node per step, so the gap must reach zero and they meet; it can never leap past.",
-    "difficulty": 2,
+    "difficulty": 1,
     "sources": [
       "https://en.wikipedia.org/wiki/Cycle_detection"
     ],
@@ -628,10 +638,10 @@
     "domain": "cs",
     "topic": "information lower bounds",
     "title": "Eight balls, two weighings",
-    "body": "You have eight balls that look identical. Seven weigh exactly the same and one is slightly heavier. Your only tool is a balance scale, which compares two groups and reports one of three results: left heavier, right heavier, or balanced. Each use counts as one weighing no matter how many balls you place on it, and you cannot weigh individual balls against a known reference. Find the heavy ball using the scale as few times as possible in the worst case.",
+    "body": "You have eight balls that look identical. Seven weigh exactly the same and one is slightly heavier. Your only tool is a balance scale, which compares two groups and reports left heavier, right heavier, or balanced. Each use counts as one weighing no matter how many balls you place on it. Find the heavy ball using the scale as few times as possible.",
     "prompt": "How do you find the one heavy ball among eight identical-looking balls using a balance scale only twice?",
     "answer": "Weigh three against three. If they balance, the heavy ball is one of the two set aside and one more weighing identifies it; if not, take the heavier three and weigh one against one. Two is also optimal, because each weighing yields three outcomes, so two weighings distinguish at most nine cases and eight balls need eight.",
-    "difficulty": 2,
+    "difficulty": 1,
     "sources": [],
     "tags": [
       "information-theory",
@@ -645,7 +655,7 @@
     "domain": "cs",
     "topic": "distributed agreement",
     "title": "The generals who can never be sure",
-    "body": "Two generals camp on opposite hills with the enemy between them. They must attack at the same hour or lose; either one attacking alone is a defeat. Their only communication is a messenger who crosses enemy ground and may be captured silently. General A sends 'attack at dawn'. B must acknowledge, or A will not know the plan arrived. But B's acknowledgement can also be lost, so B needs an acknowledgement of that acknowledgement, and so on without end.",
+    "body": "Two generals camp on opposite hills with the enemy between them. They must attack at the same hour or lose, since either one attacking alone is a defeat. Their only communication is a messenger who crosses enemy ground and may be captured silently. General A sends 'attack at dawn'. B must acknowledge, or A will not know the plan arrived. But B's acknowledgement can also be lost.",
     "prompt": "Can two parties communicating only over a channel that may lose any message guarantee they agree on a plan, and what settles the question?",
     "answer": "No, the problem is provably unsolvable. Take any protocol that works and shorten it to the fewest messages possible; the final message might be lost, and since the protocol still had to work in that case, that message was never necessary. Repeating the argument strips away every message, contradicting the claim that any were needed.",
     "difficulty": 3,
@@ -663,7 +673,7 @@
     "domain": "cs",
     "topic": "isolation levels",
     "title": "Nobody is on call",
-    "body": "A hospital requires at least one doctor on call at all times. Alice and Bob are both on call right now. Each simultaneously opens a transaction, counts the doctors currently on call, sees two, decides stepping away is safe, and sets her own row to off-call. The database runs snapshot isolation: each transaction reads a consistent snapshot taken when it began and commits unless another transaction wrote a row it also wrote. Alice writes only Alice's row; Bob writes only Bob's.",
+    "body": "A hospital requires at least one doctor on call at all times. Alice and Bob are both on call right now. Each simultaneously opens a transaction, counts the doctors currently on call, sees two, decides stepping away is safe, and sets her own row to off-call. The database runs snapshot isolation, so each transaction reads a consistent snapshot taken when it began and commits unless another transaction wrote a row it also wrote.",
     "prompt": "Under snapshot isolation, two transactions each confirm two doctors are on call and then each takes only herself off call: why do both commit, leaving nobody on call?",
     "answer": "Snapshot isolation aborts a transaction only on a write-write conflict, and here the two write disjoint rows, so neither is stopped. The real conflict is between one transaction's read set and the other's write, an anomaly called write skew, which snapshot isolation never checks and serializable isolation does.",
     "difficulty": 3,
@@ -682,7 +692,7 @@
     "domain": "cs",
     "topic": "page replacement",
     "title": "When more memory makes things worse",
-    "body": "A process touches pages in this order: 1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5. Memory starts empty, and pages are evicted first-in-first-out, meaning whichever page has been resident longest is thrown out regardless of how recently it was used. Count the page faults with three frames of memory available, then count them again with four frames. Intuition insists that more memory cannot possibly hurt.",
+    "body": "A process touches pages in this order: 1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5. Memory starts empty, and pages are evicted first-in-first-out, so whichever page has been resident longest is thrown out regardless of how recently it was used. Count the page faults with three frames of memory, then count them again with four.",
     "prompt": "Under FIFO page replacement, can giving a process more memory frames actually increase its page faults?",
     "answer": "Yes, and it is called Belady's anomaly: the reference string 1,2,3,4,1,2,5,1,2,3,4,5 causes 9 faults with three frames but 10 with four. FIFO ignores usage, so the set of pages it holds with more frames need not contain the set it holds with fewer, unlike stack algorithms such as LRU, which cannot suffer this.",
     "difficulty": 3,
@@ -701,12 +711,13 @@
     "domain": "cs",
     "topic": "regular expressions",
     "title": "Why a simple regex can hang on a short string",
-    "body": "A backtracking regex engine matches by trying choices and undoing them when they fail. Against a pattern like (a+)+$ and a string of a's ending in one b, it can split the a's among the repeated groups in exponentially many ways, trying each before giving up. A few dozen characters can take seconds. Engines built on deterministic finite automata avoid this: they track every possible match state at once and scan in linear time. Worst-case cost is set by the matching strategy, not the pattern alone.",
+    "body": "A backtracking regex engine matches by trying choices and undoing them when they fail. Against a pattern like (a+)+$ and a string of a's ending in one b, it can split the a's among the repeated groups in exponentially many ways, trying each before giving up. A few dozen characters can take seconds. Engines built on deterministic finite automata avoid this by tracking every possible match state at once.",
     "prompt": "Why can a regular expression that looks simple take exponential time to match on some inputs?",
     "answer": "Backtracking engines explore every way of dividing the input among repeated groups, and for patterns like (a+)+ that count grows exponentially, so a short string can take seconds. Engines based on deterministic finite automata avoid this by tracking all match states simultaneously and running in linear time.",
     "difficulty": 2,
     "sources": [
-      "https://en.wikipedia.org/wiki/ReDoS"
+      "https://en.wikipedia.org/wiki/ReDoS",
+      "https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS"
     ],
     "tags": [
       "regex",
@@ -718,13 +729,14 @@
     "type": "concept",
     "domain": "cs",
     "topic": "public-key cryptography",
-    "title": "The lock that only multiplies one way",
-    "body": "RSA hands everyone your public key, which contains the product of two large secret primes, so anyone can encrypt to you but only you can decrypt. The security rests on a gap: multiplying two big primes is fast, yet recovering them from the product is believed infeasible once the numbers are large enough. That asymmetry is a trapdoor, easy one way and hard to reverse without a secret. Public-key cryptography turns a hard-to-invert computation into a lock only the key-holder can open.",
+    "title": "A lock that only multiplies one way",
+    "body": "RSA hands everyone your public key, which contains the product of two large secret primes, so anyone can encrypt to you but only you can decrypt. The security rests on a gap: multiplying two big primes is fast, yet recovering them from the product is believed infeasible once the numbers are large enough. That asymmetry is a trapdoor, easy one way and hard to reverse without a secret.",
     "prompt": "What makes RSA secure, and why can its public key be shared openly?",
     "answer": "RSA's public key includes the product of two large secret primes; multiplying them is easy, but factoring the product back is believed infeasible at large sizes. That one-way gap is a trapdoor, so publishing the public key does not reveal the private key needed to decrypt.",
     "difficulty": 2,
     "sources": [
-      "https://en.wikipedia.org/wiki/RSA_cryptosystem"
+      "https://en.wikipedia.org/wiki/RSA_cryptosystem",
+      "https://www.rfc-editor.org/rfc/rfc8017.html"
     ],
     "tags": [
       "cryptography",
@@ -737,10 +749,10 @@
     "domain": "cs",
     "topic": "merkle trees",
     "title": "Proving one item without the whole dataset",
-    "body": "A Merkle tree hashes each data block, then repeatedly hashes pairs of hashes until one root remains. To prove a particular block sits under a known root, you need only the sibling hash at each level up the tree, about log n of them, not the other blocks. Recomputing the root from the block and that short path must match the known root. So verifying one file from a huge set costs work proportional to the logarithm of the data, not its size.",
+    "body": "A Merkle tree hashes each data block, then repeatedly hashes pairs of hashes until one root remains. To prove a particular block sits under a known root, you need only the sibling hash at each level up the tree, about log n of them, not the other blocks. Recomputing the root from the block and that short path must match the known root.",
     "prompt": "How does a Merkle tree let you verify one block belongs to a dataset without downloading all of it?",
     "answer": "You recompute the path from the block up to the root using only one sibling hash per level, about log n hashes, and check it against the known root. A membership proof therefore costs work proportional to the logarithm of the dataset size rather than the whole dataset.",
-    "difficulty": 2,
+    "difficulty": 1,
     "sources": [
       "https://en.wikipedia.org/wiki/Merkle_tree"
     ],
@@ -755,7 +767,7 @@
     "domain": "cs",
     "topic": "heaps",
     "title": "Why building a heap is O(n), not O(n log n)",
-    "body": "Building a binary heap by inserting elements one at a time costs O(n log n), since each of n insertions can sift up through log n levels. But there is a faster way: place all elements in the array and sift each one down. Most nodes sit near the leaves and barely move; only the few near the root travel far. Summing that work across all levels gives a series totalling O(n). Cost concentrated where nodes are rare can stay linear overall.",
+    "body": "Building a binary heap by inserting elements one at a time costs O(n log n), since each of n insertions can sift up through log n levels. But there is a faster way. Place all elements in the array and sift each one down. Most nodes sit near the leaves and barely move, and only the few near the root travel far. Summing that work across all levels gives a series totalling O(n).",
     "prompt": "Why does building a binary heap bottom-up take O(n) time rather than O(n log n)?",
     "answer": "Sifting a node down costs work proportional to its height, and almost all nodes sit near the leaves with tiny height while only a few near the root are expensive. Summing height over all nodes gives a convergent series bounded by O(n), unlike the O(n log n) of inserting one at a time.",
     "difficulty": 2,
@@ -773,9 +785,9 @@
     "domain": "cs",
     "topic": "shortest paths",
     "title": "Why Dijkstra breaks on negative edges",
-    "body": "Dijkstra's algorithm finds shortest paths by repeatedly finalizing the nearest unvisited node, assuming its distance can never improve later. That holds only when edges are non-negative: once you reach a node by the shortest route, no detour through farther nodes can beat it. Add a negative edge and a longer-looking path can suddenly become cheaper after the node is already locked in, so the answer can be wrong. Bellman-Ford instead relaxes every edge repeatedly. A greedy commitment is only safe when no later step can lower the cost.",
+    "body": "Dijkstra's algorithm finds shortest paths by repeatedly settling the nearest unvisited node, assuming its distance can never improve later. That holds only when edges are non-negative: once you reach a node by the shortest route, no detour through farther nodes can beat it. Add a negative edge and a longer-looking path can suddenly become cheaper after the node is already locked in.",
     "prompt": "Why does Dijkstra's algorithm fail on graphs with negative edge weights?",
-    "answer": "Dijkstra finalizes the closest unvisited node and never revisits it, which is valid only when no later path can be cheaper, true only for non-negative edges. A negative edge can make an already-finalized node's distance improvable, so the result may be wrong; Bellman-Ford relaxes edges repeatedly to handle this.",
+    "answer": "Dijkstra settles the closest unvisited node and never revisits it, which is valid only when no later path can be cheaper, and that holds only for non-negative edges. A negative edge can make an already-settled node's distance improvable, so the result may be wrong. Bellman-Ford relaxes edges repeatedly instead.",
     "difficulty": 2,
     "sources": [
       "https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm"
@@ -791,12 +803,13 @@
     "domain": "cs",
     "topic": "character encoding",
     "title": "How UTF-8 finds character boundaries",
-    "body": "UTF-8 encodes each character as one to four bytes, and a byte's high bits announce its role: a leading byte has a distinctive pattern, and every continuation byte begins with the bits 10. So from any position you can tell whether you are mid-character and back up at most three bytes to a boundary, making it self-synchronizing. Because the 128 ASCII characters map to single bytes identical to ASCII, old text is already valid UTF-8. Good encodings build structure into the bytes so parsing needs no outside state.",
+    "body": "UTF-8 encodes each character as one to four bytes, and a byte's high bits announce its role. A leading byte has a distinctive pattern, and every continuation byte begins with the bits 10. So from any position you can tell whether you are mid-character and back up at most three bytes to a boundary. Because the 128 ASCII characters map to single bytes identical to ASCII, old text is already valid UTF-8.",
     "prompt": "How does UTF-8 let you find character boundaries from an arbitrary byte position while staying compatible with ASCII?",
-    "answer": "Continuation bytes all begin with the bits 10 while leading bytes do not, so from any position you can back up at most three bytes to a character start; the encoding is self-synchronizing. ASCII characters encode as single bytes identical to their ASCII values, so existing ASCII text is already valid UTF-8.",
-    "difficulty": 2,
+    "answer": "Continuation bytes all begin with the bits 10 while leading bytes do not, so from any position you can back up at most three bytes to a character start, making the encoding self-synchronizing. ASCII characters encode as single bytes identical to their ASCII values, so existing ASCII text is already valid UTF-8.",
+    "difficulty": 1,
     "sources": [
-      "https://en.wikipedia.org/wiki/UTF-8"
+      "https://en.wikipedia.org/wiki/UTF-8",
+      "https://www.rfc-editor.org/rfc/rfc3629.html"
     ],
     "tags": [
       "encoding",
@@ -809,7 +822,7 @@
     "domain": "cs",
     "topic": "integer representation",
     "title": "Why computers use two's complement",
-    "body": "To store negative integers, two's complement writes minus x as the bit pattern that, added to x, wraps around to zero. This has two payoffs. There is a single representation of zero, unlike sign-magnitude, which wastes a pattern on negative zero. And addition, subtraction, and comparison reuse the exact circuitry of unsigned arithmetic, so the hardware never checks signs. Negating a number is just flipping every bit and adding one. The design principle: choose a representation that makes the common operation fall out for free.",
+    "body": "To store negative integers, two's complement writes minus x as the bit pattern that, added to x, wraps around to zero. This has two payoffs. There is a single representation of zero, unlike sign-magnitude, which wastes a pattern on negative zero. And addition, subtraction, and comparison reuse the exact circuitry of unsigned arithmetic, so the hardware never checks signs. Negating a number is just flipping every bit and adding one.",
     "prompt": "Why do computers represent signed integers in two's complement rather than sign-magnitude?",
     "answer": "Two's complement has a single representation of zero and, crucially, lets addition, subtraction, and comparison reuse the same hardware as unsigned arithmetic without checking signs. Negation is simply inverting all bits and adding one.",
     "difficulty": 2,
@@ -827,10 +840,10 @@
     "domain": "cs",
     "topic": "error-correcting codes",
     "title": "How a code fixes an error it cannot see",
-    "body": "A Hamming code adds parity bits at power-of-two positions, each covering a fixed subset of the data bits. When a message arrives, the receiver recomputes each parity check. If all pass, the data is clean. If some fail, the positions of the failing checks, read together as a binary number, spell out exactly which bit flipped, so you flip it back. The one idea beyond mere detection is to arrange the redundancy so the pattern of failures encodes the location of the fault, turning detection into correction.",
+    "body": "A Hamming code adds parity bits at power-of-two positions, each covering a fixed subset of the data bits. When a message arrives, the receiver recomputes each parity check. If all pass, the data is clean. If some fail, the positions of the failing checks, read together as a binary number, spell out exactly which bit flipped, so you flip it back.",
     "prompt": "How does a Hamming code not just detect but locate and correct a single-bit error?",
     "answer": "Each parity bit covers a specific subset of positions, chosen so that the set of failing parity checks, read as a binary number, equals the index of the corrupted bit. Reading off that index tells you which bit to flip back, upgrading detection into correction.",
-    "difficulty": 2,
+    "difficulty": 3,
     "sources": [
       "https://en.wikipedia.org/wiki/Hamming_code"
     ],
@@ -845,7 +858,7 @@
     "domain": "cs",
     "topic": "branch prediction",
     "title": "Why the CPU guesses which way a branch goes",
-    "body": "A modern CPU pipelines instructions, starting new ones before earlier ones finish. But a conditional branch does not reveal its direction until late, and the pipeline cannot wait. So the processor predicts the outcome and speculatively executes down the guessed path. A correct guess costs nothing; a wrong one discards that work and restarts, a penalty of ten to twenty cycles. This is why a loop over sorted data can beat the same loop over shuffled data. Speculation trades wasted work on misses for speed on hits.",
+    "body": "A modern CPU pipelines instructions, starting new ones before earlier ones finish. But a conditional branch does not reveal its direction until late, and the pipeline cannot wait. So the processor predicts the outcome and speculatively executes down the guessed path. A correct guess costs nothing, while a wrong one discards that work and restarts, a penalty of ten to twenty cycles. This is why a loop over sorted data can beat the same loop over shuffled data.",
     "prompt": "Why does a CPU predict the outcome of a conditional branch instead of waiting to find out?",
     "answer": "A pipelined CPU must keep fetching instructions, but a branch's direction resolves late, so it speculatively executes the predicted path. A correct prediction is free; a wrong one flushes the pipeline at a cost of ten to twenty cycles, which is why predictable branches, as over sorted data, run faster.",
     "difficulty": 2,
@@ -863,12 +876,13 @@
     "domain": "cs",
     "topic": "logical clocks",
     "title": "Ordering events without a shared clock",
-    "body": "In a distributed system, machines' physical clocks drift, so a raw timestamp cannot say which of two events came first. Lamport clocks solve a weaker but sufficient problem: each process keeps a counter, increments it on every event, and stamps outgoing messages with it; a receiver bumps its counter past any stamp it sees. This guarantees that if one event could have caused another, its number is smaller. It captures the happens-before relation, a partial order, with no synchronized time. Sometimes you need causal order, not real time.",
-    "prompt": "How do Lamport logical clocks order events across machines without synchronized physical clocks?",
-    "answer": "Each process keeps a counter it increments on every event and attaches to messages; a receiver advances its counter past any timestamp it sees. This guarantees that if one event could have caused another it carries a smaller number, capturing the happens-before partial order without real time.",
-    "difficulty": 2,
+    "body": "In a distributed system, machines' physical clocks drift, so a raw timestamp cannot say which of two events came first. Lamport clocks solve a weaker but sufficient problem. Each process keeps a counter, increments it on every event, and stamps outgoing messages with it, and a receiver bumps its counter past any stamp it sees. This guarantees that if one event could have caused another, its number is smaller.",
+    "prompt": "Physical clocks on different machines drift apart. How can you still tell which of two events came first?",
+    "answer": "Each process keeps a counter it increments on every event and attaches to messages, and a receiver advances its counter past any timestamp it sees. This guarantees that if one event could have caused another it carries a smaller number, capturing the happens-before partial order without any shared physical time.",
+    "difficulty": 3,
     "sources": [
-      "https://en.wikipedia.org/wiki/Lamport_timestamp"
+      "https://en.wikipedia.org/wiki/Lamport_timestamp",
+      "https://lamport.azurewebsites.net/pubs/time-clocks.pdf"
     ],
     "tags": [
       "distributed-systems",
@@ -881,7 +895,7 @@
     "domain": "cs",
     "topic": "string matching",
     "title": "Why good string search never looks back",
-    "body": "The naive way to find a pattern in text slides it one step at a time and, after a mismatch, starts over, re-examining text it already checked. Knuth-Morris-Pratt precomputes, from the pattern alone, how far it can safely jump after a mismatch by knowing which prefix of the pattern still matches. Because that table already encodes the pattern's internal repeats, the text pointer never moves backward. The whole search runs in time proportional to text length plus pattern length. Precomputing structure in the pattern buys linear-time search.",
+    "body": "The naive way to find a pattern in text slides it one step at a time and, after a mismatch, starts over, re-examining text it already checked. Knuth-Morris-Pratt precomputes, from the pattern alone, how far it can safely jump after a mismatch by knowing which prefix of the pattern still matches. Because that table already encodes the pattern's internal repeats, the text pointer never moves backward.",
     "prompt": "How does the Knuth-Morris-Pratt algorithm match a pattern in linear time without re-scanning the text?",
     "answer": "It precomputes a table giving, for each position in the pattern, the longest prefix that is also a suffix, so after a mismatch it shifts the pattern by the right amount without moving the text pointer backward. The search then runs in time proportional to text length plus pattern length.",
     "difficulty": 2,
@@ -899,9 +913,9 @@
     "domain": "cs",
     "topic": "quicksort",
     "title": "The sort that is fast until it isn't",
-    "body": "Quicksort picks a pivot, partitions the rest into smaller and larger, and recurses on each side. When the pivot lands near the middle, the array halves each time and the average work is O(n log n). But a pivot that always lands at an extreme, such as the last element on already-sorted input, peels off one element per step, degrading to O(n squared). Picking the pivot randomly or as a median-of-three makes that collapse vanishingly unlikely. Average-case speed can hide a worst case you must design against.",
+    "body": "Quicksort picks a pivot, partitions the rest into smaller and larger, and recurses on each side. When the pivot lands near the middle, the array halves each time and the average work is O(n log n). But a pivot that always lands at an extreme, such as the last element on already-sorted input, peels off one element per step, degrading to O(n squared).",
     "prompt": "Why is quicksort O(n log n) on average but O(n squared) in the worst case, and how is the worst case avoided?",
-    "answer": "A balanced pivot halves the array each level for O(n log n) work, but a consistently extreme pivot, such as the last element of already-sorted data, peels off one element at a time for O(n squared). Randomizing the pivot or using median-of-three makes such splits vanishingly unlikely.",
+    "answer": "A balanced pivot halves the array each level for O(n log n) work, but a consistently extreme pivot, such as the last element of already-sorted data, peels off one element at a time for O(n squared). Choosing the pivot at random or by median-of-three makes such splits vanishingly unlikely.",
     "difficulty": 2,
     "sources": [
       "https://en.wikipedia.org/wiki/Quicksort"
@@ -917,12 +931,13 @@
     "domain": "cs",
     "topic": "copy-on-write",
     "title": "The fork that copies nothing",
-    "body": "When a process forks, the child gets its own copy of the parent's entire memory. Copying gigabytes eagerly would be wasteful, especially as the child often just calls exec and discards it all. Instead the kernel maps both processes to the same physical pages, marked read-only. Reads are shared for free. Only a write triggers a page fault that copies that one page privately. The idea generalizes: share until a write forces divergence, and pay only for what actually changes.",
+    "body": "When a process forks, the child gets its own copy of the parent's entire memory. Copying gigabytes eagerly would be wasteful, especially as the child often just calls exec and discards it all. Instead the kernel maps both processes to the same physical pages, marked read-only. Reads are shared for free, and only a write triggers a page fault that copies that one page privately.",
     "prompt": "How does copy-on-write make fork() cheap even for a process using gigabytes of memory?",
     "answer": "The kernel points both parent and child at the same physical pages marked read-only instead of copying them, so reads are shared for free. A write triggers a page fault that copies just that one page, so you pay only for the pages that actually change.",
     "difficulty": 2,
     "sources": [
-      "https://en.wikipedia.org/wiki/Copy-on-write"
+      "https://en.wikipedia.org/wiki/Copy-on-write",
+      "https://man7.org/linux/man-pages/man2/fork.2.html"
     ],
     "tags": [
       "operating-systems",
@@ -934,11 +949,11 @@
     "type": "concept",
     "domain": "cs",
     "topic": "tail recursion",
-    "title": "Recursion that doesn't grow the stack",
-    "body": "Each function call normally pushes a stack frame holding its local state, so deep recursion can overflow the stack. But when a call is in tail position, the last thing a function does with no work left afterward, the caller's frame is no longer needed. A compiler can reuse it instead of pushing a new one, turning the recursion into a loop in constant stack space. This is why some languages guarantee tail-call elimination. If a frame has no remaining work, do not keep it around.",
+    "title": "Recursion that does not grow the stack",
+    "body": "Each function call normally pushes a stack frame holding its local state, so deep recursion can overflow the stack. But when a call is in tail position, meaning the last thing a function does with no work left afterward, the caller's frame is no longer needed. A compiler can reuse it instead of pushing a new one, turning the recursion into a loop in constant stack space.",
     "prompt": "Why can a tail-recursive function run in constant stack space when ordinary recursion cannot?",
     "answer": "A tail call is the last thing a function does, so once it is made the caller's frame holds no pending work and can be reused rather than pushed anew. The compiler turns the recursion into a loop using constant stack, avoiding the overflow ordinary recursion risks.",
-    "difficulty": 2,
+    "difficulty": 1,
     "sources": [
       "https://en.wikipedia.org/wiki/Tail_call"
     ],
@@ -953,9 +968,9 @@
     "domain": "cs",
     "topic": "permutation cycles",
     "title": "One hundred prisoners and the boxes",
-    "body": "A hundred prisoners are numbered. In a room sit a hundred boxes, each hiding a distinct prisoner's number in random order. One at a time, each prisoner may open fifty boxes, must find their own number, and cannot communicate or rearrange anything afterward. If everyone succeeds, all go free; if even one fails, all are executed. Independent guessing gives success probability near one in a nonillion, effectively zero. Yet a strategy frees them about a third of the time. What could possibly link the prisoners' separate searches?",
+    "body": "A hundred prisoners are numbered. In a room sit a hundred boxes, each hiding a distinct prisoner's number in random order. One at a time, each prisoner may open fifty boxes, must find their own number, and cannot communicate or rearrange anything afterward. If everyone succeeds, all go free, and if even one fails, all are executed. Independent guessing gives a success probability effectively equal to zero. Yet a strategy frees them about a third of the time.",
     "prompt": "How can 100 prisoners, each opening only half the boxes to find their own number, all succeed about 31% of the time?",
-    "answer": "Each prisoner opens the box labelled with their own number, then the box labelled with the number found inside, following the cycle of the underlying random permutation. They all succeed unless some cycle exceeds 50 boxes, and at most one such long cycle can exist, so the whole group survives about 31% of the time instead of essentially never.",
+    "answer": "Each prisoner opens the box labeled with their own number, then the box labeled with the number found inside, following the cycle of the underlying random permutation. They all succeed unless some cycle exceeds 50 boxes, and at most one such long cycle can exist, so the whole group survives about 31% of the time instead of essentially never.",
     "difficulty": 3,
     "sources": [
       "https://en.wikipedia.org/wiki/100_prisoners_problem"
@@ -970,8 +985,8 @@
     "type": "puzzle",
     "domain": "cs",
     "topic": "bitwise operations",
-    "title": "The missing number, found by cancelling",
-    "body": "An array holds every integer from 0 to n except one, in scrambled order: n numbers covering n+1 possible values, with one absent. You want the missing value. Summing all of them and subtracting works but can overflow for large n. There is a method using no arithmetic at all, only a single pass and one accumulator, that never overflows and uses constant memory. It leans on an operation with a peculiar property: applying it twice with the same value undoes it. What is the trick?",
+    "title": "The missing number, found by canceling",
+    "body": "An array holds every integer from 0 to n except one, in scrambled order: n numbers covering n+1 possible values, with one absent. You want the missing value. Summing all of them and subtracting works but can overflow for large n. There is a method using no arithmetic at all, only a single pass and one accumulator, leaning on an operation that undoes itself when applied twice.",
     "prompt": "Given all integers from 0 to n with exactly one missing, how do you find it in a single pass using no arithmetic and constant memory?",
     "answer": "XOR together all the array values and all the numbers 0 through n into one accumulator. Because XOR is its own inverse and is commutative, every present value cancels against its twin, leaving only the missing number, and it can never overflow.",
     "difficulty": 2,
@@ -989,9 +1004,9 @@
     "domain": "cs",
     "topic": "consistent hashing",
     "title": "Adding a server without reshuffling everything",
-    "body": "A cache spreads keys across n servers by hashing each key and taking the result modulo n. It works, until you add or remove a server. Because n changes, nearly every key's hash-mod-n changes too, so almost the entire cache must move at once, hammering the backing store. You want a scheme where adding the nth server relocates only a small share of keys. What has to change about the way keys are assigned to servers?",
+    "body": "A cache spreads keys across n servers by hashing each key and taking the result modulo n. It works, until you add or remove a server. Because n changes, nearly every key's hash-mod-n changes too, so almost the entire cache must move at once, hammering the backing store. You want a scheme where adding the nth server relocates only a small share of keys.",
     "prompt": "Why does modulo-based sharding force nearly all keys to move when a server is added, and how does consistent hashing avoid it?",
-    "answer": "With hash mod n, changing n alters almost every key's assignment, so the whole cache reshuffles. Consistent hashing instead places servers and keys on a shared ring and assigns each key to the next server clockwise, so adding a server steals only the keys between it and its neighbour, about a 1/n fraction.",
+    "answer": "With hash mod n, changing n alters almost every key's assignment, so the whole cache reshuffles. Consistent hashing instead places servers and keys on a shared ring and assigns each key to the next server clockwise, so adding a server steals only the keys between it and its neighbor, about a 1/n fraction.",
     "difficulty": 2,
     "sources": [
       "https://en.wikipedia.org/wiki/Consistent_hashing"
@@ -1007,7 +1022,7 @@
     "domain": "cs",
     "topic": "reservoir sampling",
     "title": "One fair pick from an endless stream",
-    "body": "Records stream past one at a time, and you must keep exactly one, chosen uniformly at random from all of them. The catch: you never learn how many there are until the stream ends, and you cannot store them or rewind. Keeping the first, or the last, is obviously biased. Somehow you must give the millionth record exactly the same chance as the first, using a single slot of memory and one random number generated on demand. How?",
+    "body": "Records stream past one at a time, and you must keep exactly one, chosen uniformly at random from all of them. The catch is that you never learn how many there are until the stream ends, and you cannot store them or rewind. Keeping the first, or the last, is obviously biased. Somehow the millionth record must get exactly the same chance as the first, using a single slot of memory.",
     "prompt": "How do you pick one item uniformly at random from a stream of unknown length using only one slot of memory?",
     "answer": "Keep the first item, then replace what you hold with the i-th item with probability 1/i as it arrives. When the stream ends after n items, every item is held with probability exactly 1/n, because each later replacement chance precisely balances the earlier survival odds.",
     "difficulty": 2,
@@ -1025,7 +1040,7 @@
     "domain": "cs",
     "topic": "combinatorial game theory",
     "title": "The game of Nim",
-    "body": "Two players face several piles of stones. On your turn you remove any positive number of stones from a single pile, and whoever takes the last stone wins. With piles of 3, 4, and 5, is it better to move first or second, and how should you play? Reasoning pile by pile gets tangled fast, because a move in one pile changes the balance of the whole position. There is a single number that decides every Nim position outright. What is it?",
+    "body": "Two players face several piles of stones. On your turn you remove any positive number of stones from a single pile, and whoever takes the last stone wins. With piles of 3, 4, and 5, is it better to move first or second? Reasoning pile by pile gets tangled fast, because a move in one pile changes the balance of the whole position. There is a single number that decides every Nim position outright.",
     "prompt": "In Nim with piles of 3, 4, and 5, should you move first, and what quantity determines the winning move?",
     "answer": "Compute the bitwise XOR of the pile sizes, the nim-sum; here 3 XOR 4 XOR 5 equals 2, which is nonzero, so the first player wins. The winning strategy is to always move to a position whose nim-sum is zero, handing the opponent a losing position.",
     "difficulty": 3,
@@ -1043,7 +1058,7 @@
     "domain": "cs",
     "topic": "fast multiplication",
     "title": "Multiplying big numbers with three, not four",
-    "body": "To multiply two n-digit numbers, the schoolbook method multiplies every digit of one by every digit of the other, about n squared single-digit products. Split each number into a high and low half and the product naively expands into four half-size multiplications, which recursion shows is still n squared. But the cross term you need can be recovered from the three products you already have, so one multiplication can be dropped. Trading a multiply for a few cheap additions changes the exponent. What running time results?",
+    "body": "To multiply two n-digit numbers, the schoolbook method multiplies every digit of one by every digit of the other, about n squared single-digit products. Split each number into a high and low half and the product naively expands into four half-size multiplications, which recursion shows is still n squared. But the cross term you need can be recovered from the three products you already have, so one multiplication can be dropped.",
     "prompt": "How does splitting each factor in half let you multiply two n-digit numbers in fewer than n squared digit operations?",
     "answer": "The four half-size products the naive split needs reduce to three, because the cross term equals a product of sums minus the two you already computed. Recursing on three half-size multiplications instead of four gives about O(n^1.585), beating the quadratic schoolbook method.",
     "difficulty": 3,
@@ -1053,6 +1068,191 @@
     "tags": [
       "algorithms",
       "arithmetic"
+    ]
+  },
+  {
+    "id": "cs-0059",
+    "type": "concept",
+    "domain": "cs",
+    "topic": "parallel speedup",
+    "title": "The serial part sets the ceiling",
+    "body": "Suppose 95% of a program can be split across cores and 5% cannot. Throw a thousand cores at it and the parallel part becomes almost free, but the serial 5% is untouched, so the whole run can never take less than a twentieth of its original time. Amdahl's law puts the maximum speedup at 1 divided by the serial fraction. Adding hardware buys progressively less, and the limit depends on the code, not the budget.",
+    "prompt": "A program is 95% parallelisable. What is the most a thousand cores can do for it?",
+    "answer": "Speed it up twentyfold, and no more. Amdahl's law caps speedup at 1 divided by the serial fraction, so the untouched 5% alone takes a twentieth of the original runtime however many cores you add.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Amdahl%27s_law"
+    ],
+    "tags": [
+      "parallelism",
+      "performance"
+    ]
+  },
+  {
+    "id": "cs-0060",
+    "type": "concept",
+    "domain": "cs",
+    "topic": "disjoint sets",
+    "title": "A data structure that flattens as you use it",
+    "body": "Union-find tracks which elements share a group by giving each group a representative and pointing every member up a tree toward it. Two tricks make it fast. Union by rank always hangs the shorter tree under the taller one, and path compression repoints every node visited during a lookup straight at the root. Each query therefore pays for the next, and the amortized cost per operation is the inverse Ackermann function, under 5 for any input that will ever exist.",
+    "prompt": "What makes union-find get cheaper the more you query it?",
+    "answer": "Path compression: each lookup repoints every node it walks past directly at the group's root, so later lookups on those nodes are shorter. Combined with union by rank, that makes the amortized cost the inverse Ackermann function, effectively a small constant.",
+    "difficulty": 3,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Disjoint-set_data_structure"
+    ],
+    "tags": [
+      "data-structures",
+      "complexity"
+    ]
+  },
+  {
+    "id": "cs-0061",
+    "type": "concept",
+    "domain": "cs",
+    "topic": "queueing theory",
+    "title": "Three numbers, and you only need two",
+    "body": "Little's law says the average number of items in any stable system equals the arrival rate times the average time each item spends inside. A queue taking 100 requests per second, each lingering 0.2 seconds, holds 20 on average. It assumes nothing about arrival patterns, service order, or how many servers there are, which is why it applies to a checkout line and a thread pool alike.",
+    "prompt": "Your service handles 100 requests a second and each takes 0.2 seconds. How many are in flight at once, and what did you have to assume?",
+    "answer": "Twenty, by Little's law: average items in the system equals arrival rate times average time spent in it. It assumes only that the system is stable over the period measured, not any particular arrival pattern, service order or server count.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Little%27s_law"
+    ],
+    "tags": [
+      "performance",
+      "queueing"
+    ]
+  },
+  {
+    "id": "cs-0062",
+    "type": "concept",
+    "domain": "cs",
+    "topic": "lock-free programming",
+    "title": "The value that changed back",
+    "body": "Lock-free code often reads a value, computes a new one, then uses compare-and-swap to write it only if the old value is still there. The check can be fooled. Another thread may change A to B and back to A while you were computing, so your swap succeeds even though the world moved underneath it. In a linked structure the node you re-pointed at may have been freed and reallocated. Tagged pointers or hazard pointers fix it by making the comparison see the change.",
+    "prompt": "Compare-and-swap confirms the value is unchanged, and your lock-free update is still wrong. How?",
+    "answer": "This is the ABA problem. Another thread changed the value from A to B and back to A, so the comparison passes while the underlying object may have been freed and reallocated. Fixes attach a version counter to the value, or use hazard pointers, so a round trip is still visible as a change.",
+    "difficulty": 3,
+    "sources": [
+      "https://en.wikipedia.org/wiki/ABA_problem",
+      "https://en.cppreference.com/w/cpp/atomic/atomic/compare_exchange"
+    ],
+    "tags": [
+      "concurrency",
+      "atomics"
+    ]
+  },
+  {
+    "id": "cs-0063",
+    "type": "concept",
+    "domain": "cs",
+    "topic": "side channels",
+    "title": "How long a wrong answer takes",
+    "body": "The obvious way to check a secret token compares it byte by byte and returns as soon as two differ. That shortcut leaks. An attacker who can time the response learns how many leading bytes were right, so they can recover the secret one byte at a time instead of guessing the whole thing. The fix is a comparison that always examines every byte and combines the differences, spending the same time whatever the input.",
+    "prompt": "A token check returns as soon as it finds a mismatched byte. What does that hand an attacker?",
+    "answer": "The length of the correct prefix, measured through response time. That turns guessing the whole secret into guessing one byte at a time, which is exponentially easier. A constant-time comparison that always scans every byte removes the signal.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Timing_attack",
+      "https://www.openssl.org/docs/man3.0/man3/CRYPTO_memcmp.html"
+    ],
+    "tags": [
+      "security",
+      "cryptography"
+    ]
+  },
+  {
+    "id": "cs-0064",
+    "type": "concept",
+    "domain": "cs",
+    "topic": "dynamic programming",
+    "title": "The same subproblem, over and over",
+    "body": "Computing the nth Fibonacci number by naive recursion takes exponential time, because the call tree recomputes fib(30) millions of times on the way to fib(50). Nothing about the problem is hard. The waste is entirely repeated work on subproblems that overlap. Storing each result the first time it is computed collapses the tree to one node per distinct input, turning exponential time into linear.",
+    "prompt": "Naive recursive Fibonacci takes exponential time even though the answer is easy to compute. Where does the time go?",
+    "answer": "Into recomputing the same subproblems. The call tree evaluates each smaller Fibonacci number an exponential number of times, so caching each result on first computation collapses the work to one evaluation per distinct input and makes it linear.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Memoization",
+      "https://docs.python.org/3/library/functools.html"
+    ],
+    "tags": [
+      "algorithms",
+      "recursion"
+    ]
+  },
+  {
+    "id": "cs-0065",
+    "type": "concept",
+    "domain": "cs",
+    "topic": "storage engines",
+    "title": "Writing sequentially and paying for it later",
+    "body": "A B-tree updates a row by writing the page it lives on, which is a random write. A log-structured merge tree instead appends every change to a sorted in-memory buffer, flushes it as a new immutable file, and merges files in the background. Writes become sequential and fast. The cost is that a read may have to check several files, and background compaction rewrites data repeatedly, so throughput is bought with read work and write amplification.",
+    "prompt": "An LSM tree makes writes much faster than a B-tree. What does it give up to get that?",
+    "answer": "Read simplicity and total disk work. Because changes are appended as immutable sorted files rather than updated in place, a read may consult several files, and background compaction rewrites the same data repeatedly, which is write amplification.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Log-structured_merge-tree"
+    ],
+    "tags": [
+      "databases",
+      "storage"
+    ]
+  },
+  {
+    "id": "cs-0066",
+    "type": "concept",
+    "domain": "cs",
+    "topic": "scheduling",
+    "title": "One core, and everything appears to run at once",
+    "body": "A single core executes one instruction stream at a time, yet a laptop plays music while compiling. The operating system slices time into intervals of a few milliseconds and switches between runnable threads at each boundary, saving and restoring their registers. Switching is fast enough that the gaps fall below human perception. This is concurrency, meaning tasks that overlap in progress, which is not parallelism, meaning tasks that literally execute at the same instant.",
+    "prompt": "A machine with one core runs a dozen programs at once. What is actually happening, and what would parallelism mean instead?",
+    "answer": "The scheduler is time-slicing, giving each runnable thread a few milliseconds before saving its registers and switching to another, fast enough that the interruptions are imperceptible. That is concurrency, meaning overlapping progress. Parallelism would mean instructions genuinely executing in the same instant, which needs more than one core.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Preemption_(computing)",
+      "https://man7.org/linux/man-pages/man7/sched.7.html"
+    ],
+    "tags": [
+      "operating-systems",
+      "concurrency"
+    ]
+  },
+  {
+    "id": "cs-0067",
+    "type": "concept",
+    "domain": "cs",
+    "topic": "asymptotic notation",
+    "title": "When the worse algorithm wins",
+    "body": "Big-O describes how cost grows, and deliberately discards constant factors and lower-order terms. That is what makes it portable across machines, and also what it hides. An O(n log n) sort with heavy bookkeeping can lose to an O(n squared) insertion sort on twenty elements, which is why real sort implementations switch to insertion sort below a threshold. Asymptotic notation answers what happens as n grows, never what is fastest at the size you actually have.",
+    "prompt": "Production sort routines fall back to insertion sort on small inputs, despite its worse complexity. Why is that not a contradiction?",
+    "answer": "Big-O discards constant factors, and on small inputs those constants dominate. Insertion sort does very little work per element, so it beats an asymptotically better algorithm below some threshold. Complexity describes growth as n increases, not speed at a particular n.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Big_O_notation"
+    ],
+    "tags": [
+      "complexity",
+      "algorithms"
+    ]
+  },
+  {
+    "id": "cs-0068",
+    "type": "concept",
+    "domain": "cs",
+    "topic": "injection attacks",
+    "title": "Data that the parser reads as instructions",
+    "body": "Building a query by pasting user input into a string means the database receives one blob of text and cannot tell which parts you wrote and which the user did. Input containing a quote and a semicolon becomes syntax. Escaping helps but is easy to get wrong across encodings. A parameterized query fixes it structurally: the SQL text is sent and parsed first, and the values arrive separately afterward, so they can never be read as syntax.",
+    "prompt": "Why does a parameterized query stop SQL injection where careful escaping still might not?",
+    "answer": "Because it separates the two channels rather than sanitizing one. The query text is sent and parsed before any values arrive, so user input is only ever bound as data and can never be reinterpreted as syntax. Escaping tries to neutralize dangerous characters, which depends on getting every encoding case right.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/SQL_injection",
+      "https://owasp.org/www-community/attacks/SQL_Injection"
+    ],
+    "tags": [
+      "security",
+      "databases"
     ]
   }
 ]

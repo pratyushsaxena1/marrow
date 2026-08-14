@@ -1,101 +1,122 @@
-# Shipping Marrow to the public App Store
+# Shipping Marrow to the App Store
 
-This is the runbook for going from "on TestFlight" to "live on the App Store." It picks up
-where `TESTFLIGHT.md` left off. The mechanical prep that can be done with the App Store
-Connect API key has already been done for you (see "Done" below). What remains needs either
-your Apple login, a hosting decision, or a judgment call that should be yours — listed under
-"Your steps."
+Marrow is live. This is the runbook for shipping an **update** to the public App Store.
+`TESTFLIGHT.md` covers getting a build to testers; this file covers getting one to everyone.
 
-App Store Connect app: **marrow - scroll to learn** — Apple ID `6791669414`,
-bundle `com.pratyushs123.marrow`. Draft version **1.0** is in `PREPARE_FOR_SUBMISSION`.
+App Store Connect app: **marrow - scroll to learn**, Apple ID `6791669414`,
+bundle `com.pratyushs123.marrow`.
 
----
+## Release history
 
-## Done for you (via the ASC API)
+| Version | Build | State | Notes |
+| --- | --- | --- | --- |
+| 1.0 | 8 | `READY_FOR_SALE` | Shipped 2026-07-26 after two Guideline 4.2 rejections. |
+| 1.1 | 9 | `READY_FOR_SALE` | Shipped 2026-08-14. UI rework, redrawn icon, captioned screenshots. |
+| 1.2 | 12 | `WAITING_FOR_REVIEW` | Submitted 2026-08-14. 40 new cards (270 total), all 230 existing cards revised, American spelling, tinted-icon fix. |
 
-- ✅ **Build 4 attached** to version 1.0 (uploaded, processing = VALID).
-- ✅ **Content rights** declared (does not use third-party content).
-- ✅ **Description, keywords, promotional text** written and pushed to the draft.
-- ✅ **Subtitle**: "Learn one idea at a time".
-- ✅ **Category**: Primary = Education, Secondary = Reference.
-- ✅ **Export compliance** already handled in `app.json`
-  (`ITSAppUsesNonExemptEncryption: false`) — no encryption docs needed.
-- ✅ **Screenshots uploaded**: 5 iPhone 6.9" + 3 iPad 13" (real app screens, captured on
-  simulator, all processed with no errors). **Superseded** by the captioned set in
-  `store/screenshots/`, which needs uploading in their place: 5 iPhone 6.9" (1320x2868) and
-  5 iPad 13" (2064x2752), each a caption over a real screen, and free of the gray simulator
-  arc the old iPad shots had.
+**Keep this table current.** It said 1.1 was `WAITING_FOR_REVIEW` when 1.1 had in
+fact shipped, which sent a later session down the path of trying to swap the build on
+a released version. A released version cannot be edited: check the real state with the
+API before planning an update.
 
-  To regenerate them after a UI change:
-  1. Boot an iPhone 17 Pro Max and an iPad Pro 13"; install a Release build on each.
-  2. Launch once so the database exists, then seed it with a month of review history, or the
-     Progress screen photographs empty. The seeding snippet lives in the session notes; it
-     writes `review_log`, `card_state` and `bookmarks` rows directly into
-     `Documents/SQLite/marrow.db` inside the app's data container.
-  3. `xcrun simctl status_bar <udid> override --time "9:41" --batteryState discharging
-     --batteryLevel 100 --wifiBars 3` for a clean status bar.
-  4. Capture five raw screens per device into a folder as `01.png` … `05.png`, in the order
-     of `CAPTIONS` in `scripts/make-screenshots.py`.
-  5. `python3 scripts/make-screenshots.py <raw-dir> <out-dir> --device iphone|ipad`.
-- ✅ **App icon** redrawn: a card held inside a ring, in the app's own palette, replacing
-  the blue chevron that matched nothing in the UI. `scripts/make-icons.py` renders every
-  asset from one description of the mark, including the iOS dark and tinted variants that
-  the old icon did not have. Rerun it after any palette change.
+Builds 10 and 11 were uploaded for 1.2 and superseded before submission. Dead builds in
+the list are harmless but can be expired in App Store Connect if you want them gone.
 
-- ✅ **Privacy & support pages** authored, hosted on GitHub Pages, and wired into the listing:
-  - Privacy: https://pratyushsaxena1.github.io/marrow/privacy.html
-  - Support: https://pratyushsaxena1.github.io/marrow/support.html
-- ✅ **Age rating** set to **4+** (all content questions = None/No).
-- ✅ **Pricing** is configured on the app.
+## Settings that persist across versions
 
-All pushed text lives on the **draft** — nothing is public, and you can edit any of it in
-App Store Connect before submitting. Review the description/keywords and change anything you
-don't like.
+These are set on the app, not the version, and carry forward automatically. You should not
+need to touch them again:
 
----
+- **App Privacy** label: "Data Not Collected" (published in the web UI; Apple exposes no API
+  for the nutrition label, so if it ever needs changing, it is a manual step).
+- **Content rights**: does not use third-party content.
+- **Category**: Primary = Education, Secondary = Reference.
+- **Age rating**: 4+.
+- **Subtitle**: "Learn one idea at a time".
+- **Privacy URL**: https://pratyushsaxena1.github.io/marrow/privacy.html
+- **Support URL**: https://pratyushsaxena1.github.io/marrow/support.html
+- **Export compliance**: handled in `app.json` (`ITSAppUsesNonExemptEncryption: false`), so
+  no encryption docs are ever requested.
+- **Pricing and availability**: free, all territories.
 
-## Your steps (only you can do these) — this is all that's left
+When you create a new version, App Store Connect copies the description, keywords, support
+URL, **and the previous version's screenshots** onto it. The screenshots are the one thing
+you usually have to replace.
 
-### 1. App Privacy questionnaire (App → App Privacy)  ← the one required data-entry step
-This is the **only** listing field I could not set: Apple exposes **no API** for the privacy
-"nutrition label," so it must be done in the App Store Connect web UI. It takes ~1 minute.
-Marrow collects nothing and makes no network requests — verified in the code (local SQLite
-only, no analytics/ads/tracking). So:
-- Click **Get Started**, then answer "Do you or your third-party partners collect data from
-  this app?" → **No**.
-- Click **Publish**. That produces a "Data Not Collected" privacy label.
+## Shipping an update
 
-### 2. (Glance) Confirm availability/territories
-Pricing is set, but double-check **Pricing and Availability** lists the territories you want
-(default is all). No action needed unless you want to restrict it.
+1. **Bump `expo.version`** in `app.json`. It must differ from every released version.
+   Leave `ios.buildNumber` alone: the `production` EAS profile has `autoIncrement`, so
+   `eas build` bumps it and writes it back to `app.json`.
+2. **Build**: `eas build --platform ios --profile production`. Takes roughly 20 minutes.
+   A native module change (adding `expo-haptics`, for example) *requires* this. An OTA
+   update will not carry native code.
+3. **Upload**: `eas submit --platform ios --profile production --latest`. Then wait about
+   5 to 10 minutes for Apple to process the binary to `processingState: VALID`. You cannot
+   attach it before then.
+4. **Create the version** and set the listing over the ASC API (see "API notes" below):
+   create the `appStoreVersion`, set `whatsNew`, replace the screenshots, attach the build.
+5. **Submit**: create a `reviewSubmission`, add a `reviewSubmissionItem` pointing at the
+   version, then PATCH the submission `{"submitted": true}`. Review usually takes 24 to 48h.
 
-### 3. Submit for Review
-On the **1.0** version page, click **Add for Review → Submit for Review**, and pick your
-release option (automatic on approval, or manual). This is the one irreversible outward step.
-Apple review typically takes ~24–48h.
+## Regenerating the store screenshots
 
-Everything else (build, description, keywords, subtitle, category, content rights, export
-compliance, screenshots, privacy/support URLs, age rating) is already done on the draft.
+Required whenever the UI changes, since the shots must show the current app. The current set
+lives in `store/screenshots/`: 5 iPhone 6.9" (1320x2868) and 5 iPad 13" (2064x2752), each an
+SF Pro caption over a real screen that bleeds off the bottom edge.
 
-### 5. Review the flagged risks before you submit (your call)
-These are carried over from the build notes and are real for a *public* release (they did
-not matter for TestFlight-to-yourself):
-- **Card accuracy.** The 230 cards were written from model knowledge; the source URLs were
-  not all link-checked, and the finance domain is the highest-risk. Your name is on these
-  claims publicly. Consider a human accuracy pass, especially on finance.
-- **Guideline 4.2 (minimum functionality).** A text-card reader with no onboarding is a
-  known rejection risk. Worth confirming you're comfortable, and having a reviewer note
-  ready that explains the spaced-repetition mechanic.
+1. Boot an iPhone 17 Pro Max and an iPad Pro 13", and install a Release build on each.
+2. Launch once so the database exists, then seed it with a month of review history, or the
+   Progress screen photographs empty. Seeding writes `review_log`, `card_state` and
+   `bookmarks` rows directly into `Documents/SQLite/marrow.db` in the app's data container.
+3. `xcrun simctl status_bar <udid> override --time "9:41" --batteryState discharging
+   --batteryLevel 100 --wifiBars 3` for a clean status bar.
+4. Capture five raw screens per device into a folder as `01.png` through `05.png`, in the
+   order of `CAPTIONS` in `scripts/make-screenshots.py`.
+5. `python3 scripts/make-screenshots.py <raw-dir> <out-dir> --device iphone|ipad`.
 
-### 6. Submit for review
-Once 1–5 are green, the version page will show **Add for Review → Submit**. Pick your
-release option (automatic on approval, or manual). This is the one irreversible, outward
-step — that's why it's left to you. Apple review typically takes ~24–48h.
+## The app icon
 
----
+The icon is **not** a listing upload. Apple reads it out of the binary's asset catalog, so a
+new icon only reaches the store as part of a new build.
 
-## Quick reference
+`scripts/make-icons.py` renders every asset from one description of the mark, including the
+iOS dark and tinted variants. Rerun it after any palette change.
 
-- Rebuild + re-upload a binary (if you change code): `eas build -p ios --profile production`
-  then `eas submit -p ios --latest`, with the `EXPO_ASC_*` env vars from `TESTFLIGHT.md`.
-- Bump `ios.buildNumber` in `app.json` for every new upload.
+**The tinted variant must keep its opaque background.** `expo prebuild` flattens that one
+asset's alpha onto white while leaving the dark variant's transparency alone, so a
+transparent tinted source ships as a white tile with little or nothing on it. Two versions
+went out that way. After changing any icon, check what prebuild actually emitted rather than
+trusting the source:
+
+```bash
+python3 -c "from PIL import Image; im=Image.open('ios/marrow/Images.xcassets/AppIcon.appiconset/App-Icon-tinted-1024x1024@1x.png'); print(im.mode, im.convert('RGBA').getpixel((5,5)))"
+```
+
+It should print a near-black corner, not `(255, 255, 255, 255)`. Note that `expo run:ios`
+does not regenerate these once `ios/` exists; delete the pngs and run `expo prebuild` to
+force it. EAS always prebuilds fresh, so cloud builds pick up the source correctly.
+
+To check the result on a device, the appearance modes live under a long press on the home
+screen, then Edit, then Customize, which offers Default / Dark / Clear / Tinted.
+
+## API notes
+
+The ASC API key is at `~/.appstoreconnect/private_keys/AuthKey_Q3L48UB69U.p8`
+(Key ID `Q3L48UB69U`, Issuer `a5755f2b-00a6-4253-ad6a-6acdf1e6150b`, Team `68LY82NV2V`).
+
+- Screenshot upload is three steps per image: POST `appScreenshots` to reserve it, PUT the
+  bytes to each returned `uploadOperation`, then PATCH `{"uploaded": true,
+  "sourceFileChecksum": "<md5>"}`. Pin display order afterwards by PATCHing the set's
+  `relationships/appScreenshots` with the ids in the order you want.
+- Deleting the copied-forward screenshots before uploading replacements is safe while the
+  version is in `PREPARE_FOR_SUBMISSION`.
+
+## Standing risks for a public release
+
+- **Card accuracy.** The 270 cards were written from model knowledge. Every source URL now
+  resolves (`npm run check-links` is part of the content workflow), but a URL resolving is not
+  the same as the claim matching what is on the page. Finance is the highest-risk domain. Your
+  name is on these claims publicly, so a human accuracy pass is still worth doing.
+- **Guideline 4.2.** Both 1.0 rejections came from an iPad. Any future version that thins out
+  what there is to *do* in the app risks the same finding. Test on an iPad before submitting.

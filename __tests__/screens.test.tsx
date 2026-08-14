@@ -62,6 +62,13 @@ import ProgressScreen from "../app/stats";
 import SettingsScreen from "../app/settings";
 import OnboardingScreen from "../app/onboarding";
 import CardDetailScreen from "../app/card/[id]";
+import { getCard, loadCorpus, countByDomain } from "../src/corpus";
+
+// Corpus counts are derived, never hardcoded: cards are added over time and only
+// their ids are stable, so a literal here turns every content addition into a
+// spurious test failure.
+const TOTAL = loadCorpus().length;
+const BY_DOMAIN = countByDomain();
 
 const metrics = {
   frame: { x: 0, y: 0, width: 390, height: 844 },
@@ -123,26 +130,26 @@ describe("Library screen", () => {
     const { getByText, getAllByText } = mount(<LibraryScreen />);
     // Two matches: the screen title and this tab's label in the bar below.
     expect(getAllByText("Library")).toHaveLength(2);
-    getByText("230 of 230 concepts");
+    getByText(`${TOTAL} of ${TOTAL} concepts`);
   });
 
   it("narrows the list as the user types", () => {
     const { getByLabelText, getByText } = mount(<LibraryScreen />);
     fireEvent.changeText(getByLabelText("Search all concepts"), "hash");
-    expect(getByText(/of 230 concepts/).props.children).not.toContain("230 of");
+    expect(getByText(/of \d+ concepts/).props.children).not.toContain(`${TOTAL} of`);
   });
 
   it("shows an empty state for a query that matches nothing", () => {
     const { getByLabelText, getByText } = mount(<LibraryScreen />);
     fireEvent.changeText(getByLabelText("Search all concepts"), "zzzzqqq");
     getByText("No matches");
-    getByText("0 of 230 concepts");
+    getByText(`0 of ${TOTAL} concepts`);
   });
 
   it("filters by subject chip", () => {
     const { getByText } = mount(<LibraryScreen />);
     fireEvent.press(getByText("Finance"));
-    getByText("57 of 230 concepts");
+    getByText(`${BY_DOMAIN.finance} of ${TOTAL} concepts`);
   });
 
   it("opens a concept", () => {
@@ -157,7 +164,7 @@ describe("Quiz screen", () => {
   it("offers a run and reports what is available", () => {
     const { getByText, getAllByText } = mount(<QuizScreen />);
     expect(getAllByText("Quiz")).toHaveLength(2); // screen title and tab label
-    getByText("230 concepts available across all subjects.");
+    getByText(`${TOTAL} concepts available across all subjects.`);
     getByText("Start 10-question quiz");
   });
 
@@ -193,7 +200,7 @@ describe("Quiz screen", () => {
   it("shortens a run to the smaller of the size and the subject pool", () => {
     const { getByText } = mount(<QuizScreen />);
     fireEvent.press(getByText("Math"));
-    getByText("58 concepts available in your selection.");
+    getByText(`${BY_DOMAIN.math} concepts available in your selection.`);
   });
 });
 
@@ -238,7 +245,7 @@ describe("Settings screen", () => {
     mockData.bookmarks.push("cs-0001");
     const { getByText } = mount(<SettingsScreen />);
     getByText("Concepts available");
-    getByText("230");
+    getByText(String(TOTAL));
     getByText("Saved cards");
     getByText("1");
   });
@@ -277,7 +284,10 @@ describe("Onboarding screen", () => {
 describe("Card detail screen", () => {
   it("shows the concept, its schedule and related concepts", () => {
     const { getByText } = mount(<CardDetailScreen />);
-    getByText("Why appending to a dynamic array is O(1)");
+    // Read the expected title from the corpus rather than hardcoding the prose:
+    // card text is revised freely (only ids are stable), so a literal here fails
+    // the suite for an edit that broke nothing.
+    getByText(getCard("cs-0001")!.title);
     getByText("Test yourself");
     getByText("Your schedule");
     getByText("Not started");

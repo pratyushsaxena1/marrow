@@ -37,6 +37,8 @@
     "web": "expo start --web",
     "test": "jest",
     "validate-corpus": "ts-node --compilerOptions '{\"module\":\"commonjs\"}' scripts/validate-corpus.ts",
+    "corpus-style": "ts-node --compilerOptions '{\"module\":\"commonjs\"}' scripts/corpus-style.ts",
+    "check-links": "ts-node --compilerOptions '{\"module\":\"commonjs\"}' scripts/check-links.ts",
     "postinstall": "patch-package"
   },
   "private": true,

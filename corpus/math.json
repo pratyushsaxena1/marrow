@@ -4,13 +4,14 @@
     "type": "concept",
     "domain": "math",
     "topic": "probability",
-    "title": "Why 23 people is enough for a birthday match",
+    "title": "Twenty-three people is enough",
     "body": "Put 23 randomly chosen people in a room and the chance that two share a birthday is just over half. The intuition that fails is comparing yourself to 22 others. The question is about any pair, and 23 people form 253 pairs. Computing the probability that all 23 birthdays differ gives about 0.493, so a collision is slightly more likely than not.",
-    "prompt": "Why does a room of just 23 people give a better-than-even chance that two of them share a birthday?",
+    "prompt": "A room holds 23 people. Why is a shared birthday more likely than not?",
     "answer": "Because the event concerns any of the 253 possible pairs, not matching one specific person. Multiplying out the chance that all 23 birthdays differ gives roughly 0.493, leaving about a 50.7% chance of at least one match.",
     "difficulty": 2,
     "sources": [
-      "https://en.wikipedia.org/wiki/Birthday_problem"
+      "https://en.wikipedia.org/wiki/Birthday_problem",
+      "https://mathworld.wolfram.com/BirthdayProblem.html"
     ],
     "tags": [
       "probability",
@@ -23,7 +24,7 @@
     "domain": "math",
     "topic": "probability",
     "title": "The second child",
-    "body": "A family has exactly two children. You are told that at least one of them is a boy. Assume boys and girls are equally likely and that each birth is independent of the other. You want to know the probability that both children are boys. Most people answer one half, reasoning that the other child is equally likely to be either sex. That answer is wrong, and the reason it is wrong is the entire point of the puzzle.",
+    "body": "A family has exactly two children. You are told that at least one of them is a boy. Assume boys and girls are equally likely and that each birth is independent. Most people answer one half, reasoning that the other child is equally likely to be either sex. That answer is wrong, and the reason it is wrong is the whole content of the puzzle.",
     "prompt": "Given that at least one of two children is a boy, what is the probability both are boys?",
     "answer": "One third. The equally likely cases are BB, BG, GB, and GG; learning at least one is a boy eliminates only GG, leaving three cases of which just one is BB. The information constrains the pair jointly, not one child individually.",
     "difficulty": 2,
@@ -46,7 +47,8 @@
     "answer": "Switch: switching wins 2/3 of the time versus 1/3 for staying. Your original door had a 1/3 chance and the host's forced, informed reveal cannot change that, so the entire remaining 2/3 concentrates on the single unopened door.",
     "difficulty": 2,
     "sources": [
-      "https://en.wikipedia.org/wiki/Monty_Hall_problem"
+      "https://en.wikipedia.org/wiki/Monty_Hall_problem",
+      "https://mathworld.wolfram.com/MontyHallProblem.html"
     ],
     "tags": [
       "probability",
@@ -82,7 +84,8 @@
     "answer": "286. Write each distribution as 10 stars and 3 bars in a row, the bars separating the children's shares; every arrangement of those 13 symbols is exactly one distribution, so the count is C(13,3) = 286.",
     "difficulty": 2,
     "sources": [
-      "https://en.wikipedia.org/wiki/Stars_and_bars_(combinatorics)"
+      "https://en.wikipedia.org/wiki/Stars_and_bars_(combinatorics)",
+      "https://mathworld.wolfram.com/Multichoose.html"
     ],
     "tags": [
       "combinatorics",
@@ -94,8 +97,8 @@
     "type": "concept",
     "domain": "math",
     "topic": "combinatorics",
-    "title": "Why Pascal's triangle adds the two above",
-    "body": "Every entry in Pascal's triangle is the sum of the two above it: C(n,k) = C(n-1,k-1) + C(n-1,k). The reason is a counting argument, not an algebraic accident. Fix one particular element of the n-element set. Any k-subset either contains it, leaving k-1 more to choose from the other n-1 elements, or excludes it, leaving all k to choose from those n-1. The two cases are disjoint and cover everything.",
+    "title": "Pascal's triangle adds the two above it",
+    "body": "Every entry in Pascal's triangle is the sum of the two above it: C(n,k) = C(n-1,k-1) + C(n-1,k). The reason is a counting argument, not an algebraic accident. Fix one particular element of the n-element set. Any k-subset either contains it, leaving k-1 more to choose from the other n-1 elements, or excludes it, leaving all k to choose from those n-1.",
     "prompt": "What counting argument explains why C(n,k) equals C(n-1,k-1) + C(n-1,k)?",
     "answer": "Single out one element: every k-subset either contains it (choose the remaining k-1 from the other n-1) or does not (choose all k from the other n-1). Those cases are disjoint and exhaustive, so their counts add to C(n,k).",
     "difficulty": 2,
@@ -118,7 +121,8 @@
     "answer": "By the pigeonhole principle: there are about 9 million Londoners but at most roughly 150,000 possible hair counts, so some value must be shared. More items than boxes forces a collision no matter how they are distributed.",
     "difficulty": 1,
     "sources": [
-      "https://en.wikipedia.org/wiki/Pigeonhole_principle"
+      "https://en.wikipedia.org/wiki/Pigeonhole_principle",
+      "https://mathworld.wolfram.com/PigeonholePrinciple.html"
     ],
     "tags": [
       "pigeonhole-principle",
@@ -131,7 +135,7 @@
     "domain": "math",
     "topic": "pigeonhole-principle",
     "title": "Five points in a square",
-    "body": "Place any 5 points anywhere inside a square of side 2. The points can be spread out however you like: corners, centre, edges, clustered or scattered. Claim: no matter how you place them, some two of the points are at distance at most the square root of 2, roughly 1.414. This must hold for every possible placement, so no clever arrangement escapes it. A short argument settles it without any case analysis.",
+    "body": "Place any 5 points anywhere inside a square of side 2. The points can be spread out however you like: corners, center, edges, clustered or scattered. Claim: no matter how you place them, some two of the points are at distance at most the square root of 2, roughly 1.414. This must hold for every possible placement, so no clever arrangement escapes it. A short argument settles it without any case analysis.",
     "prompt": "Why must some two of any 5 points placed in a square of side 2 lie within distance the square root of 2 of each other?",
     "answer": "Cut the square into four unit sub-squares. With 5 points and 4 cells, the pigeonhole principle forces two points into the same unit cell, and the farthest apart two points in a unit square can be is its diagonal, the square root of 2.",
     "difficulty": 2,
@@ -152,7 +156,7 @@
     "body": "Suppose only finitely many primes exist: p1 through pk. Multiply them all and add 1, giving N. Dividing N by any prime on the list leaves remainder 1, so no listed prime divides N. But every integer above 1 has a prime factor, so N has one, and it is not on the list. The list was incomplete. Note the subtlety: N itself need not be prime, only its factors must be new.",
     "prompt": "In Euclid's proof that the primes are infinite, why does multiplying all the listed primes and adding 1 finish the argument?",
     "answer": "The resulting number leaves remainder 1 when divided by any listed prime, so none of them divides it; since every integer above 1 has some prime factor, its factor must be a prime missing from the list. The number itself need not be prime.",
-    "difficulty": 2,
+    "difficulty": 1,
     "sources": [
       "https://en.wikipedia.org/wiki/Euclid%27s_theorem"
     ],
@@ -185,7 +189,7 @@
     "domain": "math",
     "topic": "modular-arithmetic",
     "title": "Why the digit-sum test for 9 works",
-    "body": "Add a number's digits; if the sum is divisible by 9, so is the number. The rule is not a coincidence of base 10 — it is base 10. Since 10 leaves remainder 1 when divided by 9, every power of 10 does too: 100, 1000, and so on are all one more than a multiple of 9. So each digit contributes its own value times 1, and the whole number has the same remainder mod 9 as its digit sum.",
+    "body": "Add a number's digits, and if the sum is divisible by 9, so is the number. The rule is not a coincidence of base 10. It is base 10. Since 10 leaves remainder 1 when divided by 9, every power of 10 does too, so 100 and 1000 and the rest are all one more than a multiple of 9. Each digit therefore contributes its own value times 1, and the number has the same remainder mod 9 as its digit sum.",
     "prompt": "Why does summing a number's decimal digits reveal its remainder when divided by 9?",
     "answer": "Because 10 is congruent to 1 modulo 9, so every power of 10 is as well. Each digit therefore contributes just itself to the remainder, making the number congruent to its digit sum modulo 9.",
     "difficulty": 1,
@@ -203,10 +207,10 @@
     "domain": "math",
     "topic": "modular-arithmetic",
     "title": "The last digit of a giant power",
-    "body": "What is the final decimal digit of 7 raised to the power 100? The number itself has 85 digits and no calculator will show it exactly. But the last digit of a product depends only on the last digits of its factors, so you can track just that one digit as you multiply: 7, then 49, then 343, then 2401, and onward. Do that and a pattern appears almost immediately.",
+    "body": "What is the final decimal digit of 7 raised to the power 100? The number itself has 85 digits and no calculator will show it exactly. But the last digit of a product depends only on the last digits of its factors, so you can track just that one digit as you multiply: 7, then 49, then 343, then 2401, and onward.",
     "prompt": "What is the last decimal digit of 7 to the power 100, and how do you find it without computing the number?",
     "answer": "It is 1. The last digits of powers of 7 cycle 7, 9, 3, 1 with period 4; since 100 is a multiple of 4, the hundredth power lands on the same last digit as the fourth power, which is 1.",
-    "difficulty": 2,
+    "difficulty": 1,
     "sources": [
       "https://en.wikipedia.org/wiki/Modular_arithmetic"
     ],
@@ -221,8 +225,8 @@
     "domain": "math",
     "topic": "linear-algebra",
     "title": "The determinant is a volume scale factor",
-    "body": "A square matrix is a map that sends space to space. Its determinant is the factor by which it scales volume, with a sign recording whether orientation flips. A determinant of 3 triples every region's volume; a negative one mirrors space. A determinant of zero means the map squashes space into a lower dimension — a plane collapsed to a line — and crushed information cannot be recovered. That is exactly why a zero determinant means not invertible.",
-    "prompt": "What does a matrix's determinant measure geometrically, and why does a determinant of zero mean it is not invertible?",
+    "body": "A square matrix is a map that sends space to space. Its determinant is the factor by which it scales volume, with a sign recording whether orientation flips. A determinant of 3 triples every region's volume, and a negative one mirrors space. A determinant of zero means the map squashes space into a lower dimension, say a plane collapsed to a line, and crushed information cannot be recovered.",
+    "prompt": "Geometrically, what is a matrix's determinant measuring, and what has gone wrong when it is zero?",
     "answer": "The determinant is the signed factor by which the matrix scales volume. Zero means the map collapses space into a lower dimension, destroying information irreversibly, so no inverse map can exist.",
     "difficulty": 2,
     "sources": [
@@ -240,7 +244,7 @@
     "topic": "linear-algebra",
     "title": "Every dimension survives or dies",
     "body": "Feed an n-dimensional space through a linear map. Every dimension meets one of two fates: it survives into the image, or it is crushed to zero. Nothing else can happen, and no dimension can do both. Counting them gives the rank-nullity theorem: rank plus nullity equals n, where rank is the image's dimension and nullity is the kernel's. A map from 3-space with a 1-dimensional kernel must have a 2-dimensional image.",
-    "prompt": "What does the rank-nullity theorem say, and what is the intuition behind it?",
+    "prompt": "A linear map from 3-space kills a one-dimensional subspace. What must its image look like, and why?",
     "answer": "For a linear map on an n-dimensional domain, rank plus nullity equals n. Intuitively every dimension of the domain either survives into the image (counted by the rank) or is collapsed to zero (counted by the nullity), with no overlap and nothing left over.",
     "difficulty": 3,
     "sources": [
@@ -256,9 +260,9 @@
     "type": "concept",
     "domain": "math",
     "topic": "eigenvalues",
-    "title": "The directions a matrix leaves alone",
-    "body": "Most vectors get rotated when a matrix acts on them. A few do not: they come out pointing along the same line, merely stretched or shrunk. Those are eigenvectors, and the stretch factor is the eigenvalue. They matter because applying the matrix repeatedly is trivial along these directions — you just multiply by the eigenvalue each time. Any starting vector decomposed into eigenvectors will, after many steps, be dominated by the direction of the largest-magnitude eigenvalue, provided it has some component there.",
-    "prompt": "What is an eigenvector of a matrix, and why does repeated application favour the largest-magnitude eigenvalue?",
+    "title": "Directions a matrix leaves alone",
+    "body": "Most vectors get rotated when a matrix acts on them. A few do not: they come out pointing along the same line, merely stretched or shrunk. Those are eigenvectors, and the stretch factor is the eigenvalue. They matter because applying the matrix repeatedly is trivial along these directions, since you just multiply by the eigenvalue each time. Decompose any starting vector into eigenvectors and after many steps the largest-magnitude eigenvalue dominates.",
+    "prompt": "What is an eigenvector of a matrix, and why does repeated application favor the largest-magnitude eigenvalue?",
     "answer": "An eigenvector is a vector the matrix leaves on its own line, merely scaled by its eigenvalue. Repeating the map multiplies each eigen-component by its own eigenvalue, so the largest-magnitude one outgrows the rest and comes to dominate the result.",
     "difficulty": 2,
     "sources": [
@@ -280,7 +284,8 @@
     "answer": "2 and 3. The characteristic polynomial is lambda squared minus 5 lambda plus 6, which factors as (lambda-2)(lambda-3). Trace and determinant alone suffice because the eigenvalues must sum to the trace and multiply to the determinant.",
     "difficulty": 2,
     "sources": [
-      "https://en.wikipedia.org/wiki/Characteristic_polynomial"
+      "https://en.wikipedia.org/wiki/Characteristic_polynomial",
+      "https://mathworld.wolfram.com/CharacteristicPolynomial.html"
     ],
     "tags": [
       "linear-algebra",
@@ -292,9 +297,9 @@
     "type": "concept",
     "domain": "math",
     "topic": "calculus",
-    "title": "Why antiderivatives compute areas",
-    "body": "Define A(x) as the area under a curve f from a fixed start up to x. Nudge x by a tiny h and the area grows by a sliver roughly h wide and f(x) tall, so A(x+h) minus A(x) is about f(x) times h. Divide by h and let it shrink: A'(x) = f(x). Accumulating a quantity and measuring its rate of change are inverse operations. That is the fundamental theorem of calculus.",
-    "prompt": "Why is the derivative of the area-so-far function under a curve equal to the curve's height at that point?",
+    "title": "Accumulating and differentiating are inverses",
+    "body": "Define A(x) as the area under a curve f from a fixed start up to x. Nudge x by a tiny h and the area grows by a sliver roughly h wide and f(x) tall, so A(x+h) minus A(x) is about f(x) times h. Divide by h and let it shrink, and A'(x) = f(x). Accumulating a quantity and measuring its rate of change are inverse operations.",
+    "prompt": "Why should finding areas and finding slopes have anything to do with each other?",
     "answer": "Because extending the region by a tiny width h adds a sliver of area about f(x) times h, so the difference quotient tends to f(x) as h shrinks. This is the fundamental theorem of calculus: accumulation and differentiation are inverse operations.",
     "difficulty": 2,
     "sources": [
@@ -311,10 +316,10 @@
     "domain": "math",
     "topic": "calculus",
     "title": "A sum that creeps to infinity",
-    "body": "Add 1 + 1/2 + 1/3 + 1/4 + 1/5 and onward forever. The terms shrink toward zero, and by the thousandth term you are adding only a thousandth, so the running total seems to be settling down. It reaches 10 only after about 12,000 terms and creeps up ever slower after that. Does this sum approach a finite limit, or does it grow without bound?",
+    "body": "Add 1 + 1/2 + 1/3 + 1/4 + 1/5 and onward forever. The terms shrink toward zero, and by the thousandth term you are adding only a thousandth, so the running total seems to be settling down. It reaches 10 only after about 12,000 terms and creeps up ever slower after that.",
     "prompt": "Does the sum 1 + 1/2 + 1/3 + 1/4 and so on converge to a finite value, and why?",
     "answer": "It diverges to infinity. Group the terms as 1/3+1/4, then 1/5 through 1/8, then 1/9 through 1/16: every term in a block is at least as big as the block's last term, so each block sums to more than 1/2, and there are infinitely many blocks.",
-    "difficulty": 2,
+    "difficulty": 1,
     "sources": [
       "https://en.wikipedia.org/wiki/Harmonic_series_(mathematics)"
     ],
@@ -329,7 +334,7 @@
     "domain": "math",
     "topic": "analysis",
     "title": "0.999... is not close to 1",
-    "body": "0.999... is not a number creeping toward 1; it is notation for the limit of the sequence 0.9, 0.99, 0.999, and that limit is exactly 1. The objection that there must be a gap fails: name a real number strictly between 0.999... and 1 and you cannot, because any candidate would have to differ from 1 by some positive amount, and the sequence eventually gets closer than that. Equal, not approximately equal.",
+    "body": "0.999... is not a number creeping toward 1. It is notation for the limit of the sequence 0.9, 0.99, 0.999, and that limit is exactly 1. The objection that there must be a gap fails. Name a real number strictly between 0.999... and 1 and you cannot, because any candidate would have to differ from 1 by some positive amount, and the sequence eventually gets closer than that.",
     "prompt": "Why does 0.999... equal 1 exactly rather than falling infinitesimally short?",
     "answer": "Because 0.999... denotes the limit of the sequence 0.9, 0.99, 0.999, and that limit is 1. No real number lies strictly between them: any claimed gap is a fixed positive size that the partial sums eventually beat.",
     "difficulty": 1,
@@ -346,8 +351,8 @@
     "type": "concept",
     "domain": "math",
     "topic": "analysis",
-    "title": "The horn you can fill but not paint",
-    "body": "Rotate the curve y = 1/x for x at least 1 around the x-axis. The solid it sweeps out has volume pi times the integral of 1/x squared, which converges to pi — a finite trumpet. Its surface area, however, dominates the integral of 1/x, which diverges. So the horn holds a finite amount of paint yet its inside surface can never be painted. The paradox dissolves once you notice paint layers have thickness while mathematical surfaces do not.",
+    "title": "A horn you can fill but not paint",
+    "body": "Rotate the curve y = 1/x for x at least 1 around the x-axis. The solid it sweeps out has volume pi times the integral of 1/x squared, which converges to pi, so it is a finite trumpet. Its surface area, however, dominates the integral of 1/x, which diverges. So the horn holds a finite amount of paint yet its inside surface can never be painted. The paradox dissolves once you notice paint layers have thickness while mathematical surfaces do not.",
     "prompt": "How can a solid of revolution have finite volume but infinite surface area?",
     "answer": "Rotating y = 1/x for x at least 1 about the x-axis gives Gabriel's horn: the volume integral of 1/x squared converges to pi, while the surface area is bounded below by a multiple of the divergent integral of 1/x. Cross-sectional area shrinks like 1/x squared but circumference only like 1/x.",
     "difficulty": 3,
@@ -365,7 +370,7 @@
     "domain": "math",
     "topic": "topology",
     "title": "A mug is a doughnut",
-    "body": "Topology asks which properties survive stretching, bending, and squashing — anything short of cutting or gluing. Under that rule a coffee mug and a doughnut are the same object: the mug's bowl flattens away, leaving only the handle's hole, which the doughnut also has. A sphere is different, because no amount of deformation puts a hole in it. The number of holes is a topological invariant; size, curvature, and shape are not.",
+    "body": "Topology asks which properties survive stretching, bending, and squashing, meaning anything short of cutting or gluing. Under that rule a coffee mug and a doughnut are the same object. The mug's bowl flattens away, leaving only the handle's hole, which the doughnut also has. A sphere is different, because no amount of deformation puts a hole in it.",
     "prompt": "In what sense is a coffee mug the same object as a doughnut, and what makes a sphere different?",
     "answer": "They are homeomorphic: each can be continuously deformed into the other without cutting or gluing, since both have exactly one hole. A sphere has zero holes, and hole count is a topological invariant that no deformation can change.",
     "difficulty": 1,
@@ -384,7 +389,7 @@
     "topic": "topology",
     "title": "The crumpled map that cannot escape itself",
     "body": "Lay a flat map on a table, then take an identical copy, crumple it however you like, and drop it on top so the crumpled copy lies entirely within the flat one's borders. Brouwer's fixed-point theorem guarantees that some point of the crumpled map sits exactly above the same point of the flat map. Any continuous map from a disc into itself fixes a point; to escape, the paper would have to tear.",
-    "prompt": "What does Brouwer's fixed-point theorem guarantee about a crumpled map dropped inside the borders of an identical flat map?",
+    "prompt": "Crumple a map and drop it on an identical flat one. What is guaranteed about where it lands?",
     "answer": "Some point of the crumpled copy lies exactly above the matching point of the flat map. Brouwer's theorem says every continuous map from a disc into itself has a fixed point, and avoiding one everywhere would require tearing the paper.",
     "difficulty": 2,
     "sources": [
@@ -401,10 +406,10 @@
     "domain": "math",
     "topic": "graph-theory",
     "title": "The seven bridges",
-    "body": "Königsberg had four landmasses joined by seven bridges. Citizens asked whether a walk could cross every bridge exactly once; the starting and ending points may be anywhere. Counting bridges at each landmass gives 5, 3, 3, and 3 — all odd. Thousands of attempted routes all failed, but failure to find one is not proof that none exists. Euler proved it impossible with an argument about those counts.",
+    "body": "Königsberg had four landmasses joined by seven bridges. Citizens asked whether a walk could cross every bridge exactly once, starting and ending anywhere. Counting bridges at each landmass gives 5, 3, 3, and 3, all odd. Thousands of attempted routes all failed, but failure to find one is not proof that none exists. Euler proved it impossible with an argument about those counts.",
     "prompt": "Why is it impossible to walk the seven bridges of Königsberg crossing each one exactly once?",
     "answer": "Every landmass you merely pass through must be entered and left in pairs, so it needs an even bridge count; only the start and end may be odd. Königsberg's four landmasses all have odd counts (5, 3, 3, 3), which is two too many.",
-    "difficulty": 2,
+    "difficulty": 1,
     "sources": [
       "https://en.wikipedia.org/wiki/Seven_Bridges_of_K%C3%B6nigsberg"
     ],
@@ -419,9 +424,9 @@
     "domain": "math",
     "topic": "graph-theory",
     "title": "You can never have exactly one odd handshaker",
-    "body": "In any network, count each node's connections and add them all up. Every edge has two ends, so it gets counted exactly twice: the total of all degrees equals twice the number of edges, and is therefore even. An immediate consequence: the number of nodes with an odd degree must itself be even. So at any party, the number of people who shook hands an odd number of times is even — never exactly one.",
+    "body": "In any network, count each node's connections and add them all up. Every edge has two ends, so it gets counted exactly twice. The total of all degrees equals twice the number of edges, and is therefore even. An immediate consequence is that the number of nodes with an odd degree must itself be even. So at any party, the number of people who shook hands an odd number of times is even, never exactly one.",
     "prompt": "Why must the number of people who shook hands an odd number of times always be even?",
-    "answer": "Each handshake adds one to exactly two people's counts, so the sum of all counts is twice the number of handshakes and hence even. If an odd number of people had odd counts, that sum would be odd — a contradiction.",
+    "answer": "Each handshake adds one to exactly two people's counts, so the sum of all counts is twice the number of handshakes and hence even. If an odd number of people had odd counts, that sum would be odd, which is a contradiction.",
     "difficulty": 1,
     "sources": [
       "https://en.wikipedia.org/wiki/Handshaking_lemma"
@@ -439,7 +444,7 @@
     "title": "Four cards and a rule",
     "body": "Four cards lie on a table, each with a letter on one face and a number on the other. You see A, K, 4, and 7. Someone claims: if a card has a vowel on one side, then it has an even number on the other. You may turn over only the cards that could possibly expose a violation of that claim. Most people pick A and 4. Which cards must you actually turn?",
     "prompt": "Given cards showing A, K, 4, and 7, which must you turn over to test the rule that a vowel on one side means an even number on the other?",
-    "answer": "A and 7. A could hide an odd number and 7 could hide a vowel, each a direct violation. Turning 4 is useless because the rule constrains vowels only, so a consonant behind 4 breaks nothing — testing a conditional means hunting for falsification, not confirmation.",
+    "answer": "A and 7. A could hide an odd number and 7 could hide a vowel, each a direct violation, whereas turning 4 is useless because the rule constrains vowels only and a consonant behind 4 breaks nothing. Testing a conditional means hunting for falsification, not confirmation.",
     "difficulty": 2,
     "sources": [
       "https://en.wikipedia.org/wiki/Wason_selection_task"
@@ -455,12 +460,13 @@
     "domain": "math",
     "topic": "logic",
     "title": "The contrapositive is safe, the converse is not",
-    "body": "'If it rains, the ground is wet' is logically identical to 'if the ground is not wet, it did not rain'. That swap-and-negate move is the contrapositive, and it always preserves truth. What does not preserve truth is the converse: 'if the ground is wet, it rained' — a burst pipe would falsify it. Confusing a statement with its converse is a pervasive reasoning error; the contrapositive is the safe reformulation.",
+    "body": "'If it rains, the ground is wet' is logically identical to 'if the ground is not wet, it did not rain'. That swap-and-negate move is the contrapositive, and it always preserves truth. What does not preserve truth is the converse, 'if the ground is wet, it rained', which a burst pipe would falsify. Confusing a statement with its converse is a pervasive reasoning error.",
     "prompt": "Which reformulation of 'if it rains, the ground is wet' is guaranteed to be equivalent, and which is not?",
     "answer": "The contrapositive, 'if the ground is not wet, it did not rain', is always equivalent. The converse, 'if the ground is wet, it rained', is not: a burst pipe wets the ground with no rain at all.",
     "difficulty": 1,
     "sources": [
-      "https://en.wikipedia.org/wiki/Contraposition"
+      "https://en.wikipedia.org/wiki/Contraposition",
+      "https://plato.stanford.edu/entries/logic-classical/"
     ],
     "tags": [
       "logic",
@@ -473,7 +479,7 @@
     "domain": "math",
     "topic": "proof",
     "title": "How the square root of 2 breaks every fraction",
-    "body": "Suppose the square root of 2 equals a/b with a and b whole numbers sharing no common factor. Squaring gives a squared = 2 b squared, so a squared is even, which forces a to be even, since odd numbers square to odd. Write a = 2k: then 4k squared = 2 b squared, so b squared = 2k squared and b is even too. But a and b were assumed to share no factor. The assumption collapses.",
+    "body": "Suppose the square root of 2 equals a/b with a and b whole numbers sharing no common factor. Squaring gives a squared = 2 b squared, so a squared is even, which forces a to be even, since odd numbers square to odd. Write a = 2k, and then 4k squared = 2 b squared, so b squared = 2k squared and b is even too. But a and b were assumed to share no factor.",
     "prompt": "How does assuming the square root of 2 is a fraction in lowest terms lead to a contradiction?",
     "answer": "From a squared = 2 b squared, a must be even; substituting a = 2k gives b squared = 2k squared, so b is even too. Both sharing the factor 2 contradicts 'lowest terms', so no such fraction exists and the root is irrational.",
     "difficulty": 2,
@@ -490,10 +496,10 @@
     "type": "puzzle",
     "domain": "math",
     "topic": "proof",
-    "title": "All horses are the same colour",
-    "body": "Claim: all horses are the same colour. Proof by induction. Base case: one horse is trivially the same colour as itself. Inductive step: assume any n horses share a colour. Given n+1 horses, the first n share a colour, and the last n share a colour, so all n+1 must match. The conclusion is obviously false, so the argument contains a flaw. Find exactly where it breaks.",
-    "prompt": "In the induction 'proof' that all horses are the same colour, exactly which step fails and why?",
-    "answer": "The step from n = 1 to n = 2. Merging the two overlapping groups only works if they share a horse, but with two horses the 'first one' and 'last one' are disjoint, so nothing links their colours. The chain of implications never gets started.",
+    "title": "All horses are the same color",
+    "body": "Claim: all horses are the same color. Proof by induction. Base case: one horse is trivially the same color as itself. Inductive step: assume any n horses share a color. Given n+1 horses, the first n share a color, and the last n share a color, so all n+1 must match. The conclusion is obviously false, so the argument contains a flaw. Find exactly where it breaks.",
+    "prompt": "In the induction 'proof' that all horses are the same color, exactly which step fails and why?",
+    "answer": "The step from n = 1 to n = 2. Merging the two overlapping groups only works if they share a horse, but with two horses the 'first one' and 'last one' are disjoint, so nothing links their colors. The chain of implications never gets started.",
     "difficulty": 3,
     "sources": [
       "https://en.wikipedia.org/wiki/All_horses_are_the_same_color"
@@ -509,12 +515,13 @@
     "domain": "math",
     "topic": "cardinality",
     "title": "No list can hold all the reals",
-    "body": "Suppose you could list every real number between 0 and 1 in a numbered sequence. Build a new number by taking the first digit of the first number, the second digit of the second, and so on, changing each digit as you go. The result differs from the nth listed number in its nth digit, so it is on no line of the list. Yet it is a real number in that range. Any such list is incomplete.",
+    "body": "Suppose you could list every real number between 0 and 1 in a numbered sequence. Build a new number by taking the first digit of the first number, the second digit of the second, and so on, changing each digit as you go. The result differs from the nth listed number in its nth digit, so it is on no line of the list. Yet it is a real number in that range.",
     "prompt": "How does the diagonal argument show that no list can contain every real number between 0 and 1?",
-    "answer": "Given any numbered list, construct a number whose nth digit differs from the nth listed number's nth digit. It then differs from every entry in at least one place, so it is a real in the range that the list omits — meaning every list is incomplete and the reals are uncountable.",
+    "answer": "Given any numbered list, construct a number whose nth digit differs from the nth listed number's nth digit. It then differs from every entry in at least one place, so it is a real in the range that the list omits. Every such list is therefore incomplete, and the reals are uncountable.",
     "difficulty": 3,
     "sources": [
-      "https://en.wikipedia.org/wiki/Cantor%27s_diagonal_argument"
+      "https://en.wikipedia.org/wiki/Cantor%27s_diagonal_argument",
+      "https://plato.stanford.edu/entries/set-theory/"
     ],
     "tags": [
       "cardinality",
@@ -526,10 +533,10 @@
     "type": "puzzle",
     "domain": "math",
     "topic": "cardinality",
-    "title": "The full hotel with room to spare",
-    "body": "A hotel has infinitely many rooms, numbered 1, 2, 3, and so on, and every single room is occupied. No guest may share a room, and no guest may be turned away. Now a coach arrives carrying infinitely many new guests, also numbered 1, 2, 3, onward. A full hotel should have no space at all, let alone infinite space. The manager accommodates everyone anyway, without evicting a soul.",
+    "title": "A full hotel with room to spare",
+    "body": "A hotel has infinitely many rooms, numbered 1, 2, 3 and so on, and every single room is occupied. No guest may share a room, and no guest may be turned away. Now a coach arrives carrying infinitely many new guests, also numbered 1, 2, 3 onward. The manager accommodates everyone anyway, without evicting a soul.",
     "prompt": "How can a hotel with infinitely many rooms, all occupied, still take in infinitely many new guests?",
-    "answer": "Move the guest in room n to room 2n. Existing guests then fill only the even rooms, freeing every odd room, so new guest n takes room 2n-1. 'Full' does not mean 'no room' for infinite sets, because they can be put in one-to-one correspondence with proper subsets of themselves.",
+    "answer": "Move the guest in room n to room 2n. Existing guests then fill only the even rooms, freeing every odd room, so new guest n takes room 2n-1. Full does not mean no room for infinite sets, since they can be put in one-to-one correspondence with proper subsets of themselves.",
     "difficulty": 2,
     "sources": [
       "https://en.wikipedia.org/wiki/Hilbert%27s_paradox_of_the_Grand_Hotel"
@@ -545,7 +552,7 @@
     "domain": "math",
     "topic": "statistics",
     "title": "Why shouting seems to work",
-    "body": "Any measurement mixing skill and luck will, at its extremes, be riding luck. A pilot whose landing was unusually bad was probably unlucky, so the next one is likely better regardless of what you do in between. Instructors who praise great landings see decline, and those who scream at bad ones see improvement, concluding that criticism works. It is regression to the mean: extremes are followed by less extreme values, and no intervention is needed.",
+    "body": "Any measurement mixing skill and luck will, at its extremes, be riding luck. A pilot whose landing was unusually bad was probably unlucky, so the next one is likely better regardless of what you do in between. Instructors who praise great landings see decline, and those who scream at bad ones see improvement, concluding that criticism works.",
     "prompt": "Why do flight instructors conclude that criticism works better than praise, and what statistical effect fools them?",
     "answer": "Regression to the mean. Exceptionally bad landings owe much to bad luck, so the next attempt is usually better anyway, and exceptional ones are followed by worse. The apparent effect of criticism and praise is an artefact of extremes drifting back toward average.",
     "difficulty": 2,
@@ -581,9 +588,9 @@
     "domain": "math",
     "topic": "inference",
     "title": "What a p-value is not",
-    "body": "A p-value answers one narrow question: if the null hypothesis were true, how often would data look at least this extreme? A p of 0.03 means such data would arise 3% of the time under the null. It does not mean there is a 3% chance the null is true — that is a different conditional, and getting it backwards requires knowing how plausible the hypothesis was beforehand. The p-value alone cannot supply that.",
-    "prompt": "What does a p-value of 0.03 actually mean, and what does it not mean?",
-    "answer": "It means data at least this extreme would occur 3% of the time if the null hypothesis were true. It does not mean the null has a 3% chance of being true — that reverses the conditioning and would additionally require a prior.",
+    "body": "A p-value answers one narrow question: if the null hypothesis were true, how often would data look at least this extreme? A p of 0.03 means such data would arise 3% of the time under the null. It does not mean there is a 3% chance the null is true. That is a different conditional, and getting it backwards requires knowing how plausible the hypothesis was beforehand.",
+    "prompt": "Your result comes back with p = 0.03. What have you learned, and what have you not?",
+    "answer": "You have learned that data at least this extreme would occur 3% of the time if the null hypothesis were true. You have not learned that the null has a 3% chance of being true, which reverses the conditioning and would additionally require a prior.",
     "difficulty": 2,
     "sources": [
       "https://en.wikipedia.org/wiki/P-value"
@@ -599,8 +606,8 @@
     "domain": "math",
     "topic": "inference",
     "title": "Why the bell curve is everywhere",
-    "body": "Take samples from almost any distribution — lopsided, spiky, bimodal, whatever — and average each sample. Plot those averages and they pile up in a bell curve, more tightly as sample size grows. That is the central limit theorem: sums of many independent contributions with finite variance converge to a normal distribution regardless of the shape they came from. It is a statement about averages, not about the raw data itself.",
-    "prompt": "What does the central limit theorem say, and what condition must the underlying distribution meet?",
+    "body": "Take samples from almost any distribution, however lopsided or spiky or bimodal, and average each sample. Plot those averages and they pile up in a bell curve, more tightly as sample size grows. That is the central limit theorem: sums of many independent contributions with finite variance converge to a normal distribution regardless of the shape they came from. It is a statement about averages, not about the raw data.",
+    "prompt": "Averages of samples from a wildly non-normal distribution still come out bell-shaped. What guarantees that, and what does it require?",
     "answer": "Averages of many independent samples approach a normal distribution no matter the shape of the original distribution, provided that distribution has finite variance. It describes the distribution of sample means, not of the raw observations.",
     "difficulty": 2,
     "sources": [
@@ -616,13 +623,14 @@
     "type": "puzzle",
     "domain": "math",
     "topic": "expected-value",
-    "title": "The bet with infinite expected value",
-    "body": "A casino flips a fair coin until heads appears. If heads comes on flip k, you are paid 2 to the power k dollars. Heads on the first flip pays $2, the second pays $4, the third pays $8, and so on. The chance heads first appears on flip k is 1 over 2 to the k, so that outcome contributes exactly $1 to the expected payout, and there are infinitely many such outcomes. The expected value is infinite. Yet almost nobody would pay $20 to play.",
+    "title": "A bet with infinite expected value",
+    "body": "A casino flips a fair coin until heads appears. If heads comes on flip k, you are paid 2 to the power k dollars, so heads on the first flip pays $2, the second $4, the third $8. The chance heads first appears on flip k is 1 over 2 to the k, so that outcome contributes exactly $1 to the expected payout, and there are infinitely many such outcomes. Yet almost nobody would pay $20 to play.",
     "prompt": "Why is a coin game with infinite expected value still worth only a few dollars to almost everyone?",
     "answer": "The infinite expectation comes entirely from vanishingly rare, astronomically large payouts. The median outcome is $2 and you win $8 or less about 87.5% of the time, so a sensible player weighs the whole distribution, not a mean dominated by outcomes that will essentially never occur.",
     "difficulty": 3,
     "sources": [
-      "https://en.wikipedia.org/wiki/St._Petersburg_paradox"
+      "https://en.wikipedia.org/wiki/St._Petersburg_paradox",
+      "https://plato.stanford.edu/entries/paradox-stpetersburg/"
     ],
     "tags": [
       "probability",
@@ -635,7 +643,7 @@
     "domain": "math",
     "topic": "expected-value",
     "title": "Expectation adds even when events are tangled",
-    "body": "Expectation adds even when the things you are adding are dependent: E[X+Y] = E[X] + E[Y] holds whether or not X and Y are independent. This turns brutal problems into trivial ones. Shuffle n letters into n addressed envelopes at random; how many land correctly? Write the count as a sum of n indicators, one per letter. Each letter has chance 1/n of matching, so the expected number of matches is n times 1/n, which is 1 for every n.",
+    "body": "Expectation adds even when the things you are adding are dependent, so E[X+Y] = E[X] + E[Y] holds whether or not X and Y are independent. This turns brutal problems into trivial ones. Shuffle n letters into n addressed envelopes at random and ask how many land correctly. Write the count as a sum of n indicators, one per letter. Each has chance 1/n of matching, so the expected number of matches is 1 for every n.",
     "prompt": "Why is the expected number of letters landing in their correct envelope after a random shuffle exactly 1, for any n?",
     "answer": "By linearity of expectation, which holds even for dependent variables: write the count as a sum of n indicators, each with probability 1/n of being 1. Their expectations add to n times 1/n = 1, with no need to untangle the dependence between placements.",
     "difficulty": 3,
@@ -652,10 +660,10 @@
     "type": "puzzle",
     "domain": "math",
     "topic": "geometry",
-    "title": "One metre of slack around the Earth",
-    "body": "A rope is tied snugly around the Earth's equator, roughly 40,000 kilometres long. You cut it, splice in one extra metre, and arrange the now-slightly-loose rope so it hovers at a uniform height above the ground all the way around. One metre spread over 40,000 kilometres sounds like nothing — a gap far too small to see. How high off the ground does the rope actually sit?",
-    "prompt": "If you add one metre to a rope circling the Earth's equator and lift it uniformly, how big is the resulting gap?",
-    "answer": "About 16 centimetres — enough to slide your hand under. Circumference is 2 pi r, so adding 1 metre of length adds 1/(2 pi), roughly 0.159 metres, to the radius. The Earth's size cancels out entirely: a rope around a tennis ball gives the same gap.",
+    "title": "One meter of slack around the Earth",
+    "body": "A rope is tied snugly around the Earth's equator, roughly 40,000 kilometers long. You cut it, splice in one extra meter, and arrange the now slightly loose rope so it hovers at a uniform height above the ground all the way around. One meter spread over 40,000 kilometers sounds like nothing, a gap far too small to see.",
+    "prompt": "If you add one meter to a rope circling the Earth's equator and lift it uniformly, how big is the resulting gap?",
+    "answer": "About 16 centimeters, enough to slide your hand under. Circumference is 2 pi r, so adding 1 meter of length adds 1/(2 pi), roughly 0.159 meters, to the radius. The Earth's size cancels out entirely, and a rope around a tennis ball gives the same gap.",
     "difficulty": 1,
     "sources": [
       "https://en.wikipedia.org/wiki/String_girdling_Earth"
@@ -670,8 +678,8 @@
     "type": "concept",
     "domain": "math",
     "topic": "geometry",
-    "title": "The postulate that was a choice",
-    "body": "Euclid's parallel postulate says that through a point off a line there is exactly one parallel. For two millennia people tried to derive it from his other axioms and failed — because it is independent of them. Deny it and you get consistent geometries. On a sphere, the 'lines' are great circles, every pair of them meets, no parallels exist, and a triangle's angles sum to more than 180 degrees. The postulate was a choice, not a truth.",
+    "title": "A postulate that turned out to be a choice",
+    "body": "Euclid's parallel postulate says that through a point off a line there is exactly one parallel. For two millennia people tried to derive it from his other axioms and failed, because it is independent of them. Deny it and you get consistent geometries. On a sphere the lines are great circles, every pair of them meets, no parallels exist, and a triangle's angles sum to more than 180 degrees.",
     "prompt": "What happens to geometry if Euclid's parallel postulate is denied, and what does a sphere illustrate?",
     "answer": "You get consistent non-Euclidean geometries, because the postulate is independent of Euclid's other axioms rather than derivable from them. On a sphere, great circles play the role of lines: every two of them meet, so no parallels exist, and triangle angles exceed 180 degrees.",
     "difficulty": 2,
@@ -689,10 +697,10 @@
     "domain": "math",
     "topic": "group-theory",
     "title": "Why a subgroup's size must divide the group's",
-    "body": "A group is a set with an operation obeying a few axioms, and a subgroup is a smaller group living inside it. Lagrange's theorem says the size of any subgroup must divide the size of the whole group evenly. The reason is that the subgroup slices the group into equal-sized, non-overlapping translated copies called cosets, which perfectly tile it. So a group of order 12 can only have subgroups of size 1, 2, 3, 4, 6, or 12. Counting by identical pieces forces the divisibility.",
+    "body": "A group is a set with an operation obeying a few axioms, and a subgroup is a smaller group living inside it. Lagrange's theorem says the size of any subgroup must divide the size of the whole group evenly. The reason is that the subgroup slices the group into equal-sized, non-overlapping translated copies called cosets, which perfectly tile it. So a group of order 12 can only have subgroups of size 1, 2, 3, 4, 6, or 12.",
     "prompt": "Why must the number of elements in a subgroup divide the number of elements in the whole finite group?",
     "answer": "The subgroup partitions the group into cosets, translated copies that are all the same size and do not overlap, so they tile the group exactly. The total size is therefore a whole number of subgroup-sized pieces, which means the subgroup's order divides the group's order.",
-    "difficulty": 2,
+    "difficulty": 3,
     "sources": [
       "https://en.wikipedia.org/wiki/Lagrange%27s_theorem_(group_theory)"
     ],
@@ -707,12 +715,13 @@
     "domain": "math",
     "topic": "continued-fractions",
     "title": "The most irrational number",
-    "body": "Every irrational number has an infinite continued fraction, and how well it can be approximated by simple fractions depends on the size of that expansion's terms. Big terms mean a nearby excellent rational approximation; the smallest possible terms mean the worst. The golden ratio's continued fraction is all ones, the smallest terms there are, so its rational approximations converge more slowly than any other number's. In that precise sense it is the most irrational number, the hardest to pin down with a fraction. Structure in the expansion controls approximability.",
-    "prompt": "In what sense is the golden ratio the 'most irrational' number?",
+    "body": "Every irrational number has an infinite continued fraction, and how well it can be approximated by simple fractions depends on the size of that expansion's terms. Big terms mean a nearby excellent rational approximation, and the smallest possible terms mean the worst. The golden ratio's continued fraction is all ones, so its rational approximations converge more slowly than any other number's.",
+    "prompt": "In what sense is one irrational number harder to approximate by fractions than every other?",
     "answer": "How closely an irrational can be approximated by fractions depends on its continued-fraction terms; large terms allow a very close rational nearby. The golden ratio's expansion is all ones, the smallest possible terms, so its rational approximations converge the slowest of any number, making it the hardest to approximate.",
     "difficulty": 3,
     "sources": [
-      "https://en.wikipedia.org/wiki/Golden_ratio"
+      "https://en.wikipedia.org/wiki/Golden_ratio",
+      "https://oeis.org/A001622"
     ],
     "tags": [
       "number-theory",
@@ -725,12 +734,13 @@
     "domain": "math",
     "topic": "generating-functions",
     "title": "Turning a sequence into a single function",
-    "body": "A generating function packs an entire number sequence into one object by using its terms as the coefficients of a power series. The trick is that operations you want on the sequence, such as shifting, adding, or convolving, become ordinary algebra on the function. To solve the Fibonacci recurrence, you write its generating function, use the recurrence to get a simple closed formula, then expand it back into coefficients to read off a formula for the nth term. Encoding a sequence as a function lets algebra do the combinatorics.",
-    "prompt": "What is a generating function, and how does it help solve a recurrence like Fibonacci's?",
+    "body": "A generating function packs an entire number sequence into one object by using its terms as the coefficients of a power series. The trick is that operations you want on the sequence, such as shifting, adding, or convolving, become ordinary algebra on the function. To solve the Fibonacci recurrence you write its generating function, use the recurrence to get a closed formula, then expand it back into coefficients.",
+    "prompt": "How do you turn a recurrence like Fibonacci's into a closed formula for its nth term?",
     "answer": "A generating function encodes a sequence as the coefficients of a power series, turning sequence operations into algebra on the function. For a recurrence, you translate it into an equation for the generating function, solve for a closed form, and expand it back to read off a formula for the nth term.",
     "difficulty": 3,
     "sources": [
-      "https://en.wikipedia.org/wiki/Generating_function"
+      "https://en.wikipedia.org/wiki/Generating_function",
+      "https://oeis.org/A000045"
     ],
     "tags": [
       "combinatorics",
@@ -742,10 +752,10 @@
     "type": "concept",
     "domain": "math",
     "topic": "markov-chains",
-    "title": "The process that forgets its past",
-    "body": "A Markov chain is a system that hops between states, where the probability of the next state depends only on the current one, not on the path taken to reach it. This memorylessness is the defining property. It sounds restrictive but models a great deal: board games, weather, card shuffling, web browsing. Because only the present matters, long-run behaviour is often captured by a stationary distribution the chain settles into regardless of where it started. Assuming the past matters only through the present makes otherwise-intractable systems analysable.",
+    "title": "A process that forgets its own past",
+    "body": "A Markov chain is a system that hops between states, where the probability of the next state depends only on the current one, not on the path taken to reach it. This memorylessness is the defining property. It sounds restrictive but models a great deal: board games, weather, card shuffling, web browsing. Because only the present matters, long-run behavior is often captured by a stationary distribution the chain settles into.",
     "prompt": "What defines a Markov chain, and why is that property useful?",
-    "answer": "A Markov chain moves between states so that the next state depends only on the current state, not the history of how it got there. This memorylessness lets many systems be analysed through a stationary distribution the chain converges to, regardless of its starting point.",
+    "answer": "A Markov chain moves between states so that the next state depends only on the current state, not the history of how it got there. This memorylessness lets many systems be analyzed through a stationary distribution the chain converges to, regardless of its starting point.",
     "difficulty": 2,
     "sources": [
       "https://en.wikipedia.org/wiki/Markov_chain"
@@ -761,8 +771,8 @@
     "domain": "math",
     "topic": "information-theory",
     "title": "How many bits a message really needs",
-    "body": "Shannon entropy measures the average uncertainty in a random source, in bits. A fair coin carries one bit per flip; a heavily biased coin carries less, because you can usually guess the outcome. The deep result is that entropy is exactly the floor on lossless compression: you cannot, on average, encode the source in fewer bits than its entropy without losing information. That is why predictable data compresses well and truly random data does not. Entropy turns how surprising a source is into a hard numerical limit.",
-    "prompt": "What does Shannon entropy measure, and what limit does it place on compression?",
+    "body": "Shannon entropy measures the average uncertainty in a random source, in bits. A fair coin carries one bit per flip, and a heavily biased coin carries less, because you can usually guess the outcome. The deep result is that entropy is exactly the floor on lossless compression. You cannot, on average, encode the source in fewer bits than its entropy without losing information.",
+    "prompt": "What sets the hard limit on how far a file can be losslessly compressed?",
     "answer": "Shannon entropy is the average uncertainty of a source measured in bits, lower when outcomes are predictable. It is the exact floor on lossless compression: no encoding can, on average, use fewer bits than the entropy without losing information, which is why random data resists compression.",
     "difficulty": 2,
     "sources": [
@@ -779,8 +789,8 @@
     "domain": "math",
     "topic": "fourier-analysis",
     "title": "Every periodic wave is a sum of pure tones",
-    "body": "Fourier's insight was that almost any periodic function, however jagged, can be written as a sum of sines and cosines at multiples of its base frequency. A square wave, all corners, is built from smoothly rounded sinusoids in the right proportions. Each component has an amplitude telling you how much of that frequency the signal contains. This decomposition turns hard problems in the time domain into easy ones in the frequency domain, which is why it underlies audio, images, and signal processing. Complex shapes hide simple frequency ingredients.",
-    "prompt": "What does a Fourier series say about a periodic function?",
+    "body": "Fourier's insight was that almost any periodic function, however jagged, can be written as a sum of sines and cosines at multiples of its base frequency. A square wave, all corners, is built from smoothly rounded sinusoids in the right proportions. Each component has an amplitude telling you how much of that frequency the signal contains. This turns hard problems in the time domain into easy ones in the frequency domain.",
+    "prompt": "A square wave has nothing smooth about it. How can it be built entirely out of sines and cosines?",
     "answer": "It says almost any periodic function can be expressed as a sum of sines and cosines at multiples of its fundamental frequency, each with an amplitude giving the strength of that frequency. This lets time-domain problems be solved in the frequency domain, underpinning modern signal processing.",
     "difficulty": 2,
     "sources": [
@@ -797,8 +807,8 @@
     "domain": "math",
     "topic": "convexity",
     "title": "Why the average outcome beats the outcome of the average",
-    "body": "A function is convex if it curves upward, so a chord between two points lies above the graph. Jensen's inequality says that for such a function, the average of its values is at least the function of the average input. Applied to random outcomes: if a payoff curves upward, uncertainty raises expected payoff above the payoff at the mean. The reverse holds for concave functions, which is why diminishing returns penalise volatility. Curvature, not just the average, governs how uncertainty translates into expected value.",
-    "prompt": "What does Jensen's inequality say about a convex function applied to a random quantity?",
+    "body": "A function is convex if it curves upward, so a chord between two points lies above the graph. Jensen's inequality says that for such a function, the average of its values is at least the function of the average input. Applied to random outcomes, if a payoff curves upward then uncertainty raises expected payoff above the payoff at the mean. The reverse holds for concave functions, so diminishing returns penalize volatility.",
+    "prompt": "When does adding uncertainty to a situation raise the expected payoff rather than lower it?",
     "answer": "For a convex, upward-curving function, the expected value of the function is at least the function of the expected value. So when a payoff curves upward, spreading outcomes raises expected payoff above the value at the mean, while for concave functions the inequality flips and volatility hurts.",
     "difficulty": 3,
     "sources": [
@@ -815,12 +825,13 @@
     "domain": "math",
     "topic": "prime-numbers",
     "title": "How the primes thin out",
-    "body": "Primes never stop, but they grow sparser among large numbers. The prime number theorem makes this exact: near a large number n, the fraction of integers that are prime is about 1 over the natural logarithm of n. So the count of primes below n is roughly n divided by ln n. Around a trillion, only about one number in 27 is prime. The theorem does not locate any particular prime; it describes their average density with startling accuracy. The chaos of individual primes hides a smooth statistical law.",
+    "body": "Primes never stop, but they grow sparser among large numbers. The prime number theorem makes this exact: near a large number n, the fraction of integers that are prime is about 1 over the natural logarithm of n. So the count of primes below n is roughly n divided by ln n. Around a trillion, only about one number in 27 is prime.",
     "prompt": "What does the prime number theorem say about how common primes are near a large number n?",
     "answer": "It says the density of primes near a large number n is about 1 divided by the natural logarithm of n, so the number of primes below n is roughly n over ln n. It describes their average thinning, not the location of any specific prime.",
     "difficulty": 2,
     "sources": [
-      "https://en.wikipedia.org/wiki/Prime_number_theorem"
+      "https://en.wikipedia.org/wiki/Prime_number_theorem",
+      "https://mathworld.wolfram.com/PrimeNumberTheorem.html"
     ],
     "tags": [
       "number-theory",
@@ -833,12 +844,13 @@
     "domain": "math",
     "topic": "ramsey-theory",
     "title": "Six people guarantee a trio",
-    "body": "Invite six people to a party and consider each pair: they either know each other or they do not. No matter who knows whom, you are guaranteed to find three people who all mutually know each other, or three who are all mutual strangers. With only five people this can fail. This is the smallest case of Ramsey theory, which shows that complete disorder is impossible: any large enough structure must contain an orderly pattern. You cannot arrange the acquaintances to dodge every such trio.",
+    "body": "Invite six people to a party and consider each pair: they either know each other or they do not. No matter who knows whom, you are guaranteed to find three people who all mutually know each other, or three who are all mutual strangers. With only five people this can fail. This is the smallest case of Ramsey theory, which shows that complete disorder is impossible.",
     "prompt": "Why must any group of six people contain three mutual acquaintances or three mutual strangers?",
     "answer": "Pick one person; among the other five, at least three share the same relation to them, say all acquaintances. If any two of those three know each other you have a mutual trio with the first person; if none do, those three are mutual strangers. Six forces the pattern, though five need not.",
     "difficulty": 2,
     "sources": [
-      "https://en.wikipedia.org/wiki/Theorem_on_friends_and_strangers"
+      "https://en.wikipedia.org/wiki/Theorem_on_friends_and_strangers",
+      "https://mathworld.wolfram.com/RamseyNumber.html"
     ],
     "tags": [
       "combinatorics",
@@ -851,9 +863,9 @@
     "domain": "math",
     "topic": "graph-coloring",
     "title": "Four colors for any map",
-    "body": "Take any map of countries and try to colour it so no two regions sharing a border get the same colour. Remarkably, four colours always suffice, no matter how tangled the borders. Three are not always enough, and the four-colour theorem proves you never need a fifth. Its 1976 proof was the first major theorem verified by computer, checking a huge number of unavoidable configurations by machine, controversial at the time for being impossible to check by hand. Planarity alone caps the colours needed at four.",
-    "prompt": "What does the four-colour theorem state, and what made its proof historic?",
-    "answer": "It states that any map drawn in the plane can be coloured with at most four colours so that no two regions sharing a border match. Its 1976 proof was the first major theorem proved with a computer, checking many configurations by machine and sparking debate about proofs too large to verify by hand.",
+    "body": "Take any map of countries and try to color it so no two regions sharing a border get the same color. Four colors always suffice, no matter how tangled the borders. Three are not always enough, and the four-color theorem proves you never need a fifth. Its 1976 proof was the first major theorem verified by computer, checking a huge number of unavoidable configurations by machine.",
+    "prompt": "How many colors does any flat map need, and what made the proof of that answer historic?",
+    "answer": "Four. Any map drawn in the plane can be colored with at most four colors so that no two regions sharing a border match. Its 1976 proof was the first major theorem proved with a computer, checking many configurations by machine and sparking debate about proofs too large to verify by hand.",
     "difficulty": 2,
     "sources": [
       "https://en.wikipedia.org/wiki/Four_color_theorem"
@@ -869,12 +881,13 @@
     "domain": "math",
     "topic": "catalan-numbers",
     "title": "The number that counts balanced parentheses",
-    "body": "How many ways can you correctly match n pairs of parentheses? For n equal to three there are five: the Catalan numbers run 1, 2, 5, 14, 42, and on. The same sequence counts astonishingly many things: lattice paths that stay below a diagonal, ways to triangulate a polygon, shapes of binary trees. They all share a running balance that must never go negative, which is why one formula, the central binomial coefficient divided by n plus one, counts them. When a counting problem has that shape, expect Catalan numbers.",
-    "prompt": "What do the Catalan numbers count, and why do so many different problems share them?",
+    "body": "How many ways can you correctly match n pairs of parentheses? For n equal to three there are five, and the Catalan numbers run 1, 2, 5, 14, 42 and on. The same sequence counts astonishingly many things: lattice paths that stay below a diagonal, ways to triangulate a polygon, shapes of binary trees. They all share a running balance that must never go negative.",
+    "prompt": "Parenthesis matchings, polygon triangulations and binary tree shapes are all counted by one sequence. What do they have in common?",
     "answer": "The Catalan numbers count the ways to match n pairs of parentheses, and equally count lattice paths staying under a diagonal, polygon triangulations, and binary tree shapes. These problems all share a running balance that must never go negative, so the same formula, the central binomial coefficient over n plus one, solves them all.",
     "difficulty": 2,
     "sources": [
-      "https://en.wikipedia.org/wiki/Catalan_number"
+      "https://en.wikipedia.org/wiki/Catalan_number",
+      "https://oeis.org/A000108"
     ],
     "tags": [
       "combinatorics",
@@ -887,8 +900,8 @@
     "domain": "math",
     "topic": "law-of-large-numbers",
     "title": "What the law of large numbers does not promise",
-    "body": "The law of large numbers says that as you take more independent samples, their average converges to the true expected value. Flip a fair coin enough times and the fraction of heads approaches one half. But it promises nothing about short runs, and it does not say a streak of heads makes tails due, since coins have no memory. Convergence happens because a growing pile of new flips dilutes any early imbalance, not because the imbalance gets corrected. The law is about long-run averages, never about rescuing the next trial.",
-    "prompt": "What does the law of large numbers guarantee, and why is expecting a streak to 'balance out' a misreading of it?",
+    "body": "The law of large numbers says that as you take more independent samples, their average converges to the true expected value. Flip a fair coin enough times and the fraction of heads approaches one half. But it promises nothing about short runs, and it does not say a streak of heads makes tails due, since coins have no memory. Convergence happens because a growing pile of new flips dilutes any early imbalance, not because the imbalance gets corrected.",
+    "prompt": "Ten heads in a row, and the coin is fair. Does the law of large numbers say tails is now due?",
     "answer": "It guarantees that the average of many independent samples converges to the expected value as the count grows. A streak is never corrected, only diluted by the growing number of later trials, so the next flip stays fifty-fifty regardless of history, which is the gambler's fallacy.",
     "difficulty": 2,
     "sources": [
@@ -904,9 +917,9 @@
     "type": "concept",
     "domain": "math",
     "topic": "complex-numbers",
-    "title": "The equation linking five fundamental constants",
-    "body": "Euler's formula says e to the power i times x equals cos x plus i sin x. Geometrically, e to the i x is the point on the unit circle at angle x, so multiplying by it rotates. Set x to pi and you land at minus one, giving Euler's identity: e to the i pi plus one equals zero. In one line it ties together e, i, pi, one, and zero. The formula reveals that exponential growth and circular motion are the same operation in the complex plane.",
-    "prompt": "What does Euler's formula say, and how does it produce the identity relating e, i, pi, 1, and 0?",
+    "title": "One line linking five fundamental constants",
+    "body": "Euler's formula says e to the power i times x equals cos x plus i sin x. Geometrically, e to the i x is the point on the unit circle at angle x, so multiplying by it rotates. Set x to pi and you land at minus one, giving Euler's identity: e to the i pi plus one equals zero. In one line it ties together e, i, pi, one, and zero.",
+    "prompt": "How does a formula about exponential growth end up producing a statement about circles?",
     "answer": "Euler's formula states that e to the power i times x equals cos x plus i sin x, which traces the unit circle as x varies, so it represents rotation. Setting x to pi gives minus one, so e to the i pi plus one equals zero, linking e, i, pi, one, and zero.",
     "difficulty": 3,
     "sources": [
@@ -923,12 +936,13 @@
     "domain": "math",
     "topic": "incompleteness",
     "title": "True but unprovable",
-    "body": "Godel's first incompleteness theorem says that any consistent formal system rich enough to express basic arithmetic must contain statements that are true yet cannot be proved within the system. He built one by encoding the sentence this statement is not provable as a precise arithmetic claim. If it were provable the system would be inconsistent, so it is unprovable, and therefore true. You cannot patch this by adding axioms, since the enlarged system has its own unprovable truths. Provability and truth, it turns out, are not the same thing.",
-    "prompt": "What does Godel's first incompleteness theorem establish about formal systems containing arithmetic?",
-    "answer": "It establishes that any consistent formal system able to express basic arithmetic contains true statements it cannot prove. Godel encoded a sentence asserting its own unprovability; it must be unprovable yet true, and adding axioms only creates new unprovable truths, so provability and truth come apart.",
+    "body": "Gödel's first incompleteness theorem says that any consistent formal system rich enough to express basic arithmetic must contain statements that are true yet cannot be proved within the system. He built one by encoding the sentence 'this statement is not provable' as a precise arithmetic claim. If it were provable the system would be inconsistent, so it is unprovable, and therefore true. You cannot patch this by adding axioms.",
+    "prompt": "Gödel produced a sentence that is true and unprovable. How did he build it, and why can no repair fix the gap?",
+    "answer": "He encoded a sentence asserting its own unprovability as an arithmetic claim. If it were provable the system would be inconsistent, so it must be unprovable and hence true. Adding axioms only creates a larger system with its own unprovable truths, so provability and truth come apart permanently.",
     "difficulty": 3,
     "sources": [
-      "https://en.wikipedia.org/wiki/G%C3%B6del%27s_incompleteness_theorems"
+      "https://en.wikipedia.org/wiki/G%C3%B6del%27s_incompleteness_theorems",
+      "https://plato.stanford.edu/entries/goedel-incompleteness/"
     ],
     "tags": [
       "logic",
@@ -941,12 +955,13 @@
     "domain": "math",
     "topic": "buffon-needle",
     "title": "Estimating pi by dropping needles",
-    "body": "A floor is ruled with parallel lines spaced one needle-length apart. You drop a needle at random and note whether it crosses a line. Do this thousands of times and record the fraction that cross. Astonishingly, that fraction lets you compute an estimate of pi, a number about circles, from an experiment with no circle in sight. Where does pi come from, and what is the probability that a randomly dropped needle crosses a line?",
+    "body": "A floor is ruled with parallel lines spaced one needle-length apart. You drop a needle at random and note whether it crosses a line. Do this thousands of times and record the fraction that cross. That fraction lets you compute an estimate of pi, a number about circles, from an experiment with no circle in sight.",
     "prompt": "Why does the fraction of randomly dropped needles crossing evenly spaced lines let you estimate pi?",
     "answer": "When the needle length equals the line spacing, the probability it crosses a line is exactly 2/pi, so the observed crossing fraction estimates 2/pi and hence pi. Pi enters through averaging over the needle's uniformly random angle, an integral of a sine that brings in the circle.",
     "difficulty": 3,
     "sources": [
-      "https://en.wikipedia.org/wiki/Buffon%27s_needle_problem"
+      "https://en.wikipedia.org/wiki/Buffon%27s_needle_problem",
+      "https://mathworld.wolfram.com/BuffonsNeedleProblem.html"
     ],
     "tags": [
       "probability",
@@ -959,7 +974,7 @@
     "domain": "math",
     "topic": "weighing-puzzle",
     "title": "Twelve coins, three weighings",
-    "body": "You have twelve identical-looking coins. Exactly one is counterfeit, differing in weight, but you do not know whether it is heavier or lighter than the rest. With only a balance scale and three weighings, you must identify the fake coin and say whether it is heavy or light. A first instinct is to split into halves, but that can waste information. How can three weighings possibly settle both questions at once?",
+    "body": "You have twelve identical-looking coins. Exactly one is counterfeit, differing in weight, but you do not know whether it is heavier or lighter than the rest. With only a balance scale and three weighings, you must identify the fake coin and say whether it is heavy or light. A first instinct is to split into halves, but that wastes information.",
     "prompt": "How can three weighings on a balance find the one counterfeit among twelve coins and tell whether it is heavy or light?",
     "answer": "Each weighing has three outcomes, left heavy, right heavy, or balanced, so three weighings distinguish 27 cases, enough for the 24 possibilities of 12 coins each heavy or light. A fixed scheme that rotates which coins go left, right, and aside across the three weighings maps every outcome pattern to a unique coin and direction.",
     "difficulty": 3,
@@ -977,7 +992,7 @@
     "domain": "math",
     "topic": "two-envelopes",
     "title": "The envelope you always want to switch",
-    "body": "Two sealed envelopes each hold money; one holds twice the other. You pick one and could keep it or switch. Here is a tempting argument: let your envelope hold A. The other holds 2A or A/2 with equal chance, so its expected value is 1.25A, more than A, so you should switch. But the same reasoning applies to the other envelope, suggesting you switch forever. Something is wrong with the calculation. What is the error?",
+    "body": "Two sealed envelopes each hold money, and one holds twice the other. You pick one and could keep it or switch. Here is a tempting argument. Let your envelope hold A. The other holds 2A or A/2 with equal chance, so its expected value is 1.25A, more than A, so you should switch. But the same reasoning applies to the other envelope, suggesting you switch forever.",
     "prompt": "What is wrong with the argument that you should always switch envelopes because the other holds an expected 1.25 times yours?",
     "answer": "The symbol A is used for two different things: the amount in your envelope, and the smaller amount the pair is built from. Once you fix the pair as x and 2x, switching gains x half the time and loses x half the time for zero expected gain; the 1.25A step secretly conflates the two cases.",
     "difficulty": 3,
@@ -995,7 +1010,7 @@
     "domain": "math",
     "topic": "nontransitive-dice",
     "title": "Dice with no best die",
-    "body": "You and a friend each pick one of three specially numbered dice, roll, and the higher number wins. You generously let your friend choose first, expecting a disadvantage. But it turns out that whichever die they pick, you can always pick one that beats it more than half the time. Die A beats B, B beats C, and C beats A, each with the same edge. Our intuition that beats should rank the dice in order fails here. How can there be no strongest die?",
+    "body": "You and a friend each pick one of three specially numbered dice, roll, and the higher number wins. You generously let your friend choose first, expecting a disadvantage. But whichever die they pick, you can always pick one that beats it more than half the time. Die A beats B, B beats C, and C beats A, each with the same edge.",
     "prompt": "How can three dice be arranged so that A beats B, B beats C, and C beats A, with no single best die?",
     "answer": "The relation rolls higher more than half the time need not be transitive, because each die's numbers are arranged to win against one specific rival, not to be uniformly large. With the right numbering, A beats B, B beats C, and C beats A each with probability 5/9, so choosing second is the advantage.",
     "difficulty": 3,
@@ -1013,12 +1028,13 @@
     "domain": "math",
     "topic": "benford-law",
     "title": "Why leading digits favor 1",
-    "body": "Collect the populations of every city, or the lengths of the world's rivers, or the numbers on a company's tax return, and look only at the first digit of each. You might expect each digit 1 through 9 equally often. Instead 1 leads about 30% of the time and 9 under 5%. This lopsided pattern appears across wildly different datasets, and auditors use deviations from it to flag fabricated figures. Why would nature and accounting both prefer numbers starting with 1?",
-    "prompt": "Why do the leading digits of many real-world datasets favor 1 (about 30%) over 9 (under 5%)?",
+    "body": "Collect the populations of every city, or the lengths of the world's rivers, or the numbers on a company's tax return, and look only at the first digit of each. You might expect each digit 1 through 9 equally often. Instead 1 leads about 30% of the time and 9 under 5%. This lopsided pattern appears across wildly different datasets, and auditors use deviations from it to flag fabricated figures.",
+    "prompt": "Across city populations, river lengths and tax returns, the digit 1 leads about 30% of the time. What causes that?",
     "answer": "Quantities that span many orders of magnitude are roughly uniform on a logarithmic scale, and on that scale the stretch from 1 to 2 is far wider than from 9 to 10. So a first digit d appears with probability log10(1 + 1/d), giving 1 about 30% and 9 under 5%; fabricated numbers often miss this.",
     "difficulty": 2,
     "sources": [
-      "https://en.wikipedia.org/wiki/Benford%27s_law"
+      "https://en.wikipedia.org/wiki/Benford%27s_law",
+      "https://mathworld.wolfram.com/BenfordsLaw.html"
     ],
     "tags": [
       "statistics",
@@ -1031,16 +1047,205 @@
     "domain": "math",
     "topic": "common-knowledge",
     "title": "The islanders and the visitor's remark",
-    "body": "On an island, blue-eyed people must leave at dawn once they deduce their own eye colour, but no one may discuss eyes and there are no mirrors. Everyone already sees everyone else's eyes, so each blue-eyed person knows others have blue eyes. A visitor announces that someone here has blue eyes, apparently telling them nothing new. Yet if there are a hundred blue-eyed islanders, exactly a hundred days later they all leave. How did an already-known fact trigger the exodus?",
+    "body": "On an island, blue-eyed people must leave at dawn once they deduce their own eye color, but no one may discuss eyes and there are no mirrors. Everyone already sees everyone else's eyes, so each blue-eyed person knows others have blue eyes. A visitor announces that someone here has blue eyes, apparently telling them nothing new. Yet if there are a hundred blue-eyed islanders, exactly a hundred days later they all leave.",
     "prompt": "How can announcing something everyone already knows, that someone has blue eyes, cause the blue-eyed islanders to eventually leave?",
     "answer": "The announcement adds no private information but makes the fact common knowledge, so everyone knows that everyone knows it, and so on without end. That shared certainty lets an induction run: with n blue-eyed people, each waits n days, sees no one leave earlier, and on day n deduces their own eyes are blue.",
     "difficulty": 3,
     "sources": [
-      "https://en.wikipedia.org/wiki/Common_knowledge_(logic)"
+      "https://en.wikipedia.org/wiki/Common_knowledge_(logic)",
+      "https://plato.stanford.edu/entries/common-knowledge/"
     ],
     "tags": [
       "logic",
       "epistemics"
+    ]
+  },
+  {
+    "id": "math-0059",
+    "type": "concept",
+    "domain": "math",
+    "topic": "bayesian-updating",
+    "title": "Evidence moves a belief, it does not set one",
+    "body": "Bayes' theorem says the probability of a hypothesis given evidence equals the prior probability times how likely that evidence was under the hypothesis, divided by how likely it was overall. The prior never drops out. Strong evidence for a hypothesis that started out very improbable can still leave it improbable, which is why a test that is right 99% of the time says little about a condition affecting one person in a million.",
+    "prompt": "Two people see identical evidence and end up with different confidence. Can both be reasoning correctly?",
+    "answer": "Yes, if they started from different priors. Bayes' theorem multiplies the prior by the likelihood of the evidence, so the same evidence shifts each belief by the same factor while leaving the starting points different. Evidence updates a belief rather than determining it outright.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Bayes%27_theorem",
+      "https://plato.stanford.edu/entries/bayes-theorem/"
+    ],
+    "tags": [
+      "probability",
+      "inference"
+    ]
+  },
+  {
+    "id": "math-0060",
+    "type": "concept",
+    "domain": "math",
+    "topic": "inclusion-exclusion",
+    "title": "Add, subtract, and keep alternating",
+    "body": "To count elements in at least one of several sets, adding the set sizes double-counts every overlap. Subtracting each pairwise intersection then removes elements in three sets once too often, so those must be added back, and the correction alternates all the way up. Among 100 numbers, those divisible by 2 or 3 number 50 plus 33 minus the 16 divisible by 6, giving 67.",
+    "prompt": "How many numbers from 1 to 100 are divisible by 2 or by 3, and why is 50 plus 33 the wrong answer?",
+    "answer": "Sixty-seven. Adding 50 and 33 counts every multiple of 6 twice, since those are divisible by both, so the 16 of them must be subtracted once. This is inclusion-exclusion, where overlaps are removed and then re-added in alternating fashion.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Inclusion%E2%80%93exclusion_principle",
+      "https://mathworld.wolfram.com/Inclusion-ExclusionPrinciple.html"
+    ],
+    "tags": [
+      "combinatorics",
+      "counting"
+    ]
+  },
+  {
+    "id": "math-0061",
+    "type": "puzzle",
+    "domain": "math",
+    "topic": "derangements",
+    "title": "The cloakroom that returns every coat wrongly",
+    "body": "A cloakroom loses its tickets and hands n coats back at random. The chance that not one person gets their own coat is a derangement probability. For n = 4 it is 9 out of 24. What is surprising is what happens as n grows: the answer barely moves, settling almost immediately on a constant, and it does not drift toward 0 or 1 as the number of coats increases.",
+    "prompt": "As the number of randomly returned coats grows, what does the probability that nobody gets their own approach?",
+    "answer": "It approaches 1/e, about 0.368, and it gets there fast: n = 7 is already correct to four decimal places. Inclusion-exclusion gives the probability as the alternating sum 1 - 1/1! + 1/2! - 1/3! and so on, which is precisely the series for e to the power minus one.",
+    "difficulty": 3,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Derangement",
+      "https://oeis.org/A000166"
+    ],
+    "tags": [
+      "combinatorics",
+      "probability"
+    ]
+  },
+  {
+    "id": "math-0062",
+    "type": "concept",
+    "domain": "math",
+    "topic": "dynamical-systems",
+    "title": "Deterministic and unpredictable at once",
+    "body": "Chaos does not mean randomness. A chaotic system follows exact deterministic rules, but nearby starting points separate exponentially fast, so any error in the initial measurement grows until the prediction is worthless. The rules stay perfectly knowable while the long-run outcome does not. This is why weather forecasts degrade over days rather than hours, and why more computing power extends the horizon only slowly.",
+    "prompt": "The equations governing weather are deterministic and known. Why does forecasting still fail beyond about a fortnight?",
+    "answer": "Because the system is chaotic: nearby initial states diverge exponentially, so any measurement error, however small, grows until it dominates the forecast. Determinism guarantees the rules, not predictability, and halving the initial error only buys a fixed extra stretch of accurate time.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Chaos_theory",
+      "https://en.wikipedia.org/wiki/Butterfly_effect"
+    ],
+    "tags": [
+      "dynamical-systems",
+      "prediction"
+    ]
+  },
+  {
+    "id": "math-0063",
+    "type": "concept",
+    "domain": "math",
+    "topic": "polyhedra",
+    "title": "Vertices minus edges plus faces",
+    "body": "Count the corners, edges and faces of a cube and you get 8, 12 and 6, and 8 minus 12 plus 6 is 2. A tetrahedron gives 4, 6 and 4, which is also 2. Every convex polyhedron does. The quantity does not depend on shape or size, only on the surface being sphere-like, and a doughnut-shaped solid gives 0 instead. It is a topological invariant wearing a counting problem's clothes.",
+    "prompt": "Corners minus edges plus faces gives 2 for a cube and for a tetrahedron. What is that number really counting?",
+    "answer": "The Euler characteristic, a topological invariant of the surface rather than a property of the shape. Every convex polyhedron has a sphere-like surface and so gives 2, while a solid with one hole through it gives 0 no matter how it is subdivided.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Euler_characteristic",
+      "https://mathworld.wolfram.com/PolyhedralFormula.html"
+    ],
+    "tags": [
+      "topology",
+      "geometry"
+    ]
+  },
+  {
+    "id": "math-0064",
+    "type": "concept",
+    "domain": "math",
+    "topic": "exponential-growth",
+    "title": "Where e comes from",
+    "body": "Invest £1 at 100% annual interest and after a year you have £2. Compound it twice a year and you get £2.25, monthly £2.613, daily £2.7146. Compounding more often keeps helping, but by less each time, and the total converges rather than running away. The limit is e, about 2.71828. So e is not an arbitrary constant. It is the answer to what continuous compounding at 100% actually pays.",
+    "prompt": "Compounding 100% interest more and more often pays more each time. Why does it not grow without limit?",
+    "answer": "Because each extra compounding period earns interest on a smaller slice of time, so the gains shrink fast enough to converge. The limit of (1 + 1/n) to the power n as n grows is e, about 2.71828, which is exactly what continuous compounding at 100% pays.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/E_(mathematical_constant)"
+    ],
+    "tags": [
+      "analysis",
+      "compounding"
+    ]
+  },
+  {
+    "id": "math-0065",
+    "type": "concept",
+    "domain": "math",
+    "topic": "data-visualisation",
+    "title": "Four datasets, one set of statistics",
+    "body": "Anscombe's quartet is four small datasets with nearly identical means, variances, correlation and regression line. Plotted, they could hardly differ more. One is a clean linear relationship, one is a smooth curve, one is a perfect line with a single outlier dragging the fit, and one is a vertical stack plus one distant point that creates the entire slope. Summary statistics compress, and compression discards exactly the structure that decides whether they mean anything.",
+    "prompt": "Four datasets share a mean, variance, correlation and regression line. How much can they still differ?",
+    "answer": "Almost completely. Anscombe's quartet shows a linear relationship, a curve, a line ruined by one outlier, and a vertical stack whose slope comes entirely from a single distant point. Summary statistics discard shape, so agreeing on them says little without a plot.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Anscombe%27s_quartet"
+    ],
+    "tags": [
+      "statistics",
+      "visualisation"
+    ]
+  },
+  {
+    "id": "math-0066",
+    "type": "concept",
+    "domain": "math",
+    "topic": "open-problems",
+    "title": "A rule a child can follow that nobody can prove",
+    "body": "Take any positive integer. If it is even, halve it. If it is odd, triple it and add one. Repeat. Every starting value ever tested, into the quintillions, eventually reaches 1. Nobody has proved it always does, and nobody has found a counterexample. Erdős remarked that mathematics is not yet ready for such problems. Simplicity of statement is no guide at all to difficulty of proof.",
+    "prompt": "Halve it if even, triple and add one if odd. What is unresolved about this rule?",
+    "answer": "Whether every positive integer eventually reaches 1. This is the Collatz conjecture, verified computationally into the quintillions with no counterexample and no proof. It shows that a problem statable in one line to a child can be beyond current mathematics.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Collatz_conjecture",
+      "https://oeis.org/A006577"
+    ],
+    "tags": [
+      "number-theory",
+      "open-problems"
+    ]
+  },
+  {
+    "id": "math-0067",
+    "type": "concept",
+    "domain": "math",
+    "topic": "fermat-little-theorem",
+    "title": "A test for primality that never factors anything",
+    "body": "Fermat's little theorem says that if p is prime and a is not divisible by p, then a to the power p-1 leaves remainder 1 when divided by p. Modular exponentiation computes that in a few hundred multiplications even for a 2048-bit p. So a failed test proves compositeness without exhibiting a single factor. A pass is only evidence, since Carmichael numbers pass for every base, which is why real tests use Miller-Rabin instead.",
+    "prompt": "How can you prove a 2048-bit number is composite without finding any of its factors?",
+    "answer": "By Fermat's little theorem: if n were prime then a to the power n-1 would be congruent to 1 modulo n for any a not divisible by n, and modular exponentiation checks that quickly. A failure proves n composite while revealing no factor. A pass is weaker evidence, since Carmichael numbers satisfy it for every base.",
+    "difficulty": 3,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Fermat%27s_little_theorem",
+      "https://mathworld.wolfram.com/FermatsLittleTheorem.html"
+    ],
+    "tags": [
+      "number-theory",
+      "primality"
+    ]
+  },
+  {
+    "id": "math-0068",
+    "type": "concept",
+    "domain": "math",
+    "topic": "constructibility",
+    "title": "Why the circle cannot be squared",
+    "body": "Greek geometers asked for a square equal in area to a given circle, drawn with compass and unmarked straightedge alone. Every such construction solves a chain of linear and quadratic equations, so any length it produces is algebraic, meaning a root of some polynomial with rational coefficients. Squaring the circle needs the square root of pi. Lindemann proved in 1882 that pi is transcendental and so satisfies no such polynomial, which closed the question after two thousand years.",
+    "prompt": "Two millennia of failure to square the circle ended with a proof about pi. What did it show?",
+    "answer": "That pi is transcendental, meaning it is the root of no polynomial with rational coefficients. Compass and straightedge constructions only ever produce algebraic lengths, so a length involving the square root of pi is unreachable. Lindemann's 1882 proof made the impossibility a theorem rather than a run of bad luck.",
+    "difficulty": 3,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Squaring_the_circle",
+      "https://en.wikipedia.org/wiki/Lindemann%E2%80%93Weierstrass_theorem"
+    ],
+    "tags": [
+      "geometry",
+      "algebra"
     ]
   }
 ]

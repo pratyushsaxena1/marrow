@@ -40,6 +40,11 @@ const neutraliseAbbreviations = (s: string): string => {
     out = out.replace(re, (m) => m.replace(/\./g, "\0"));
   }
   out = out.replace(/\b[A-Z]\./g, (m) => m.replace(".", "\0"));
+  // Factorial notation: a "!" directly after a digit is an operator, not the end of
+  // a sentence, so "1 - 1/1! + 1/2! - 1/3!" is one sentence rather than four. The
+  // digit prefix makes this unambiguous, since an exclamation ending a real sentence
+  // is preceded by a letter or closing punctuation.
+  out = out.replace(/(\d)!/g, "$1\0");
   return out;
 };
 

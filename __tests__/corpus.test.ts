@@ -194,10 +194,10 @@ import { loadCorpus, getCard, getUnseen, allIds } from "../src/corpus";
 import { DOMAINS } from "../src/constants";
 
 describe("corpus module", () => {
-  it("loads all 230 cards with unique ids", () => {
+  it("loads all 270 cards with unique ids", () => {
     const cards = loadCorpus();
-    expect(cards.length).toBe(230);
-    expect(new Set(cards.map((c) => c.id)).size).toBe(230);
+    expect(cards.length).toBe(270);
+    expect(new Set(cards.map((c) => c.id)).size).toBe(270);
   });
 
   it("covers every domain", () => {
@@ -219,6 +219,6 @@ describe("corpus module", () => {
   });
 
   it("returns every id", () => {
-    expect(allIds().length).toBe(230);
+    expect(allIds().length).toBe(270);
   });
 });
