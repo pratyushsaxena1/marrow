@@ -1069,5 +1069,190 @@
       "algorithms",
       "arithmetic"
     ]
+  },
+  {
+    "id": "cs-0059",
+    "type": "concept",
+    "domain": "cs",
+    "topic": "parallel speedup",
+    "title": "The serial part sets the ceiling",
+    "body": "Suppose 95% of a program can be split across cores and 5% cannot. Throw a thousand cores at it and the parallel part becomes almost free, but the serial 5% is untouched, so the whole run can never take less than a twentieth of its original time. Amdahl's law puts the maximum speedup at 1 divided by the serial fraction. Adding hardware buys progressively less, and the limit depends on the code, not the budget.",
+    "prompt": "A program is 95% parallelisable. What is the most a thousand cores can do for it?",
+    "answer": "Speed it up twentyfold, and no more. Amdahl's law caps speedup at 1 divided by the serial fraction, so the untouched 5% alone takes a twentieth of the original runtime however many cores you add.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Amdahl%27s_law"
+    ],
+    "tags": [
+      "parallelism",
+      "performance"
+    ]
+  },
+  {
+    "id": "cs-0060",
+    "type": "concept",
+    "domain": "cs",
+    "topic": "disjoint sets",
+    "title": "A data structure that flattens as you use it",
+    "body": "Union-find tracks which elements share a group by giving each group a representative and pointing every member up a tree toward it. Two tricks make it fast. Union by rank always hangs the shorter tree under the taller one, and path compression repoints every node visited during a lookup straight at the root. Each query therefore pays for the next, and the amortized cost per operation is the inverse Ackermann function, under 5 for any input that will ever exist.",
+    "prompt": "What makes union-find get cheaper the more you query it?",
+    "answer": "Path compression: each lookup repoints every node it walks past directly at the group's root, so later lookups on those nodes are shorter. Combined with union by rank, that makes the amortized cost the inverse Ackermann function, effectively a small constant.",
+    "difficulty": 3,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Disjoint-set_data_structure"
+    ],
+    "tags": [
+      "data-structures",
+      "complexity"
+    ]
+  },
+  {
+    "id": "cs-0061",
+    "type": "concept",
+    "domain": "cs",
+    "topic": "queueing theory",
+    "title": "Three numbers, and you only need two",
+    "body": "Little's law says the average number of items in any stable system equals the arrival rate times the average time each item spends inside. A queue taking 100 requests per second, each lingering 0.2 seconds, holds 20 on average. It assumes nothing about arrival patterns, service order, or how many servers there are, which is why it applies to a checkout line and a thread pool alike.",
+    "prompt": "Your service handles 100 requests a second and each takes 0.2 seconds. How many are in flight at once, and what did you have to assume?",
+    "answer": "Twenty, by Little's law: average items in the system equals arrival rate times average time spent in it. It assumes only that the system is stable over the period measured, not any particular arrival pattern, service order or server count.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Little%27s_law"
+    ],
+    "tags": [
+      "performance",
+      "queueing"
+    ]
+  },
+  {
+    "id": "cs-0062",
+    "type": "concept",
+    "domain": "cs",
+    "topic": "lock-free programming",
+    "title": "The value that changed back",
+    "body": "Lock-free code often reads a value, computes a new one, then uses compare-and-swap to write it only if the old value is still there. The check can be fooled. Another thread may change A to B and back to A while you were computing, so your swap succeeds even though the world moved underneath it. In a linked structure the node you re-pointed at may have been freed and reallocated. Tagged pointers or hazard pointers fix it by making the comparison see the change.",
+    "prompt": "Compare-and-swap confirms the value is unchanged, and your lock-free update is still wrong. How?",
+    "answer": "This is the ABA problem. Another thread changed the value from A to B and back to A, so the comparison passes while the underlying object may have been freed and reallocated. Fixes attach a version counter to the value, or use hazard pointers, so a round trip is still visible as a change.",
+    "difficulty": 3,
+    "sources": [
+      "https://en.wikipedia.org/wiki/ABA_problem",
+      "https://en.cppreference.com/w/cpp/atomic/atomic/compare_exchange"
+    ],
+    "tags": [
+      "concurrency",
+      "atomics"
+    ]
+  },
+  {
+    "id": "cs-0063",
+    "type": "concept",
+    "domain": "cs",
+    "topic": "side channels",
+    "title": "How long a wrong answer takes",
+    "body": "The obvious way to check a secret token compares it byte by byte and returns as soon as two differ. That shortcut leaks. An attacker who can time the response learns how many leading bytes were right, so they can recover the secret one byte at a time instead of guessing the whole thing. The fix is a comparison that always examines every byte and combines the differences, spending the same time whatever the input.",
+    "prompt": "A token check returns as soon as it finds a mismatched byte. What does that hand an attacker?",
+    "answer": "The length of the correct prefix, measured through response time. That turns guessing the whole secret into guessing one byte at a time, which is exponentially easier. A constant-time comparison that always scans every byte removes the signal.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Timing_attack",
+      "https://www.openssl.org/docs/man3.0/man3/CRYPTO_memcmp.html"
+    ],
+    "tags": [
+      "security",
+      "cryptography"
+    ]
+  },
+  {
+    "id": "cs-0064",
+    "type": "concept",
+    "domain": "cs",
+    "topic": "dynamic programming",
+    "title": "The same subproblem, over and over",
+    "body": "Computing the nth Fibonacci number by naive recursion takes exponential time, because the call tree recomputes fib(30) millions of times on the way to fib(50). Nothing about the problem is hard. The waste is entirely repeated work on subproblems that overlap. Storing each result the first time it is computed collapses the tree to one node per distinct input, turning exponential time into linear.",
+    "prompt": "Naive recursive Fibonacci takes exponential time even though the answer is easy to compute. Where does the time go?",
+    "answer": "Into recomputing the same subproblems. The call tree evaluates each smaller Fibonacci number an exponential number of times, so caching each result on first computation collapses the work to one evaluation per distinct input and makes it linear.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Memoization",
+      "https://docs.python.org/3/library/functools.html"
+    ],
+    "tags": [
+      "algorithms",
+      "recursion"
+    ]
+  },
+  {
+    "id": "cs-0065",
+    "type": "concept",
+    "domain": "cs",
+    "topic": "storage engines",
+    "title": "Writing sequentially and paying for it later",
+    "body": "A B-tree updates a row by writing the page it lives on, which is a random write. A log-structured merge tree instead appends every change to a sorted in-memory buffer, flushes it as a new immutable file, and merges files in the background. Writes become sequential and fast. The cost is that a read may have to check several files, and background compaction rewrites data repeatedly, so throughput is bought with read work and write amplification.",
+    "prompt": "An LSM tree makes writes much faster than a B-tree. What does it give up to get that?",
+    "answer": "Read simplicity and total disk work. Because changes are appended as immutable sorted files rather than updated in place, a read may consult several files, and background compaction rewrites the same data repeatedly, which is write amplification.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Log-structured_merge-tree"
+    ],
+    "tags": [
+      "databases",
+      "storage"
+    ]
+  },
+  {
+    "id": "cs-0066",
+    "type": "concept",
+    "domain": "cs",
+    "topic": "scheduling",
+    "title": "One core, and everything appears to run at once",
+    "body": "A single core executes one instruction stream at a time, yet a laptop plays music while compiling. The operating system slices time into intervals of a few milliseconds and switches between runnable threads at each boundary, saving and restoring their registers. Switching is fast enough that the gaps fall below human perception. This is concurrency, meaning tasks that overlap in progress, which is not parallelism, meaning tasks that literally execute at the same instant.",
+    "prompt": "A machine with one core runs a dozen programs at once. What is actually happening, and what would parallelism mean instead?",
+    "answer": "The scheduler is time-slicing, giving each runnable thread a few milliseconds before saving its registers and switching to another, fast enough that the interruptions are imperceptible. That is concurrency, meaning overlapping progress. Parallelism would mean instructions genuinely executing in the same instant, which needs more than one core.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Preemption_(computing)",
+      "https://man7.org/linux/man-pages/man7/sched.7.html"
+    ],
+    "tags": [
+      "operating-systems",
+      "concurrency"
+    ]
+  },
+  {
+    "id": "cs-0067",
+    "type": "concept",
+    "domain": "cs",
+    "topic": "asymptotic notation",
+    "title": "When the worse algorithm wins",
+    "body": "Big-O describes how cost grows, and deliberately discards constant factors and lower-order terms. That is what makes it portable across machines, and also what it hides. An O(n log n) sort with heavy bookkeeping can lose to an O(n squared) insertion sort on twenty elements, which is why real sort implementations switch to insertion sort below a threshold. Asymptotic notation answers what happens as n grows, never what is fastest at the size you actually have.",
+    "prompt": "Production sort routines fall back to insertion sort on small inputs, despite its worse complexity. Why is that not a contradiction?",
+    "answer": "Big-O discards constant factors, and on small inputs those constants dominate. Insertion sort does very little work per element, so it beats an asymptotically better algorithm below some threshold. Complexity describes growth as n increases, not speed at a particular n.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Big_O_notation"
+    ],
+    "tags": [
+      "complexity",
+      "algorithms"
+    ]
+  },
+  {
+    "id": "cs-0068",
+    "type": "concept",
+    "domain": "cs",
+    "topic": "injection attacks",
+    "title": "Data that the parser reads as instructions",
+    "body": "Building a query by pasting user input into a string means the database receives one blob of text and cannot tell which parts you wrote and which the user did. Input containing a quote and a semicolon becomes syntax. Escaping helps but is easy to get wrong across encodings. A parameterised query fixes it structurally: the SQL text is sent and parsed first, and the values arrive separately afterward, so they can never be read as syntax.",
+    "prompt": "Why does a parameterised query stop SQL injection where careful escaping still might not?",
+    "answer": "Because it separates the two channels rather than sanitising one. The query text is sent and parsed before any values arrive, so user input is only ever bound as data and can never be reinterpreted as syntax. Escaping tries to neutralise dangerous characters, which depends on getting every encoding case right.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/SQL_injection",
+      "https://owasp.org/www-community/attacks/SQL_Injection"
+    ],
+    "tags": [
+      "security",
+      "databases"
+    ]
   }
 ]

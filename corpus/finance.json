@@ -1080,5 +1080,194 @@
       "behavioral-economics",
       "decision-theory"
     ]
+  },
+  {
+    "id": "finance-0058",
+    "type": "concept",
+    "domain": "finance",
+    "topic": "index investing",
+    "title": "Active management is arithmetic before it is skill",
+    "body": "All the shares in a market are held by someone, so the holdings of active investors together are the market minus the holdings of index investors. Before costs, the average actively managed dollar must therefore earn exactly the market return. After costs it must earn less, because active management charges more in fees and trading. William Sharpe made this point without any assumption about market efficiency or investor skill. It follows from adding up.",
+    "prompt": "What does the average actively managed dollar earn compared with the market, and why does the argument need no view on skill?",
+    "answer": "Exactly the market return before costs, and less after them. Active and passive holdings together are the whole market, so the active average is the market average by arithmetic, and higher fees and trading costs then subtract from it. Skill and market efficiency never enter the argument.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Index_fund",
+      "https://www.nobelprize.org/prizes/economic-sciences/1990/summary/"
+    ],
+    "tags": [
+      "investing",
+      "costs"
+    ]
+  },
+  {
+    "id": "finance-0059",
+    "type": "concept",
+    "domain": "finance",
+    "topic": "short selling",
+    "title": "The trade whose losses have no ceiling",
+    "body": "A short seller borrows shares, sells them, and hopes to buy them back cheaper. Buying a share risks the price falling to zero, so the loss is capped at what you paid. Shorting inverts the payoff, because the price can rise without limit. Worse, a rising price forces margin calls and buying to close, which pushes the price up further.",
+    "prompt": "Buying a share can cost you everything you put in. What is different about the downside of shorting one?",
+    "answer": "It has no ceiling. A share price cannot fall below zero, so a buyer's loss is capped at the purchase price, but it can rise without limit, so a short seller's loss is unbounded. Rising prices also trigger margin calls that force buying to close, pushing prices higher still, which is a short squeeze.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Short_(finance)",
+      "https://en.wikipedia.org/wiki/Short_squeeze"
+    ],
+    "tags": [
+      "investing",
+      "risk"
+    ]
+  },
+  {
+    "id": "finance-0060",
+    "type": "concept",
+    "domain": "finance",
+    "topic": "insurance",
+    "title": "Why pooling risk makes it smaller",
+    "body": "An insurer cannot predict whether your house burns down, and does not need to. Pooling many largely independent risks leaves the total loss far more predictable in proportion, because independent variations partly cancel while the average stays put. That is why premiums can be set close to expected losses plus a modest margin. The model breaks when risks are correlated rather than independent, which is why flood and earthquake cover is priced and reinsured very differently.",
+    "prompt": "An insurer cannot predict any single claim, yet prices policies confidently. What makes the aggregate easier than the individual?",
+    "answer": "Pooling many largely independent risks makes the total loss proportionally far more predictable, since independent variations partly cancel out while the average holds. The reasoning fails when risks are correlated, as with floods or earthquakes, where one event hits the whole pool at once.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Risk_pool",
+      "https://en.wikipedia.org/wiki/Law_of_large_numbers"
+    ],
+    "tags": [
+      "insurance",
+      "risk"
+    ]
+  },
+  {
+    "id": "finance-0061",
+    "type": "concept",
+    "domain": "finance",
+    "topic": "national accounts",
+    "title": "What GDP was never built to measure",
+    "body": "GDP totals the market value of goods and services produced in a period. It therefore counts a traffic jam's petrol and a hurricane's rebuilding as output, while unpaid childcare, household work and leisure contribute nothing. It is silent on how the total is distributed and on depletion of natural capital. Simon Kuznets, who built the US accounts, warned in 1934 that national welfare could scarcely be inferred from them.",
+    "prompt": "GDP rises after a hurricane and ignores unpaid childcare entirely. Is that a flaw in the statistic?",
+    "answer": "No, it is the definition working as intended. GDP measures the market value of production in a period, so rebuilding counts and unpriced household work does not. It was never designed to capture welfare, distribution, or the depletion of natural capital, a limit Kuznets stated when he built the accounts.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Gross_domestic_product",
+      "https://www.bea.gov/resources/learning-center"
+    ],
+    "tags": [
+      "macroeconomics",
+      "measurement"
+    ]
+  },
+  {
+    "id": "finance-0062",
+    "type": "concept",
+    "domain": "finance",
+    "topic": "exchange rate policy",
+    "title": "Three policies, and you may have two",
+    "body": "A country cannot simultaneously hold a fixed exchange rate, allow free movement of capital, and run an independent monetary policy. Cut rates below the anchor country's and capital leaves in search of yield, which forces the currency down unless you defend the peg until reserves run out. Pick any two and the third must give. Hong Kong keeps the peg and open capital and imports US policy; most large economies float instead.",
+    "prompt": "A central bank wants a currency peg, open capital markets, and rates set for its own economy. Which can it have?",
+    "answer": "Any two of the three, never all of them, a constraint known as the impossible trinity. Setting rates independently under open capital flows moves capital in or out until the peg breaks or reserves are exhausted, so a country either floats, closes its capital account, or accepts the anchor country's policy.",
+    "difficulty": 3,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Impossible_trinity",
+      "https://www.imf.org/"
+    ],
+    "tags": [
+      "macroeconomics",
+      "exchange-rates"
+    ]
+  },
+  {
+    "id": "finance-0063",
+    "type": "concept",
+    "domain": "finance",
+    "topic": "survivorship bias",
+    "title": "The funds that are no longer in the table",
+    "body": "A table of fund returns over twenty years lists funds that still exist. Poor performers were closed or merged into better ones along the way, and their records left with them. The surviving sample therefore reports a return well above what an investor choosing at the start would have earned. Studies putting the gap at roughly one percentage point a year are common, which is enough to change the ranking against an index.",
+    "prompt": "Why does a twenty-year table of fund returns overstate what an investor would actually have earned?",
+    "answer": "Because it only lists funds that survived. Poor performers were closed or merged away and their records left the sample, so the reported average reflects survivors rather than the full set an investor could have picked at the start. The gap is commonly estimated at around a percentage point a year.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Survivorship_bias"
+    ],
+    "tags": [
+      "investing",
+      "statistics"
+    ]
+  },
+  {
+    "id": "finance-0064",
+    "type": "concept",
+    "domain": "finance",
+    "topic": "investment costs",
+    "title": "One percent, compounded for thirty years",
+    "body": "A fee sounds small next to a return, but it is charged on the whole balance every year, and the money it removes stops compounding. Invest £10,000 for thirty years at 7%, and you finish with about £76,100. Charge 1% a year and the effective return is 6%, leaving about £57,400. The extra quarter of the balance did not vanish into one year's fee. It is thirty years of growth that never happened.",
+    "prompt": "A 1% annual fee against a 7% return sounds like a small bite. What does it cost over thirty years?",
+    "answer": "Roughly a quarter of the final balance. £10,000 at 7% for thirty years grows to about £76,100, while the same sum at 6% reaches about £57,400. The loss is not the fee itself but the compounding on every pound the fee removed along the way.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Compound_interest",
+      "https://www.investor.gov/financial-tools-calculators/calculators/compound-interest-calculator"
+    ],
+    "tags": [
+      "investing",
+      "compounding"
+    ]
+  },
+  {
+    "id": "finance-0065",
+    "type": "concept",
+    "domain": "finance",
+    "topic": "bank capital",
+    "title": "Two ways a bank dies, and two different cures",
+    "body": "A bank fails for one of two reasons. It is insolvent when its assets are worth less than what it owes, and it is illiquid when the assets are fine but cannot be turned into cash fast enough. Capital, meaning equity funding rather than debt, absorbs losses and addresses the first. Liquid asset buffers and central bank lending address the second. The distinction matters because lending to an insolvent bank only enlarges the eventual loss.",
+    "prompt": "A bank with sound loans and a bank with bad loans both cannot pay depositors today. Why do they need different remedies?",
+    "answer": "One is illiquid and one is insolvent. Illiquidity means good assets that cannot be converted to cash quickly, which liquid buffers or central bank lending against collateral can bridge. Insolvency means the assets are worth less than the liabilities, which only more capital resolves, and lending to an insolvent bank enlarges the eventual loss.",
+    "difficulty": 3,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Capital_requirement",
+      "https://www.bis.org/bcbs/basel3.htm"
+    ],
+    "tags": [
+      "banking",
+      "regulation"
+    ]
+  },
+  {
+    "id": "finance-0066",
+    "type": "concept",
+    "domain": "finance",
+    "topic": "demand curves",
+    "title": "Goods people buy more of as they get dearer",
+    "body": "Demand curves usually slope downward, but two exceptions run the other way for different reasons. A Veblen good is bought partly because it is expensive, so a higher price raises its appeal directly. A Giffen good is a staple so dominant in a poor household's budget that a price rise leaves them too poor to afford anything better, forcing them to buy more of it. Veblen goods are easy to observe, whereas convincing empirical Giffen cases are rare.",
+    "prompt": "Two kinds of good see demand rise when the price does. What separates them?",
+    "answer": "The mechanism. A Veblen good is desired partly for its expense, so price feeds demand directly through status, whereas a Giffen good is a cheap staple whose price rise makes a poor household so much worse off that they drop costlier foods and eat more of the staple. Veblen effects are readily observed, while empirical Giffen cases are rare and contested.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Veblen_good",
+      "https://en.wikipedia.org/wiki/Giffen_good"
+    ],
+    "tags": [
+      "microeconomics",
+      "demand"
+    ]
+  },
+  {
+    "id": "finance-0067",
+    "type": "concept",
+    "domain": "finance",
+    "topic": "subsidy incidence",
+    "title": "Who pockets a housing subsidy",
+    "body": "Give renters a monthly housing subsidy and their willingness to pay rises by roughly that amount. Where new housing can be built quickly, supply expands and most of the benefit reaches tenants. Where building is constrained by planning rules or geography, quantity cannot respond, so the extra demand shows up almost entirely in rents and the landlord captures much of the money. The intended recipient of a transfer and its eventual beneficiary are decided by elasticities.",
+    "prompt": "A city introduces a rent subsidy for tenants. What determines whether tenants or landlords end up with the money?",
+    "answer": "How elastic housing supply is. Where new building responds quickly, quantity rises and most of the subsidy reaches tenants. Where supply is fixed by planning limits or geography, the extra demand raises rents instead, and landlords capture much of the transfer.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Tax_incidence",
+      "https://en.wikipedia.org/wiki/Subsidy"
+    ],
+    "tags": [
+      "microeconomics",
+      "housing"
+    ]
   }
 ]

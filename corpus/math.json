@@ -1059,5 +1059,193 @@
       "logic",
       "epistemics"
     ]
+  },
+  {
+    "id": "math-0059",
+    "type": "concept",
+    "domain": "math",
+    "topic": "bayesian-updating",
+    "title": "Evidence moves a belief, it does not set one",
+    "body": "Bayes' theorem says the probability of a hypothesis given evidence equals the prior probability times how likely that evidence was under the hypothesis, divided by how likely it was overall. The prior never drops out. Strong evidence for a hypothesis that started out very improbable can still leave it improbable, which is why a test that is right 99% of the time says little about a condition affecting one person in a million.",
+    "prompt": "Two people see identical evidence and end up with different confidence. Can both be reasoning correctly?",
+    "answer": "Yes, if they started from different priors. Bayes' theorem multiplies the prior by the likelihood of the evidence, so the same evidence shifts each belief by the same factor while leaving the starting points different. Evidence updates a belief rather than determining it outright.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Bayes%27_theorem",
+      "https://plato.stanford.edu/entries/bayes-theorem/"
+    ],
+    "tags": [
+      "probability",
+      "inference"
+    ]
+  },
+  {
+    "id": "math-0060",
+    "type": "concept",
+    "domain": "math",
+    "topic": "inclusion-exclusion",
+    "title": "Add, subtract, and keep alternating",
+    "body": "To count elements in at least one of several sets, adding the set sizes double-counts every overlap. Subtracting each pairwise intersection then removes elements in three sets once too often, so those must be added back, and the correction alternates all the way up. Among 100 numbers, those divisible by 2 or 3 number 50 plus 33 minus the 16 divisible by 6, giving 67.",
+    "prompt": "How many numbers from 1 to 100 are divisible by 2 or by 3, and why is 50 plus 33 the wrong answer?",
+    "answer": "Sixty-seven. Adding 50 and 33 counts every multiple of 6 twice, since those are divisible by both, so the 16 of them must be subtracted once. This is inclusion-exclusion, where overlaps are removed and then re-added in alternating fashion.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Inclusion%E2%80%93exclusion_principle",
+      "https://mathworld.wolfram.com/Inclusion-ExclusionPrinciple.html"
+    ],
+    "tags": [
+      "combinatorics",
+      "counting"
+    ]
+  },
+  {
+    "id": "math-0061",
+    "type": "puzzle",
+    "domain": "math",
+    "topic": "derangements",
+    "title": "The cloakroom that returns every coat wrongly",
+    "body": "A cloakroom loses its tickets and hands n coats back at random. The chance that not one person gets their own coat is a derangement probability. For n = 4 it is 9 out of 24. What is surprising is what happens as n grows: the answer barely moves, settling almost immediately on a constant, and it does not drift toward 0 or 1 as the number of coats increases.",
+    "prompt": "As the number of randomly returned coats grows, what does the probability that nobody gets their own approach?",
+    "answer": "It approaches 1/e, about 0.368, and it gets there fast: n = 7 is already correct to four decimal places. Inclusion-exclusion gives the probability as the alternating sum 1 - 1/1! + 1/2! - 1/3! and so on, which is precisely the series for e to the power minus one.",
+    "difficulty": 3,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Derangement",
+      "https://oeis.org/A000166"
+    ],
+    "tags": [
+      "combinatorics",
+      "probability"
+    ]
+  },
+  {
+    "id": "math-0062",
+    "type": "concept",
+    "domain": "math",
+    "topic": "dynamical-systems",
+    "title": "Deterministic and unpredictable at once",
+    "body": "Chaos does not mean randomness. A chaotic system follows exact deterministic rules, but nearby starting points separate exponentially fast, so any error in the initial measurement grows until the prediction is worthless. The rules stay perfectly knowable while the long-run outcome does not. This is why weather forecasts degrade over days rather than hours, and why more computing power extends the horizon only slowly.",
+    "prompt": "The equations governing weather are deterministic and known. Why does forecasting still fail beyond about a fortnight?",
+    "answer": "Because the system is chaotic: nearby initial states diverge exponentially, so any measurement error, however small, grows until it dominates the forecast. Determinism guarantees the rules, not predictability, and halving the initial error only buys a fixed extra stretch of accurate time.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Chaos_theory",
+      "https://en.wikipedia.org/wiki/Butterfly_effect"
+    ],
+    "tags": [
+      "dynamical-systems",
+      "prediction"
+    ]
+  },
+  {
+    "id": "math-0063",
+    "type": "concept",
+    "domain": "math",
+    "topic": "polyhedra",
+    "title": "Vertices minus edges plus faces",
+    "body": "Count the corners, edges and faces of a cube and you get 8, 12 and 6, and 8 minus 12 plus 6 is 2. A tetrahedron gives 4, 6 and 4, which is also 2. Every convex polyhedron does. The quantity does not depend on shape or size, only on the surface being sphere-like, and a doughnut-shaped solid gives 0 instead. It is a topological invariant wearing a counting problem's clothes.",
+    "prompt": "Corners minus edges plus faces gives 2 for a cube and for a tetrahedron. What is that number really counting?",
+    "answer": "The Euler characteristic, a topological invariant of the surface rather than a property of the shape. Every convex polyhedron has a sphere-like surface and so gives 2, while a solid with one hole through it gives 0 no matter how it is subdivided.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Euler_characteristic",
+      "https://mathworld.wolfram.com/PolyhedralFormula.html"
+    ],
+    "tags": [
+      "topology",
+      "geometry"
+    ]
+  },
+  {
+    "id": "math-0064",
+    "type": "concept",
+    "domain": "math",
+    "topic": "exponential-growth",
+    "title": "Where e comes from",
+    "body": "Invest £1 at 100% annual interest and after a year you have £2. Compound it twice a year and you get £2.25, monthly £2.613, daily £2.7146. Compounding more often keeps helping, but by less each time, and the total converges rather than running away. The limit is e, about 2.71828. So e is not an arbitrary constant. It is the answer to what continuous compounding at 100% actually pays.",
+    "prompt": "Compounding 100% interest more and more often pays more each time. Why does it not grow without limit?",
+    "answer": "Because each extra compounding period earns interest on a smaller slice of time, so the gains shrink fast enough to converge. The limit of (1 + 1/n) to the power n as n grows is e, about 2.71828, which is exactly what continuous compounding at 100% pays.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/E_(mathematical_constant)"
+    ],
+    "tags": [
+      "analysis",
+      "compounding"
+    ]
+  },
+  {
+    "id": "math-0065",
+    "type": "concept",
+    "domain": "math",
+    "topic": "data-visualisation",
+    "title": "Four datasets, one set of statistics",
+    "body": "Anscombe's quartet is four small datasets with nearly identical means, variances, correlation and regression line. Plotted, they could hardly differ more. One is a clean linear relationship, one is a smooth curve, one is a perfect line with a single outlier dragging the fit, and one is a vertical stack plus one distant point that creates the entire slope. Summary statistics compress, and compression discards exactly the structure that decides whether they mean anything.",
+    "prompt": "Four datasets share a mean, variance, correlation and regression line. How much can they still differ?",
+    "answer": "Almost completely. Anscombe's quartet shows a linear relationship, a curve, a line ruined by one outlier, and a vertical stack whose slope comes entirely from a single distant point. Summary statistics discard shape, so agreeing on them says little without a plot.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Anscombe%27s_quartet"
+    ],
+    "tags": [
+      "statistics",
+      "visualisation"
+    ]
+  },
+  {
+    "id": "math-0066",
+    "type": "concept",
+    "domain": "math",
+    "topic": "open-problems",
+    "title": "A rule a child can follow that nobody can prove",
+    "body": "Take any positive integer. If it is even, halve it. If it is odd, triple it and add one. Repeat. Every starting value ever tested, into the quintillions, eventually reaches 1. Nobody has proved it always does, and nobody has found a counterexample. Erdős remarked that mathematics is not yet ready for such problems. Simplicity of statement is no guide at all to difficulty of proof.",
+    "prompt": "Halve it if even, triple and add one if odd. What is unresolved about this rule?",
+    "answer": "Whether every positive integer eventually reaches 1. This is the Collatz conjecture, verified computationally into the quintillions with no counterexample and no proof. It shows that a problem statable in one line to a child can be beyond current mathematics.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Collatz_conjecture",
+      "https://oeis.org/A006577"
+    ],
+    "tags": [
+      "number-theory",
+      "open-problems"
+    ]
+  },
+  {
+    "id": "math-0067",
+    "type": "concept",
+    "domain": "math",
+    "topic": "fermat-little-theorem",
+    "title": "A test for primality that never factors anything",
+    "body": "Fermat's little theorem says that if p is prime and a is not divisible by p, then a to the power p-1 leaves remainder 1 when divided by p. Modular exponentiation computes that in a few hundred multiplications even for a 2048-bit p. So a failed test proves compositeness without exhibiting a single factor. A pass is only evidence, since Carmichael numbers pass for every base, which is why real tests use Miller-Rabin instead.",
+    "prompt": "How can you prove a 2048-bit number is composite without finding any of its factors?",
+    "answer": "By Fermat's little theorem: if n were prime then a to the power n-1 would be congruent to 1 modulo n for any a not divisible by n, and modular exponentiation checks that quickly. A failure proves n composite while revealing no factor. A pass is weaker evidence, since Carmichael numbers satisfy it for every base.",
+    "difficulty": 3,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Fermat%27s_little_theorem",
+      "https://mathworld.wolfram.com/FermatsLittleTheorem.html"
+    ],
+    "tags": [
+      "number-theory",
+      "primality"
+    ]
+  },
+  {
+    "id": "math-0068",
+    "type": "concept",
+    "domain": "math",
+    "topic": "constructibility",
+    "title": "Why the circle cannot be squared",
+    "body": "Greek geometers asked for a square equal in area to a given circle, drawn with compass and unmarked straightedge alone. Every such construction solves a chain of linear and quadratic equations, so any length it produces is algebraic, meaning a root of some polynomial with rational coefficients. Squaring the circle needs the square root of pi. Lindemann proved in 1882 that pi is transcendental and so satisfies no such polynomial, which closed the question after two thousand years.",
+    "prompt": "Two millennia of failure to square the circle ended with a proof about pi. What did it show?",
+    "answer": "That pi is transcendental, meaning it is the root of no polynomial with rational coefficients. Compass and straightedge constructions only ever produce algebraic lengths, so a length involving the square root of pi is unreachable. Lindemann's 1882 proof made the impossibility a theorem rather than a run of bad luck.",
+    "difficulty": 3,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Squaring_the_circle",
+      "https://en.wikipedia.org/wiki/Lindemann%E2%80%93Weierstrass_theorem"
+    ],
+    "tags": [
+      "geometry",
+      "algebra"
+    ]
   }
 ]

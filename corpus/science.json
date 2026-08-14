@@ -1072,5 +1072,193 @@
       "physics",
       "earth-science"
     ]
+  },
+  {
+    "id": "science-0058",
+    "type": "concept",
+    "domain": "science",
+    "topic": "tidal locking",
+    "title": "The Moon keeps one face turned toward us",
+    "body": "Earth's gravity raises a slight bulge on the Moon. When the Moon rotated faster than it orbited, that bulge was dragged ahead of the Earth-Moon line, and Earth's pull on it acted as a brake. The torque bled off rotational energy until the spin period matched the orbital period, at which point the bulge sits still and the braking stops. The Moon still rotates, exactly once per orbit, which is why one hemisphere always faces us.",
+    "prompt": "The same lunar hemisphere always faces Earth. Does that mean the Moon does not rotate?",
+    "answer": "No, it rotates exactly once per orbit. Earth's pull on the tidal bulge it raises on the Moon acted as a brake until spin and orbital periods matched, a state called tidal locking, after which the bulge no longer lags and the braking torque vanishes.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Tidal_locking",
+      "https://science.nasa.gov/moon/"
+    ],
+    "tags": [
+      "astronomy",
+      "gravitation"
+    ]
+  },
+  {
+    "id": "science-0059",
+    "type": "concept",
+    "domain": "science",
+    "topic": "electronic band structure",
+    "title": "What separates a metal from an insulator",
+    "body": "Bring atoms together and their discrete electron energy levels broaden into bands separated by gaps. Conduction requires electrons that can pick up a tiny amount of energy and move to a nearby unoccupied state. In a metal the highest occupied band is only partly filled, so those states sit immediately above and current flows freely. In an insulator the band is exactly full and the next empty states lie several electronvolts away, far beyond what an applied field supplies.",
+    "prompt": "Copper and glass are both packed with electrons. Why does only one of them carry a current?",
+    "answer": "Because conduction needs empty states just above the occupied ones. Copper's highest band is partly filled, so electrons can move into adjacent states with almost no energy. Glass has a completely filled band and a gap of several electronvolts to the next empty one, which an ordinary field cannot bridge.",
+    "difficulty": 3,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Electronic_band_structure",
+      "https://en.wikipedia.org/wiki/Band_gap"
+    ],
+    "tags": [
+      "condensed-matter",
+      "electricity"
+    ]
+  },
+  {
+    "id": "science-0060",
+    "type": "concept",
+    "domain": "science",
+    "topic": "thermal conductivity",
+    "title": "Tile feels colder than carpet at the same temperature",
+    "body": "A tiled floor and a carpet in the same room sit at the same temperature, yet the tile feels much colder underfoot. Your skin does not sense temperature directly. It senses heat leaving it. Tile conducts heat away quickly, so the skin's surface temperature drops fast and the nerves report cold. Carpet traps air, conducts poorly, and lets the contact surface warm toward skin temperature almost immediately.",
+    "prompt": "Tile and carpet in one room are at the same temperature, and only the tile feels cold. What are your feet measuring?",
+    "answer": "The rate at which heat leaves them, not temperature. Tile has a high thermal conductivity and pulls heat away quickly, dropping the skin's surface temperature, while carpet traps air, conducts poorly, and lets the contact patch warm up to near skin temperature.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Thermal_conductivity"
+    ],
+    "tags": [
+      "thermodynamics",
+      "perception"
+    ]
+  },
+  {
+    "id": "science-0061",
+    "type": "concept",
+    "domain": "science",
+    "topic": "radiative forcing",
+    "title": "The gases that are transparent one way",
+    "body": "Sunlight arrives mostly as visible light, which passes through the atmosphere largely unabsorbed. The warmed surface re-radiates in the infrared, and molecules with three or more atoms, such as carbon dioxide, water vapour and methane, have vibrational modes at exactly those wavelengths. They absorb the outgoing radiation and re-emit it in all directions, some back downward. Nitrogen and oxygen, being symmetric two-atom molecules, have no such modes and are transparent both ways.",
+    "prompt": "The atmosphere is 99% nitrogen and oxygen, yet trace gases drive the greenhouse effect. How does that work?",
+    "answer": "Symmetric two-atom molecules like nitrogen and oxygen have no vibrational modes that absorb infrared, so they are transparent to both incoming sunlight and outgoing heat. Molecules of three or more atoms, such as carbon dioxide and water vapour, absorb the outgoing infrared and re-emit part of it downward, which is why trace concentrations matter.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Greenhouse_effect",
+      "https://www.climate.gov/"
+    ],
+    "tags": [
+      "climate",
+      "spectroscopy"
+    ]
+  },
+  {
+    "id": "science-0062",
+    "type": "concept",
+    "domain": "science",
+    "topic": "antimicrobial targets",
+    "title": "Antibiotics have nothing to grab on a virus",
+    "body": "Antibiotics work by attacking structures bacteria have and human cells do not: a peptidoglycan cell wall, a bacterial ribosome, bacterial DNA gyrase. That selectivity is the whole basis of the drug. A virus has none of these. It is genetic material in a protein coat that replicates using the host cell's own machinery, so there is no bacterial target to disrupt and nothing an antibiotic can act on.",
+    "prompt": "Why is an antibiotic useless against a cold, when it clears a chest infection?",
+    "answer": "Because antibiotics target structures unique to bacteria, such as the cell wall, the bacterial ribosome or DNA gyrase, and viruses have none of them. A virus replicates using the host cell's own machinery, so there is nothing bacterial for the drug to attack.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Antibiotic",
+      "https://www.cdc.gov/antibiotic-use/"
+    ],
+    "tags": [
+      "microbiology",
+      "medicine"
+    ]
+  },
+  {
+    "id": "science-0063",
+    "type": "concept",
+    "domain": "science",
+    "topic": "ocean salinity",
+    "title": "Rivers are fresh and they are what makes the sea salty",
+    "body": "Rainwater is slightly acidic and slowly dissolves minerals from rock, so every river carries a small load of dissolved salts to the sea. The concentration is too low to taste. At the ocean, water leaves by evaporation and the salts do not, so they accumulate. Over hundreds of millions of years that steady delivery and selective removal has built the salinity we have, held roughly steady now by salts settling into seafloor sediments.",
+    "prompt": "Rivers taste fresh and they feed the sea. So where does the ocean's salt come from?",
+    "answer": "From those same rivers. Slightly acidic rain weathers rock, so rivers carry dissolved salts at concentrations too low to taste. Evaporation then removes water from the ocean while leaving the salts behind, and over geological time that one-way accumulation builds the salinity, now roughly balanced by deposition into seafloor sediments.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Seawater",
+      "https://oceanservice.noaa.gov/facts/whysalty.html"
+    ],
+    "tags": [
+      "oceanography",
+      "geochemistry"
+    ]
+  },
+  {
+    "id": "science-0064",
+    "type": "concept",
+    "domain": "science",
+    "topic": "speed of sound",
+    "title": "Sound travels fastest through the stiffest thing",
+    "body": "Sound moves at about 340 metres per second in air, 1,500 in water and 5,000 in steel, which seems backwards if you expect dense material to slow it. The speed goes as the square root of stiffness divided by density, and stiffness varies far more between these materials than density does. Steel is enormously harder to compress than air, so each particle passes the disturbance on to its neighbour almost immediately.",
+    "prompt": "Sound moves fifteen times faster through steel than through air, despite steel being far denser. What resolves that?",
+    "answer": "Speed goes as the square root of stiffness over density, and stiffness varies far more than density across these materials. Steel resists compression enormously more than air does, so a disturbance passes between neighbouring particles much faster despite the greater mass.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Speed_of_sound"
+    ],
+    "tags": [
+      "acoustics",
+      "materials"
+    ]
+  },
+  {
+    "id": "science-0065",
+    "type": "concept",
+    "domain": "science",
+    "topic": "muscle physiology",
+    "title": "Lactic acid is not why you ache two days later",
+    "body": "The old story blames next-day muscle soreness on lactic acid pooling in the tissue. Lactate is cleared within roughly an hour of exercise, long before the ache peaks at 24 to 72 hours. Delayed onset muscle soreness instead follows microscopic damage to muscle fibres and connective tissue, especially from eccentric contractions where the muscle lengthens under load, and the pain tracks the resulting inflammatory repair response.",
+    "prompt": "Muscle soreness peaks two days after a hard session. Why does that timing rule out the usual explanation?",
+    "answer": "Because lactate is cleared within about an hour of stopping, long before soreness peaks at 24 to 72 hours. Delayed onset muscle soreness comes from microscopic damage to muscle fibres and connective tissue, particularly from lengthening contractions under load, and tracks the inflammatory repair that follows.",
+    "difficulty": 2,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Delayed_onset_muscle_soreness",
+      "https://en.wikipedia.org/wiki/Lactic_acid"
+    ],
+    "tags": [
+      "physiology",
+      "exercise"
+    ]
+  },
+  {
+    "id": "science-0066",
+    "type": "concept",
+    "domain": "science",
+    "topic": "seasons",
+    "title": "Summer is not when Earth is closest to the Sun",
+    "body": "Earth's orbit is very slightly elliptical, and it reaches its closest point to the Sun in early January, during the northern winter. Distance is not what drives the seasons. The axis is tilted about 23.4 degrees, so in a hemisphere's summer the Sun climbs higher, spreading the same beam over less ground, and stays above the horizon longer. Both effects deliver more energy per square metre per day. The hemispheres have opposite seasons for the same reason.",
+    "prompt": "Earth is closest to the Sun in January. Why is that not the northern summer?",
+    "answer": "Because seasons come from the 23.4 degree axial tilt, not orbital distance. In a hemisphere's summer the Sun rises higher, so the same beam is spread over less ground, and it stays up longer, both of which raise the daily energy per square metre. The tilt also explains why the hemispheres are opposite.",
+    "difficulty": 1,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Season",
+      "https://science.nasa.gov/"
+    ],
+    "tags": [
+      "astronomy",
+      "climate"
+    ]
+  },
+  {
+    "id": "science-0067",
+    "type": "concept",
+    "domain": "science",
+    "topic": "chemiosmosis",
+    "title": "A cell makes its energy currency with a battery",
+    "body": "Mitochondria do not couple food oxidation directly to ATP synthesis. The electron transport chain uses the energy from oxidising food to pump protons out across the inner membrane, building both a concentration difference and a voltage. That gradient is the stored energy. Protons then flow back through ATP synthase, a molecular turbine whose rotation drives the chemistry that makes ATP. Peter Mitchell proposed this in 1961 to widespread disbelief and won the 1978 Nobel Prize for it.",
+    "prompt": "What actually links oxidising food to making ATP inside a mitochondrion?",
+    "answer": "A proton gradient. The electron transport chain uses the energy from oxidation to pump protons across the inner membrane, storing energy as a concentration and voltage difference, and those protons then flow back through ATP synthase, whose rotation drives ATP formation. Peter Mitchell's chemiosmotic theory won the 1978 Nobel Prize in Chemistry.",
+    "difficulty": 3,
+    "sources": [
+      "https://en.wikipedia.org/wiki/Chemiosmosis",
+      "https://www.nobelprize.org/prizes/chemistry/1978/summary/"
+    ],
+    "tags": [
+      "biochemistry",
+      "cell-biology"
+    ]
   }
 ]
