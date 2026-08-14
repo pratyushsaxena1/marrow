@@ -116,7 +116,10 @@ ones") is fine once. It was a template across the corpus. Vary where the name la
 leave it to the answer.
 
 **Spelling.** British throughout: colour, behaviour, centre, metre, analyse, organise,
-recognise, labelled, defence. The script catches the American forms.
+recognise, labelled, defence. The script catches the American forms. Two deliberate
+exceptions, both entrenched terms of art whose -z spelling is standard even in
+British-published texts: "amortized analysis" and the SERIALIZABLE isolation level.
+Normalising those would make the corpus read as though it did not know the field.
 
 **Characters.** ASCII plus a small allowlist of maths symbols, currency signs and
 accents, all listed in the script. Straight quotes only. Use one convention for
