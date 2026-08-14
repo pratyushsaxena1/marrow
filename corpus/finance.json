@@ -4,10 +4,10 @@
     "type": "concept",
     "domain": "finance",
     "topic": "compound interest",
-    "title": "The Rule of 72",
-    "body": "Money growing at a constant rate takes roughly 72 divided by the percentage rate to double. At 8% a year, 72/8 gives nine years; the exact answer is 9.01. At 6% it predicts twelve years against an exact 11.90. The trick works because doubling time is ln(2)/ln(1+r), ln(2) is about 0.693, and ln(1+r) tracks r closely for small rates. Accuracy is best for rates roughly between 5% and 12%, and degrades badly at very high ones.",
-    "prompt": "What does the Rule of 72 estimate, and how do you apply it?",
-    "answer": "It estimates how long a quantity growing at a constant percentage rate takes to double: divide 72 by the rate expressed as a percentage. At 8% a year that gives nine years against an exact 9.01, and it is most accurate for rates roughly between 5% and 12%.",
+    "title": "Seventy-two, divided by the rate",
+    "body": "Money growing at a constant rate takes roughly 72 divided by the percentage rate to double. At 8% a year that gives nine years, against an exact 9.01. At 6% it predicts twelve years against 11.90. The shortcut works because doubling time is ln(2)/ln(1+r), and ln(1+r) tracks r closely at small rates. Accuracy is best between roughly 5% and 12%.",
+    "prompt": "How can you estimate a doubling time from a growth rate without a calculator?",
+    "answer": "Divide 72 by the rate expressed as a percentage. At 8% a year that gives nine years against an exact 9.01, and the approximation is most accurate for rates roughly between 5% and 12%.",
     "difficulty": 1,
     "sources": [
       "https://en.wikipedia.org/wiki/Rule_of_72"
@@ -24,9 +24,9 @@
     "domain": "finance",
     "topic": "compound interest",
     "title": "Ten million, or a penny that doubles",
-    "body": "Someone offers you a choice, and you must pick before seeing it play out. Option A: ten million dollars, handed over today. Option B: one cent today, two cents tomorrow, four the day after, doubling every day for thirty days, and you keep every payment. There is no catch, no inflation, no taxes, and no interest earned on money you have already received. Most people take the ten million without doing any arithmetic.",
+    "body": "Someone offers you a choice, and you must pick before seeing it play out. Option A is ten million dollars, handed over today. Option B is one cent today, two cents tomorrow, four the day after, doubling every day for thirty days, and you keep every payment. No inflation, no taxes, no interest on money already received. Most people take the ten million without doing any arithmetic.",
     "prompt": "Which is worth more: ten million dollars now, or a penny that doubles daily for thirty days with every payment kept?",
-    "answer": "The doubling penny, by about $737,000. The payments are 1, 2, 4, … up to 2^29 cents, and a sum of doubling terms equals twice the last term minus one — here 2^30 − 1 cents, or $10,737,418.23. More than half the total arrives on the final two days alone.",
+    "answer": "The doubling penny, by about $737,000. The payments run 1, 2, 4 and so on up to 2^29 cents, and a sum of doubling terms equals twice the last term minus one, here 2^30 - 1 cents, or $10,737,418.23. More than half the total arrives on the final two days alone.",
     "difficulty": 1,
     "sources": [
       "https://en.wikipedia.org/wiki/Geometric_series"
@@ -42,7 +42,7 @@
     "domain": "finance",
     "topic": "time value of money",
     "title": "Why discounting is not about inflation",
-    "body": "A dollar today is worth more than a dollar next year because today's dollar can be invested and earn a return, so it grows into more than a dollar by then. Discounting runs that logic backwards. A payment of $1,000 due in three years, at a 6% annual rate, is worth 1000 divided by 1.06 cubed, about $840, today. The discount rate is not a guess about inflation; at root it is the return the money could otherwise earn.",
+    "body": "A dollar today is worth more than a dollar next year because today's dollar can be invested and earn a return. Discounting runs that logic backwards. A payment of $1,000 due in three years, at a 6% annual rate, is worth 1000 divided by 1.06 cubed, about $840, today. The discount rate is not a guess about inflation. At root it is the return the money could otherwise earn.",
     "prompt": "Why is a future payment worth less than the same nominal amount today, and how is the discount computed?",
     "answer": "Because money held today can be invested and earn a return, so it grows into a larger sum by the future date. Discounting divides the future payment by (1 + r) raised to the number of periods: $1,000 due in three years at 6% is worth about $840 now.",
     "difficulty": 1,
@@ -60,9 +60,9 @@
     "domain": "finance",
     "topic": "perpetuities",
     "title": "Infinite payments, finite value",
-    "body": "A perpetuity pays a fixed amount forever. It sounds like it should be worth infinitely much, but it is not: its present value is simply the payment divided by the discount rate. A bond paying 100 pounds a year forever, discounted at 5%, is worth 2,000 pounds. Each more distant payment is discounted more heavily than the last, so the discounted amounts shrink geometrically and the infinite sum converges. Britain issued exactly this instrument, called consols, and redeemed the last of them in 2015.",
-    "prompt": "What is the present value of a perpetuity, and why is it finite rather than infinite?",
-    "answer": "It equals the periodic payment divided by the discount rate — 100 pounds a year at 5% is worth 2,000 pounds. The value is finite because each successive payment is discounted more heavily, so the discounted payments shrink geometrically and the infinite series converges.",
+    "body": "A perpetuity pays a fixed amount forever, so it sounds as though it should be worth infinitely much. Its present value is just the payment divided by the discount rate. A bond paying 100 pounds a year forever, discounted at 5%, is worth 2,000 pounds. Each more distant payment is discounted more heavily than the last, so the discounted amounts shrink geometrically and the infinite sum converges. Britain issued exactly this instrument, called consols, and redeemed the last of them in 2015.",
+    "prompt": "How can a stream of payments that never ends have a finite present value?",
+    "answer": "Its present value is the periodic payment divided by the discount rate, so 100 pounds a year at 5% is worth 2,000 pounds. The total is finite because each successive payment is discounted more heavily, so the discounted payments shrink geometrically and the series converges.",
     "difficulty": 2,
     "sources": [
       "https://en.wikipedia.org/wiki/Perpetuity",
@@ -79,9 +79,9 @@
     "domain": "finance",
     "topic": "present value",
     "title": "The million-dollar prize that isn't",
-    "body": "A lottery advertises a one million dollar prize. The fine print: it is paid as $50,000 at the end of each year for twenty years, not as a lump sum. You can borrow and lend freely at 5% a year. Ignore taxes and inflation. Twenty payments of fifty thousand does add up to a million, so the arithmetic on the poster is correct — but that is not what the prize is worth to you today.",
+    "body": "A lottery advertises a one million dollar prize. The fine print says it is paid as $50,000 at the end of each year for twenty years, not as a lump sum. You can borrow and lend freely at 5% a year. Ignore taxes and inflation. Twenty payments of fifty thousand does add up to a million, so the arithmetic on the poster is correct. It is not what the prize is worth to you today.",
     "prompt": "A prize of $50,000 a year for twenty years is advertised as $1,000,000. What is it actually worth today at a 5% discount rate?",
-    "answer": "About $623,000. Each payment is divided by 1.05 raised to the year it arrives, and the sum gives the annuity factor (1 − 1.05^−20)/0.05 ≈ 12.46, times $50,000. The advertised million adds dollars from twenty different years as though they were the same good; they are not.",
+    "answer": "About $623,000. Each payment is divided by 1.05 raised to the year it arrives, and the sum gives an annuity factor of about 12.46, times $50,000. The advertised million adds dollars from twenty different years as though they were the same good, and they are not.",
     "difficulty": 2,
     "sources": [
       "https://en.wikipedia.org/wiki/Annuity"
@@ -98,9 +98,9 @@
     "domain": "finance",
     "topic": "real interest rates",
     "title": "Nominal rates versus real rates",
-    "body": "The interest rate your bank quotes is nominal. What matters for purchasing power is the real rate: roughly the nominal rate minus inflation. Earn 5% on a deposit while prices rise 3%, and you are only about 2% richer in goods. The exact relation is that one plus the nominal rate equals one plus the real rate times one plus inflation, which gives 1.94% here — close enough that the subtraction shortcut is fine at low rates. Real rates can be negative, and often have been.",
-    "prompt": "What is the difference between a nominal and a real interest rate?",
-    "answer": "The nominal rate is the quoted rate; the real rate adjusts for inflation to give the change in purchasing power. Earning 5% while prices rise 3% leaves you about 2% better off in goods — exactly 1.94% by the Fisher relation.",
+    "body": "The interest rate your bank quotes is nominal. What matters for purchasing power is the real rate, roughly the nominal rate minus inflation. Earn 5% on a deposit while prices rise 3%, and you are only about 2% richer in goods. The exact Fisher relation gives 1.94% here, close enough that the subtraction shortcut is fine at low rates. Real rates can be negative, and often have been.",
+    "prompt": "Your deposit pays 5% while prices rise 3%. How much better off are you, and what is that figure called?",
+    "answer": "About 2% better off in goods, which is the real interest rate as against the 5% nominal rate the bank quotes. The exact Fisher relation gives 1.94%, so subtracting inflation from the nominal rate is a good approximation at low rates.",
     "difficulty": 2,
     "sources": [
       "https://en.wikipedia.org/wiki/Fisher_equation",
@@ -117,12 +117,13 @@
     "domain": "finance",
     "topic": "bond pricing",
     "title": "Why bond prices and yields move opposite",
-    "body": "A bond's coupon payments are fixed when it is issued. If market interest rates rise afterwards, newly issued bonds pay more, so nobody will pay full price for the old one — its price falls until the return a buyer earns from holding it to maturity matches what the new bonds offer. That return is the yield. Price and yield are two ways of quoting the same thing, which is why they always move in opposite directions. The bond's cash flows never changed; only its price did.",
+    "body": "A bond's coupon payments are fixed when it is issued. If market rates rise afterwards, newly issued bonds pay more, so nobody will pay full price for the old one. Its price falls until the return a buyer earns from holding it to maturity matches what new bonds offer. That return is the yield, so price and yield are two ways of quoting the same thing.",
     "prompt": "Why do a bond's price and its yield always move in opposite directions?",
     "answer": "Because the bond's coupon payments are fixed, the only thing that can adjust when market rates change is the price. A lower price means a buyer earns a higher return on the same fixed cash flows, and that higher return is exactly what a higher yield means.",
     "difficulty": 1,
     "sources": [
-      "https://en.wikipedia.org/wiki/Bond_valuation"
+      "https://en.wikipedia.org/wiki/Bond_valuation",
+      "https://www.investor.gov/introduction-investing/investing-basics/glossary/bonds"
     ],
     "tags": [
       "bonds",
@@ -135,8 +136,8 @@
     "type": "concept",
     "domain": "finance",
     "topic": "duration",
-    "title": "What duration measures",
-    "body": "Duration measures how far in the future a bond's cash flows sit, weighting each payment by its share of the bond's present value. It doubles as a sensitivity measure: a bond with a duration near seven falls roughly 7% in price when yields rise by one percentage point. A zero-coupon bond pays only at maturity, so its duration equals its maturity. Coupon bonds return some cash earlier, which pulls the weighted average in and makes them less rate-sensitive than a zero of the same maturity.",
+    "title": "How far away a bond's money sits",
+    "body": "Duration measures how far in the future a bond's cash flows sit, weighting each payment by its share of the bond's present value. It doubles as a sensitivity measure: a bond with duration near seven falls roughly 7% in price when yields rise by one percentage point. A zero-coupon bond pays only at maturity, so its duration equals its maturity. Coupon bonds return some cash earlier, which pulls the weighted average in.",
     "prompt": "What does a bond's duration measure, and what does a duration near seven imply about its price sensitivity?",
     "answer": "Duration is the present-value-weighted average time until a bond's cash flows arrive, and it approximates interest-rate sensitivity. A duration near seven means the price falls roughly 7% if yields rise by one percentage point.",
     "difficulty": 2,
@@ -155,9 +156,9 @@
     "domain": "finance",
     "topic": "interest rate risk",
     "title": "Same maturity, different damage",
-    "body": "Two bonds both mature in exactly ten years and both currently yield 5%. Bond A is a zero-coupon bond: it pays nothing at all until a single lump sum of face value at maturity. Bond B pays a 10% annual coupon and then its face value at maturity. Market yields suddenly rise from 5% to 6% for both. Same issuer, same maturity, same yield move — yet the two prices do not fall by the same percentage.",
+    "body": "Two bonds both mature in exactly ten years and both currently yield 5%. Bond A is a zero-coupon bond, paying nothing at all until a single lump sum at maturity. Bond B pays a 10% annual coupon and then its face value. Market yields suddenly rise from 5% to 6% for both. Same issuer, same maturity, same yield move, yet the two prices do not fall by the same percentage.",
     "prompt": "Two ten-year bonds, one zero-coupon and one with a 10% coupon, both yield 5%. Which loses more when yields rise to 6%, and why?",
-    "answer": "The zero-coupon bond, falling about 9.0% against about 6.6% for the coupon bond. The zero's entire payment sits ten years out, so its present-value-weighted average payment date is the full ten years; the coupon bond returns cash along the way, pulling that average in to roughly seven years and blunting its rate sensitivity.",
+    "answer": "The zero-coupon bond, falling about 9.0% against about 6.6% for the coupon bond. The zero's entire payment sits ten years out, so its present-value-weighted average payment date is the full ten years. The coupon bond returns cash along the way, pulling that average in to roughly seven years and blunting its rate sensitivity.",
     "difficulty": 3,
     "sources": [
       "https://en.wikipedia.org/wiki/Bond_duration"
@@ -173,14 +174,14 @@
     "type": "concept",
     "domain": "finance",
     "topic": "yield curve",
-    "title": "What an inverted yield curve does and does not tell you",
-    "body": "The yield curve plots government bond yields against maturity. It usually slopes upward — lenders want more compensation for tying money up longer. Occasionally it inverts, with short yields above long ones, which implies markets expect short rates to fall. In the United States, an inversion has preceded every recession since the 1960s, with at least one false alarm. Economists dispute what to make of that: whether inversion causes anything, merely reflects expectations, or is a statistical regularity that could break.",
+    "title": "What an inversion does and does not tell you",
+    "body": "The yield curve plots government bond yields against maturity. It usually slopes upward, since lenders want more compensation for tying money up longer. Occasionally it inverts, with short yields above long ones, which implies markets expect short rates to fall. In the United States an inversion has preceded every recession since the 1960s, with at least one false alarm. Economists dispute what to make of that: whether inversion causes anything, merely reflects expectations, or is a regularity that could break.",
     "prompt": "What is an inverted yield curve, and how confident should you be in what it predicts?",
     "answer": "An inversion means short-maturity government yields exceed long-maturity ones, implying markets expect short rates to fall. In the US it has preceded every recession since the 1960s with at least one false alarm, but economists disagree over whether it is causal, merely reflects expectations, or is a regularity that could break.",
-    "difficulty": 2,
+    "difficulty": 3,
     "sources": [
       "https://en.wikipedia.org/wiki/Yield_curve",
-      "https://en.wikipedia.org/wiki/Inverted_yield_curve"
+      "https://fred.stlouisfed.org/series/T10Y2Y"
     ],
     "tags": [
       "bonds",
@@ -194,10 +195,10 @@
     "domain": "finance",
     "topic": "equity valuation",
     "title": "The Gordon growth model",
-    "body": "A share is a claim on a company's future cash to shareholders, so its value is those payments discounted back to today. The Gordon growth version compresses this into one line: if a stock pays a dividend D next year, growing forever at rate g, and investors require return r, the value is D divided by r minus g. A $2 dividend growing at 3% with an 8% required return gives $40. The formula only works when r exceeds g, and it is brutally sensitive to both.",
+    "body": "A share is a claim on a company's future cash to shareholders, so its value is those payments discounted back to today. The Gordon growth version compresses this into one line. If a stock pays a dividend D next year, growing forever at rate g, and investors require return r, the value is D divided by (r minus g). It only works when r exceeds g.",
     "prompt": "How does the Gordon growth model value a share, and what is its key restriction?",
-    "answer": "It values the share as next year's dividend divided by the required return minus the perpetual dividend growth rate: D/(r − g). It requires r to exceed g, and the answer is extremely sensitive to small changes in either input.",
-    "difficulty": 2,
+    "answer": "It values the share as next year's dividend divided by the required return minus the perpetual growth rate, or D/(r - g). The model requires r to exceed g, and the answer is extremely sensitive to small changes in either input.",
+    "difficulty": 3,
     "sources": [
       "https://en.wikipedia.org/wiki/Dividend_discount_model"
     ],
@@ -213,9 +214,9 @@
     "domain": "finance",
     "topic": "valuation ratios",
     "title": "A P/E ratio is a question, not an answer",
-    "body": "A price-to-earnings ratio is the share price divided by earnings per share: a stock at $50 earning $2.50 a share has a P/E of 20, meaning buyers pay twenty dollars per dollar of current annual profit. It is not a verdict. A high P/E can mean investors expect earnings to grow fast, or that the stock is expensive, or that earnings are temporarily depressed — and the ratio cannot tell you which. Comparing P/Es across industries with different growth and capital needs is largely meaningless.",
+    "body": "A price-to-earnings ratio is the share price divided by earnings per share. A stock at $50 earning $2.50 a share has a P/E of 20, meaning buyers pay twenty dollars per dollar of current annual profit. It is not a verdict. A high P/E can mean investors expect fast earnings growth, or that the stock is expensive, or that earnings are temporarily depressed, and the ratio cannot tell you which.",
     "prompt": "What does a price-to-earnings ratio measure, and why can't a high P/E alone tell you a stock is overpriced?",
-    "answer": "It is the share price divided by earnings per share — the price paid per dollar of current annual profit. A high P/E is ambiguous: it can reflect expected earnings growth, genuine overvaluation, or temporarily depressed earnings, and the ratio alone cannot distinguish between them.",
+    "answer": "It is the share price divided by earnings per share, the price paid per dollar of current annual profit. A high P/E is ambiguous: it can reflect expected earnings growth, genuine overvaluation, or temporarily depressed earnings, and the ratio alone cannot distinguish between them.",
     "difficulty": 1,
     "sources": [
       "https://en.wikipedia.org/wiki/Price%E2%80%93earnings_ratio"
@@ -231,9 +232,9 @@
     "domain": "finance",
     "topic": "market microstructure",
     "title": "What the bid-ask spread pays for",
-    "body": "At any moment a market has two prices: the bid, the highest price someone will pay, and the ask, the lowest price someone will sell at. The gap between them is the spread, and it is what trading immediately costs you — you buy at the ask and sell at the bid. The spread compensates whoever supplies that immediacy for three distinct things: the cost of processing orders, the risk of holding inventory that moves against them, and the risk that the person trading knows something they do not.",
-    "prompt": "What is the bid-ask spread, and what three things does it compensate a liquidity provider for?",
-    "answer": "It is the gap between the highest price a buyer will pay and the lowest a seller will accept, and it is what an immediate round trip costs. It compensates the liquidity provider for order-processing costs, inventory risk, and the risk of trading against someone better informed.",
+    "body": "At any moment a market has two prices: the bid, the highest price someone will pay, and the ask, the lowest price someone will sell at. The gap between them is the spread, and it is what trading immediately costs you, since you buy at the ask and sell at the bid. It compensates whoever supplies that immediacy for three things: processing the order, holding inventory that may move against them, and trading against someone better informed.",
+    "prompt": "Trading in and straight back out loses you money even if the price never moves. What have you paid, and what does it buy?",
+    "answer": "You have paid the bid-ask spread, the gap between the highest price a buyer will pay and the lowest a seller will accept. It compensates the liquidity provider for order-processing costs, inventory risk, and the risk of trading against someone better informed.",
     "difficulty": 1,
     "sources": [
       "https://en.wikipedia.org/wiki/Bid%E2%80%93ask_spread"
@@ -250,9 +251,9 @@
     "domain": "finance",
     "topic": "order types",
     "title": "Market orders and limit orders trade one certainty for another",
-    "body": "A market order says: trade now, at whatever price is available. A limit order says: trade only at my price or better, and wait. The trade-off is exact. A market order buys certainty of execution and pays the spread. A limit order earns the spread but may never fill — and worse, it tends to fill precisely when the price is moving through it, which means the counterparty often knows something you do not. You are choosing which uncertainty to bear: price, or execution.",
-    "prompt": "What is the trade-off between placing a market order and placing a limit order?",
-    "answer": "A market order guarantees execution but not price, and pays the spread; a limit order fixes the price but not whether it executes, and earns the spread. The choice is which uncertainty to accept, with limit orders also bearing the risk of filling only when informed traders push the price through them.",
+    "body": "A market order says trade now, at whatever price is available. A limit order says trade only at my price or better, and wait. The trade-off is exact. A market order buys certainty of execution and pays the spread. A limit order earns the spread but may never fill, and worse, it tends to fill precisely when the price is moving through it. You are choosing which uncertainty to bear: price, or execution.",
+    "prompt": "You can trade now at the market price or name your price and wait. What are you giving up in each case?",
+    "answer": "A market order guarantees execution but not price, and pays the spread. A limit order fixes the price but not whether it executes, and earns the spread. The choice is which uncertainty to accept, with limit orders also bearing the risk of filling only when informed traders push the price through them.",
     "difficulty": 2,
     "sources": [
       "https://en.wikipedia.org/wiki/Order_(exchange)"
@@ -268,9 +269,9 @@
     "domain": "finance",
     "topic": "diversification",
     "title": "The risk diversification cannot touch",
-    "body": "Hold one company's stock and you carry two kinds of risk: things that happen only to that firm — a fire, a lawsuit, a bad chief executive — and things that hit every firm at once, like a recession or an interest rate shock. Own fifty firms and the firm-specific shocks largely cancel: some go badly, some go well. The economy-wide shocks do not cancel, because they strike everything together. That is why diversification is close to free against one kind of risk and useless against the other.",
+    "body": "Hold one company's stock and you carry two kinds of risk: things that happen only to that firm, such as a fire or a lawsuit or a bad chief executive, and things that hit every firm at once, like a recession or a rate shock. Own fifty firms and the firm-specific shocks largely cancel, since some go badly and some go well. The economy-wide shocks do not cancel, because they strike everything together.",
     "prompt": "Which kind of risk does diversification remove, and which does it leave behind?",
-    "answer": "It removes idiosyncratic, firm-specific risk, because largely independent shocks across many holdings tend to cancel out. It cannot remove systematic risk — shocks like recessions or interest rate moves that hit every holding at the same time.",
+    "answer": "It removes idiosyncratic, firm-specific risk, because largely independent shocks across many holdings tend to cancel out. It cannot remove systematic risk: shocks like recessions or interest rate moves that hit every holding at the same time.",
     "difficulty": 2,
     "sources": [
       "https://en.wikipedia.org/wiki/Systematic_risk",
@@ -288,9 +289,9 @@
     "domain": "finance",
     "topic": "portfolio risk",
     "title": "Diversification runs on correlation, not on counting",
-    "body": "Take two assets, each with a 20% standard deviation of returns, and split your money evenly between them. If the two are uncorrelated, the portfolio's standard deviation drops to about 14%. If they move perfectly together, it stays at 20% and you have gained nothing at all. Owning thirty stocks in the same industry is much closer to the second case than the first. Correlations, not the number of names on the statement, decide how much risk actually disappears.",
+    "body": "Take two assets, each with a 20% standard deviation of returns, and split your money evenly between them. If the two are uncorrelated, the portfolio's standard deviation drops to about 14%. If they move perfectly together, it stays at 20% and you have gained nothing. Owning thirty stocks in one industry is much closer to the second case. Correlations, not the number of names on the statement, decide how much risk disappears.",
     "prompt": "Why does diversification depend on correlation rather than on the number of holdings?",
-    "answer": "Because risk falls only when shocks cancel, which requires holdings that do not move together. Two 20%-volatility assets split evenly give about 14% volatility if uncorrelated, but still 20% if perfectly correlated — so thirty highly correlated stocks diversify very little.",
+    "answer": "Because risk falls only when shocks cancel, which requires holdings that do not move together. Two 20%-volatility assets split evenly give about 14% volatility if uncorrelated, but still 20% if perfectly correlated, so thirty highly correlated stocks diversify very little.",
     "difficulty": 2,
     "sources": [
       "https://en.wikipedia.org/wiki/Modern_portfolio_theory"
@@ -307,9 +308,9 @@
     "domain": "finance",
     "topic": "options",
     "title": "A call option buys an asymmetry",
-    "body": "A call option gives you the right, not the obligation, to buy an asset at a fixed strike price. If the asset ends above the strike, you exercise and pocket the difference; below it, you simply walk away and lose only what you paid. Buy a $100-strike call for $5: at $130 you net $25, and at $60 you lose $5, not $40. The payoff is bent — floored on one side, open on the other. That asymmetry, not a prediction, is what the premium buys.",
-    "prompt": "What does buying a call option give you, and what shape does its payoff have?",
-    "answer": "It gives the right but not the obligation to buy the asset at the strike price, so you exercise only when doing so is profitable. The payoff is asymmetric: your loss is capped at the premium paid, while gains rise with the asset's price above the strike.",
+    "body": "A call option gives you the right, not the obligation, to buy an asset at a fixed strike price. If the asset ends above the strike you exercise and pocket the difference. Below it you walk away and lose only what you paid. Buy a $100-strike call for $5: at $130 you net $25, and at $60 you lose $5, not $40. That bent payoff, floored on one side and open on the other, is what the premium buys.",
+    "prompt": "Buying a $100-strike call for $5, you lose $5 if the stock falls to $60 but make $25 if it rises to $130. What are you actually paying for?",
+    "answer": "An asymmetry. The option is a right rather than an obligation, so you exercise only when doing so pays, which caps your loss at the premium while leaving gains open above the strike. The premium buys that bent payoff, not a prediction about direction.",
     "difficulty": 1,
     "sources": [
       "https://en.wikipedia.org/wiki/Call_option"
@@ -326,13 +327,13 @@
     "domain": "finance",
     "topic": "volatility",
     "title": "Why volatility makes an option worth more",
-    "body": "An option's price usually exceeds what you would get from exercising it right now. The extra is time value, and it grows with two things: how long is left, and how much the underlying is expected to move. Volatility helps the holder because the downside is capped at the premium while the upside is not — a wider range of outcomes only widens the profitable tail. Implied volatility inverts this: it is the volatility that makes a pricing model reproduce the option's actual market price.",
+    "body": "An option's price usually exceeds what you would get from exercising it right now. The extra is time value, and it grows with how long is left and how much the underlying is expected to move. Volatility helps the holder because the downside is capped at the premium while the upside is not, so a wider range of outcomes only widens the profitable tail. Implied volatility inverts this: it is the volatility that makes a pricing model reproduce the option's market price.",
     "prompt": "Why does more expected volatility raise an option's price, and what is implied volatility?",
     "answer": "Because the holder's loss is capped at the premium while the gain is not, so a wider distribution of outcomes extends only the profitable tail. Implied volatility is the volatility input that makes a pricing model output the option's observed market price.",
-    "difficulty": 2,
+    "difficulty": 3,
     "sources": [
       "https://en.wikipedia.org/wiki/Implied_volatility",
-      "https://en.wikipedia.org/wiki/Option_time_value"
+      "https://www.nobelprize.org/prizes/economic-sciences/1997/summary/"
     ],
     "tags": [
       "options",
@@ -346,9 +347,9 @@
     "domain": "finance",
     "topic": "put-call parity",
     "title": "The call, the put, and the free lunch",
-    "body": "A stock trades at $100 and pays no dividends. A European call struck at $100 and expiring in one year trades at $8. A European put with the same strike and expiry trades at $2. You can borrow or lend at 5% a year, and there are no transaction costs. Holding the stock, plus that put, minus that call, guarantees you exactly $100 in a year no matter where the stock ends up. That is the hint.",
+    "body": "A stock trades at $100 and pays no dividends. A European call struck at $100 and expiring in one year trades at $8. A European put with the same strike and expiry trades at $2. You can borrow or lend at 5% a year, and there are no transaction costs. Holding the stock, plus that put, minus that call, guarantees you exactly $100 in a year no matter where the stock ends up.",
     "prompt": "A no-dividend stock is at $100; a one-year $100 call trades at $8 and the matching put at $2, with a 5% rate. Where is the arbitrage?",
-    "answer": "Sell the call, buy the put, buy the stock, and borrow $95.24 — the present value of $100. That nets $1.24 in your pocket today, and the position settles at exactly zero, since the guaranteed $100 repays the loan grown to $100. Parity requires call minus put to equal $100 − $95.24 = $4.76, but the market prices that difference at $6, so the call is dear relative to the put.",
+    "answer": "Sell the call, buy the put, buy the stock, and borrow $95.24, the present value of $100. That nets $1.24 today, and the position settles at exactly zero, since the guaranteed $100 repays the loan grown to $100. Parity requires call minus put to equal $4.76, but the market prices that difference at $6, so the call is dear relative to the put.",
     "difficulty": 3,
     "sources": [
       "https://en.wikipedia.org/wiki/Put%E2%80%93call_parity"
@@ -367,7 +368,7 @@
     "title": "Three currencies that do not agree",
     "body": "Three quotes are live at the same instant at three banks, all with zero fees and unlimited size. One dollar buys 0.90 euros. One euro buys 160 yen. One dollar buys 150 yen. You hold $1,000 and may convert in any sequence you like, so long as you end back in dollars. These three rates are not mutually consistent, and the inconsistency is worth money to whoever works out which way around to trade.",
     "prompt": "Given $1 = €0.90, €1 = ¥160, and $1 = ¥150, how do you turn $1,000 into a risk-free profit?",
-    "answer": "Go dollars to yen to euros to dollars: $1,000 buys ¥150,000, which buys €937.50, which buys about $1,041.67 — roughly $41.67 risk-free. The key step is the implied cross rate: routed through euros a dollar is worth only ¥144, but the direct quote gives ¥150, so buy yen directly with dollars and unwind back through euros.",
+    "answer": "Go dollars to yen to euros to dollars: $1,000 buys ¥150,000, which buys €937.50, which buys about $1,041.67, a risk-free gain of roughly $41.67. The key step is the implied cross rate. Routed through euros a dollar is worth only ¥144, but the direct quote gives ¥150, so buy yen directly and unwind back through euros.",
     "difficulty": 2,
     "sources": [
       "https://en.wikipedia.org/wiki/Triangular_arbitrage"
@@ -384,10 +385,10 @@
     "domain": "finance",
     "topic": "money creation",
     "title": "Where a bank loan's money comes from",
-    "body": "The textbook story is that banks lend out the deposits savers bring in. The Bank of England's own account of it is different: when a bank makes a loan, it simultaneously credits the borrower's account with a brand-new deposit. No pre-existing money was moved from anyone. That deposit is new money in the economy, and it is destroyed again when the loan is repaid. What limits the process is not a stock of reserves but profitability, credit risk, capital requirements, and the central bank's policy rate.",
+    "body": "The textbook story is that banks lend out the deposits savers bring in. The Bank of England's own account is different. When a bank makes a loan it simultaneously credits the borrower's account with a brand-new deposit, and no pre-existing money moves from anyone. That deposit is new money in the economy, and it is destroyed again when the loan is repaid. What limits the process is not a stock of reserves but profitability, credit risk, capital requirements, and the policy rate.",
     "prompt": "According to the Bank of England, where does the money come from when a commercial bank makes a loan?",
     "answer": "The bank creates it, crediting the borrower's account with a new deposit at the moment the loan is made, rather than lending out money savers deposited first. That deposit is new money and is destroyed when the loan is repaid; lending is limited by profitability, credit risk, capital rules, and the policy rate.",
-    "difficulty": 2,
+    "difficulty": 3,
     "sources": [
       "https://www.bankofengland.co.uk/quarterly-bulletin/2014/q1/money-creation-in-the-modern-economy",
       "https://en.wikipedia.org/wiki/Money_creation"
@@ -403,10 +404,10 @@
     "type": "concept",
     "domain": "finance",
     "topic": "banking",
-    "title": "Maturity transformation and why banks are fragile",
-    "body": "A bank borrows short and lends long: depositors can withdraw today, while the mortgages and business loans on the other side of the balance sheet take years to mature and cannot be sold quickly at full value. This maturity transformation is genuinely useful — it lets illiquid projects be funded by people who want liquidity. It is also structurally fragile. If enough depositors demand their money at once, the assets cannot be turned into cash in time, and a bank whose loans are perfectly good still fails.",
+    "title": "Borrow short, lend long, and hope",
+    "body": "A bank borrows short and lends long. Depositors can withdraw today, while the mortgages and business loans on the other side of the balance sheet take years to mature and cannot be sold quickly at full value. This maturity transformation is genuinely useful, since it lets illiquid projects be funded by people who want liquidity. It is also structurally fragile. If enough depositors demand their money at once, a bank whose loans are perfectly good still fails.",
     "prompt": "What is maturity transformation, and why does it make even a solvent bank fragile?",
-    "answer": "A bank funds long-term, illiquid loans with deposits that can be withdrawn on demand. If enough depositors withdraw at once, it cannot liquidate those assets quickly at full value and fails even though its loans are sound — the logic that deposit insurance exists to break.",
+    "answer": "A bank funds long-term, illiquid loans with deposits that can be withdrawn on demand. If enough depositors withdraw at once it cannot liquidate those assets quickly at full value, so it fails even though its loans are sound. That is the logic deposit insurance exists to break.",
     "difficulty": 2,
     "sources": [
       "https://en.wikipedia.org/wiki/Diamond%E2%80%93Dybvig_model",
@@ -424,13 +425,13 @@
     "domain": "finance",
     "topic": "monetary policy",
     "title": "How a central bank actually sets the rate",
-    "body": "A central bank does not decree the interest rate you pay; it controls the rate at the very short end and lets markets do the rest. Before 2008 the Federal Reserve kept bank reserves scarce and nudged the overnight rate by buying and selling small quantities of securities. Since then it has kept reserves abundant and steers the rate mainly by paying interest on reserves, which sets a floor a bank has little reason to lend below. Longer rates then price off expectations of that path.",
+    "body": "A central bank does not decree the interest rate you pay. It controls the rate at the very short end and lets markets do the rest. Before 2008 the Federal Reserve kept bank reserves scarce and nudged the overnight rate by buying and selling small quantities of securities. Since then it has kept reserves abundant and steers the rate mainly by paying interest on reserves, which sets a floor a bank has little reason to lend below.",
     "prompt": "How does a central bank with abundant reserves steer the short-term interest rate?",
     "answer": "It pays interest on reserves, which sets a floor: a bank has little reason to lend overnight below what it can earn risk-free at the central bank. The Federal Reserve moved to this approach after 2008, replacing the pre-crisis method of keeping reserves scarce and adjusting their quantity.",
     "difficulty": 3,
     "sources": [
       "https://en.wikipedia.org/wiki/Federal_funds_rate",
-      "https://en.wikipedia.org/wiki/Monetary_policy"
+      "https://www.federalreserve.gov/monetarypolicy/openmarket.htm"
     ],
     "tags": [
       "monetary-policy",
@@ -444,9 +445,9 @@
     "domain": "finance",
     "topic": "quantitative easing",
     "title": "Quantitative easing: clear mechanism, disputed effect",
-    "body": "In quantitative easing a central bank creates reserves and uses them to buy longer-dated bonds. Mechanically this swaps a long, duration-heavy asset for a short, safe one, shrinking the amount of interest rate risk private investors must hold between them, and it signals that policy rates will stay low for a while. Both channels are meant to push long yields down. How much it actually moved output and inflation is genuinely disputed, with credible estimates ranging from substantial to close to nothing.",
+    "body": "In quantitative easing a central bank creates reserves and uses them to buy longer-dated bonds. Mechanically this swaps a long, duration-heavy asset for a short, safe one, shrinking the interest rate risk private investors must hold between them. It also signals that policy rates will stay low. How much it actually moved output and inflation is genuinely disputed.",
     "prompt": "What does quantitative easing do mechanically, and how settled are its macroeconomic effects?",
-    "answer": "A central bank creates reserves to buy longer-dated bonds, which removes interest rate risk from private portfolios and signals that policy rates will stay low — both of which push long-term yields down. Its effect on output and inflation is genuinely disputed, with credible estimates spanning from substantial to near zero.",
+    "answer": "A central bank creates reserves to buy longer-dated bonds, which removes interest rate risk from private portfolios and signals that policy rates will stay low, both of which push long-term yields down. Its effect on output and inflation is genuinely disputed, with credible estimates spanning from substantial to near zero.",
     "difficulty": 3,
     "sources": [
       "https://en.wikipedia.org/wiki/Quantitative_easing"
@@ -463,13 +464,13 @@
     "domain": "finance",
     "topic": "inflation measurement",
     "title": "Substitution bias in a price index",
-    "body": "A consumer price index prices a fixed basket of goods each month and reports how much that basket's cost changed. The trouble is that people substitute: when beef gets expensive they buy more chicken, so a fixed basket overstates what it actually costs them to stay equally well off. The 1996 Boskin Commission estimated that the US consumer price index overstated cost-of-living inflation by around 1.1 percentage points a year across all such biases. The statistical agency has since made changes, including a chained index that lets the basket adjust.",
+    "body": "A consumer price index prices a fixed basket of goods each month and reports how much that basket's cost changed. The trouble is that people substitute. When beef gets expensive they buy more chicken, so a fixed basket overstates what it actually costs them to stay equally well off. The 1996 Boskin Commission put total US CPI overstatement at around 1.1 percentage points a year. The statistical agency has since made changes, including a chained index that lets the basket adjust.",
     "prompt": "What is substitution bias in a consumer price index, and roughly how large did the Boskin Commission put total US CPI bias?",
     "answer": "A fixed basket ignores that consumers switch toward goods that have become relatively cheaper, so it overstates the cost of maintaining the same standard of living. The 1996 Boskin Commission estimated total US CPI overstatement at roughly 1.1 percentage points a year.",
     "difficulty": 2,
     "sources": [
-      "https://en.wikipedia.org/wiki/Consumer_price_index",
-      "https://en.wikipedia.org/wiki/Boskin_Commission"
+      "https://en.wikipedia.org/wiki/Boskin_Commission",
+      "https://www.bls.gov/cpi/"
     ],
     "tags": [
       "inflation",
@@ -483,14 +484,14 @@
     "domain": "finance",
     "topic": "minimum wage",
     "title": "The disagreement economists are best known for",
-    "body": "The competitive labour model predicts that a wage floor set above the market rate reduces employment. The monopsony model, where employers have wage-setting power, predicts a moderate floor can raise both wages and employment. Both are respectable theory. Card and Krueger's 1994 study of New Jersey fast food found no job losses; Neumark and Wascher contested the data and found some. Decades of studies have not settled it, and the most defensible reading is that the effect depends on how high the floor sits relative to local wages.",
+    "body": "The competitive labour model predicts that a wage floor set above the market rate reduces employment. The monopsony model, where employers have wage-setting power, predicts a moderate floor can raise both wages and employment. Both are respectable theory. Card and Krueger's 1994 study of New Jersey fast food found no job losses, while Neumark and Wascher contested the data and found some. Decades of studies have not settled it.",
     "prompt": "Why do economists disagree about whether a minimum wage reduces employment?",
-    "answer": "Because two credible models predict opposite things — the competitive model implies job losses, the monopsony model allows a moderate floor to raise employment — and the empirical evidence is genuinely mixed, from Card and Krueger's null result to Neumark and Wascher's contrary findings. The effect likely depends on the floor's height relative to local wages.",
-    "difficulty": 2,
+    "answer": "Because two credible models predict opposite things. The competitive model implies job losses, while the monopsony model allows a moderate floor to raise employment, and the empirical evidence is genuinely mixed, from Card and Krueger's null result to Neumark and Wascher's contrary findings. The effect likely depends on the floor's height relative to local wages.",
+    "difficulty": 3,
     "sources": [
       "https://en.wikipedia.org/wiki/Minimum_wage",
       "https://en.wikipedia.org/wiki/Monopsony",
-      "https://en.wikipedia.org/wiki/David_Card"
+      "https://www.nobelprize.org/prizes/economic-sciences/2021/summary/"
     ],
     "tags": [
       "labor",
@@ -504,10 +505,10 @@
     "domain": "finance",
     "topic": "comparative advantage",
     "title": "Being worse at everything and still gaining from trade",
-    "body": "Suppose one country is better at making both cloth and wine than another. It still gains by specialising. What matters is not who is better in absolute terms but what each must give up: if a barrel of wine costs the first country two bolts of cloth and costs the second only one, the second should make the wine, whatever its absolute productivity. Trading at any rate between those two opportunity costs leaves both countries consuming more of both goods than either could produce alone.",
+    "body": "Suppose one country is better at making both cloth and wine than another. It still gains by specialising. What matters is not who is better in absolute terms but what each must give up. If a barrel of wine costs the first country two bolts of cloth and costs the second only one, the second should make the wine, whatever its absolute productivity. Trading at any rate between those two opportunity costs leaves both consuming more of both goods.",
     "prompt": "Why can a country that is worse at producing everything still gain from trade?",
-    "answer": "Because gains come from comparative, not absolute, advantage: each country should specialise where its opportunity cost — what it gives up to make a good — is lower. Trading at a rate between the two countries' opportunity costs leaves both consuming more than they could produce on their own.",
-    "difficulty": 2,
+    "answer": "Because gains come from comparative, not absolute, advantage. Each country should specialise where its opportunity cost, meaning what it gives up to make a good, is lower. Trading at a rate between the two countries' opportunity costs leaves both consuming more than they could produce on their own.",
+    "difficulty": 1,
     "sources": [
       "https://en.wikipedia.org/wiki/Comparative_advantage"
     ],
@@ -522,10 +523,10 @@
     "domain": "finance",
     "topic": "trade",
     "title": "What economists agree and disagree about on trade",
-    "body": "Economists agree nearly unanimously that trade raises a country's total income; that part follows from comparative advantage. The disagreement is everything downstream. Standard theory says trade also redistributes, hurting whoever competes with imports, and assumes those workers move into other jobs reasonably fast. Research on the so-called China shock found that in hard-hit American regions they largely did not, with employment and wages staying depressed for years. So the live dispute is not whether the pie grows but how big the losses are and how long they persist.",
+    "body": "Economists agree nearly unanimously that trade raises a country's total income, which follows from comparative advantage. The disagreement is everything downstream. Standard theory says trade also redistributes, hurting whoever competes with imports, and assumes those workers move into other jobs reasonably fast. Research on the China shock found that in hard-hit American regions they largely did not, with employment and wages staying depressed for years.",
     "prompt": "What do economists broadly agree on about trade, and what is genuinely disputed?",
-    "answer": "There is near-consensus that trade raises aggregate income through comparative advantage. The dispute is about distribution and adjustment — how large and persistent the losses to import-competing workers and regions are, with China shock research finding adjustment far slower than standard models assume.",
-    "difficulty": 2,
+    "answer": "There is near-consensus that trade raises aggregate income through comparative advantage. The dispute is about distribution and adjustment: how large and persistent the losses to import-competing workers and regions are, with China shock research finding adjustment far slower than standard models assume.",
+    "difficulty": 3,
     "sources": [
       "https://en.wikipedia.org/wiki/Gains_from_trade",
       "https://en.wikipedia.org/wiki/Stolper%E2%80%93Samuelson_theorem",
@@ -543,13 +544,13 @@
     "domain": "finance",
     "topic": "cartels",
     "title": "Why cartels fall apart",
-    "body": "A cartel agrees to restrict output so that prices stay high. The agreement is valuable to every member, and it is unstable for exactly that reason. Once the others are holding production back, the price is high, so the profitable move for you is to quietly produce more and sell it at that high price. Every member faces the same incentive, so cheating spreads and the price sags. It is a prisoner's dilemma: collectively better to hold the line, individually better to defect, whatever anyone else does.",
+    "body": "A cartel agrees to restrict output so that prices stay high. The agreement is valuable to every member, and it is unstable for exactly that reason. Once the others are holding production back the price is high, so the profitable move for you is to quietly produce more and sell it at that high price. Every member faces the same incentive, so cheating spreads and the price sags.",
     "prompt": "Why are cartel agreements structurally unstable?",
     "answer": "Because each member's individually best move is to defect: with the others restricting output and holding the price up, quietly producing extra is profitable regardless of what anyone else does. That is a prisoner's dilemma, so the cooperative outcome tends to unravel.",
     "difficulty": 2,
     "sources": [
       "https://en.wikipedia.org/wiki/Cartel",
-      "https://en.wikipedia.org/wiki/Prisoner%27s_dilemma"
+      "https://plato.stanford.edu/entries/prisoner-dilemma/"
     ],
     "tags": [
       "game-theory",
@@ -563,12 +564,13 @@
     "domain": "finance",
     "topic": "price competition",
     "title": "Two firms, and the price collapses anyway",
-    "body": "Two firms sell an identical product. Each can produce any quantity at a constant cost of $10 per unit, with no capacity limit. They post prices simultaneously, once, and cannot communicate or make deals. Every customer buys from whichever firm is cheaper; if prices tie, the market splits evenly. Both firms know all of this. Intuition says two firms is nearly a monopoly, so prices should settle well above cost. There is exactly one pair of prices from which neither firm wants to deviate.",
+    "body": "Two firms sell an identical product. Each can produce any quantity at a constant cost of $10 per unit, with no capacity limit. They post prices simultaneously, once, and cannot communicate. Every customer buys from whichever firm is cheaper, and a tie splits the market evenly. Intuition says two firms is nearly a monopoly, so prices should settle well above cost.",
     "prompt": "Two firms with identical $10 unit costs simultaneously post prices for an identical good and customers buy the cheaper. What is the equilibrium price?",
-    "answer": "Both price at $10, their marginal cost, and earn zero profit. The key step is that at any common price above cost, either firm can shade its price by a penny and capture the whole market instead of half of it, which is profitable — so no price above $10 survives, while no firm will price below cost. Two firms suffice for the competitive outcome under these assumptions.",
+    "answer": "Both price at $10, their marginal cost, and earn zero profit. The key step is that at any common price above cost either firm can shade its price by a penny and capture the whole market rather than half of it. No price above $10 survives, and no firm will price below cost, so two firms suffice for the competitive outcome.",
     "difficulty": 2,
     "sources": [
-      "https://en.wikipedia.org/wiki/Bertrand_competition"
+      "https://en.wikipedia.org/wiki/Bertrand_competition",
+      "https://plato.stanford.edu/entries/game-theory/"
     ],
     "tags": [
       "game-theory",
@@ -582,12 +584,13 @@
     "domain": "finance",
     "topic": "auctions",
     "title": "The winner pays too much",
-    "body": "Ten oil companies bid for a drilling tract in a sealed auction; the highest bid wins and pays its bid. The tract's true value is the same for all of them, but nobody knows what it is. Each company's geologists produce an unbiased estimate — right on average, as likely to be too high as too low. Every firm bids exactly its own estimate. The auction runs, the winner is announced, and the tract is drilled. On average, the winner loses money.",
+    "body": "Ten oil companies bid for a drilling tract in a sealed auction. The highest bid wins and pays its bid. The tract's true value is the same for all of them, but nobody knows what it is. Each company's geologists produce an unbiased estimate, right on average and as likely to be too high as too low. Every firm bids exactly its own estimate. On average, the winner loses money.",
     "prompt": "If every bidder bids their own unbiased estimate of an item's common value, why does the winner tend to lose money?",
     "answer": "This is the winner's curse: you win precisely when your estimate was the most optimistic of the ten, so the fact of winning is itself evidence your estimate was too high. Unbiased on average is not unbiased conditional on winning. The fix is to shade your bid below your estimate, by more when there are more bidders or noisier estimates.",
     "difficulty": 3,
     "sources": [
-      "https://en.wikipedia.org/wiki/Winner%27s_curse"
+      "https://en.wikipedia.org/wiki/Winner%27s_curse",
+      "https://www.nobelprize.org/prizes/economic-sciences/2020/summary/"
     ],
     "tags": [
       "auctions",
@@ -601,13 +604,13 @@
     "domain": "finance",
     "topic": "behavioral finance",
     "title": "Losses loom larger than gains",
-    "body": "People do not treat gains and losses symmetrically. Kahneman and Tversky found that a loss of a given size feels worse than an equal gain feels good, and estimated the ratio at roughly two to one. It shows up as reluctance to sell a losing position, as demanding a large premium before accepting a fair coin-flip bet, and as choices flipping when the same outcome is described as a gain rather than a loss. The effect is well established; its exact size and universality are still argued over.",
+    "body": "People do not treat gains and losses symmetrically. Kahneman and Tversky found that a loss of a given size feels worse than an equal gain feels good, and put the ratio at roughly two to one. It shows up as reluctance to sell a losing position, and as choices flipping when the same outcome is described as a gain rather than a loss. The effect is well established. Its exact size and universality are still argued over.",
     "prompt": "What is loss aversion, and how settled is the size of the effect?",
     "answer": "It is the finding that a loss weighs more heavily than a gain of the same size, which Kahneman and Tversky estimated at roughly a two-to-one ratio. The phenomenon is well established, but its magnitude and how universally it holds remain actively debated.",
     "difficulty": 1,
     "sources": [
-      "https://en.wikipedia.org/wiki/Loss_aversion",
-      "https://en.wikipedia.org/wiki/Prospect_theory"
+      "https://en.wikipedia.org/wiki/Prospect_theory",
+      "https://www.nobelprize.org/prizes/economic-sciences/2002/summary/"
     ],
     "tags": [
       "behavioral-finance",
@@ -621,7 +624,7 @@
     "domain": "finance",
     "topic": "sunk costs",
     "title": "The money is already gone",
-    "body": "You have spent $8,000 on a car repair and the car still is not fixed. Another $2,000 might do it, or might not. The $8,000 is gone whichever way you choose, so it should carry exactly zero weight in the decision. The only live question is whether $2,000 buys more here than $2,000 spent anywhere else. People systematically fail this: having already invested, they escalate, because walking away feels like conceding the earlier money was wasted. It was wasted regardless; continuing cannot un-waste it.",
+    "body": "You have spent $8,000 on a car repair and the car still is not fixed. Another $2,000 might do it, or might not. The $8,000 is gone whichever way you choose, so it should carry zero weight. The only live question is whether $2,000 buys more here than anywhere else. People systematically fail this and escalate, because walking away feels like conceding the earlier money was wasted. It was wasted regardless.",
     "prompt": "Why should sunk costs carry no weight in a decision?",
     "answer": "Because they are unrecoverable whichever option you pick, so they are identical across the options and cannot distinguish between them. Only future costs and benefits at the margin are relevant, though people systematically escalate commitment instead of ignoring what is already spent.",
     "difficulty": 1,
@@ -639,14 +642,14 @@
     "domain": "finance",
     "topic": "information asymmetry",
     "title": "Adverse selection is not moral hazard",
-    "body": "Two problems get routinely confused. Adverse selection is hidden information before a deal: the sick buy more health insurance, so the pool an insurer actually gets is worse than the population, and pricing for the average drives the good risks out. Moral hazard is hidden action after a deal: once insured, people lock the bike a little less carefully. The distinction is timing and what is hidden — a type versus a behaviour — and it dictates the remedy: screening and signalling for one, deductibles and monitoring for the other.",
+    "body": "Two problems get routinely confused. Adverse selection is hidden information before a deal: the sick buy more health insurance, so the pool an insurer actually gets is worse than the population. Moral hazard is hidden action after a deal: once insured, people lock the bike a little less carefully. The distinction is timing and what is hidden, a type versus a behaviour, and it dictates the remedy.",
     "prompt": "What distinguishes adverse selection from moral hazard?",
     "answer": "Adverse selection is hidden information before contracting: the counterparty's type is unknown, so worse risks self-select in. Moral hazard is hidden action after contracting: being covered changes behaviour. Screening and signalling address the first; deductibles and monitoring address the second.",
     "difficulty": 2,
     "sources": [
-      "https://en.wikipedia.org/wiki/Information_asymmetry",
       "https://en.wikipedia.org/wiki/Adverse_selection",
-      "https://en.wikipedia.org/wiki/Moral_hazard"
+      "https://en.wikipedia.org/wiki/Moral_hazard",
+      "https://www.nobelprize.org/prizes/economic-sciences/2001/summary/"
     ],
     "tags": [
       "information-asymmetry",
@@ -662,7 +665,7 @@
     "title": "The market that eats itself",
     "body": "Half the used cars for sale are good and half are defective, and only the seller knows which is which. A buyer would pay $10,000 for a good one and $2,000 for a bad one. Owners of good cars will not part with them below $8,000; owners of bad cars will accept anything above $1,000. Buyers cannot inspect, and everyone knows all of these numbers. A risk-neutral buyer starts out offering the average, $6,000.",
     "prompt": "With buyers offering $6,000 for a used car equally likely to be good or bad, what happens to this market and why?",
-    "answer": "It collapses to bad cars only. At $6,000 no good-car owner sells, since they value theirs at $8,000, so only bad cars are offered; buyers infer this and cut their bid toward $2,000. The key step is that the price determines which sellers turn up, so average quality is not a fixed input — it responds to the offer.",
+    "answer": "It collapses to bad cars only. At $6,000 no good-car owner sells, since they value theirs at $8,000, so only bad cars are offered, and buyers infer this and cut their bid toward $2,000. The key step is that the price determines which sellers turn up, so average quality is not a fixed input but responds to the offer.",
     "difficulty": 2,
     "sources": [
       "https://en.wikipedia.org/wiki/The_Market_for_Lemons"
@@ -679,9 +682,9 @@
     "domain": "finance",
     "topic": "principal-agent problem",
     "title": "Why paying a manager in stock only half works",
-    "body": "A principal-agent problem arises whenever one party acts on behalf of another whose interests differ and whose actions cannot be fully observed. Shareholders want long-run firm value; a manager wants a career, and only she knows how hard she is really working. Paying her in stock is the standard fix, and it genuinely does tie her outcome to theirs. But it also rewards raising the share price by any route at all: taking risks the shareholders bear, timing disclosures, cutting research that only pays off after she leaves.",
-    "prompt": "What is a principal-agent problem, and why does paying a manager in stock only partly solve it?",
-    "answer": "It is the conflict that arises when one party acts on another's behalf with different interests and unobservable actions. Equity pay aligns outcomes but rewards any route to a higher share price — excessive risk-taking, disclosure timing, or cutting long-horizon investment — not genuine value creation specifically.",
+    "body": "A principal-agent problem arises whenever one party acts on behalf of another whose interests differ and whose actions cannot be fully observed. Shareholders want long-run firm value. A manager wants a career, and only she knows how hard she is really working. Paying her in stock is the standard fix and genuinely does tie her outcome to theirs. It also rewards raising the share price by any route at all.",
+    "prompt": "Shareholders cannot see how hard a manager works, so they pay her in stock. What does that fix, and what does it leave broken?",
+    "answer": "It fixes the alignment of outcomes, since her wealth now moves with theirs. It leaves the underlying principal-agent problem intact, because it rewards any route to a higher share price, including excessive risk-taking, disclosure timing, or cutting long-horizon investment, rather than genuine value creation.",
     "difficulty": 2,
     "sources": [
       "https://en.wikipedia.org/wiki/Principal%E2%80%93agent_problem",
@@ -699,12 +702,13 @@
     "domain": "finance",
     "topic": "market efficiency",
     "title": "Two Nobel laureates who disagree about prices",
-    "body": "The efficient market hypothesis holds that asset prices already reflect available information, so public information cannot be used to beat the market reliably. Eugene Fama argued the evidence supports it, pointing out that most active managers underperform simple indexes. Robert Shiller argued that prices swing far more than any news about future dividends can justify, and pointed to bubbles. They shared the Nobel in the same year, 2013, which tells you how unsettled it is. Markets are hard to beat, which is not the same as always right.",
+    "body": "The efficient market hypothesis holds that asset prices already reflect available information, so public information cannot be used to beat the market reliably. Eugene Fama argued the evidence supports it, pointing out that most active managers underperform simple indexes. Robert Shiller argued that prices swing far more than any news about future dividends can justify. They shared the Nobel in the same year, 2013, which tells you how unsettled it is.",
     "prompt": "What does the efficient market hypothesis claim, and why is it considered unsettled?",
-    "answer": "It claims prices already incorporate available information, so public information cannot reliably be used to beat the market. It is unsettled because both Fama's evidence that active managers underperform indexes and Shiller's evidence of excess volatility and bubbles have real support — they shared the 2013 Nobel.",
+    "answer": "It claims prices already incorporate available information, so public information cannot reliably be used to beat the market. It is unsettled because Fama's evidence that active managers underperform indexes and Shiller's evidence of excess volatility both have real support. They shared the 2013 Nobel.",
     "difficulty": 2,
     "sources": [
-      "https://en.wikipedia.org/wiki/Efficient-market_hypothesis"
+      "https://en.wikipedia.org/wiki/Efficient-market_hypothesis",
+      "https://www.nobelprize.org/prizes/economic-sciences/2013/summary/"
     ],
     "tags": [
       "market-efficiency",
@@ -717,10 +721,10 @@
     "type": "concept",
     "domain": "finance",
     "topic": "opportunity cost",
-    "title": "The cost that never shows on a receipt",
-    "body": "Every choice made under scarcity forecloses alternatives, and its true cost is the best of those forgone options, not the money spent. Spending a Saturday building a deck yourself has a price even if you buy no labour: the most valuable thing you gave up that day. A firm holding cash in a vault forgoes the interest it could have earned. Because this cost leaves no invoice, decisions that look free often are not. Sound reasoning compares each option against what you must give up to take it.",
-    "prompt": "What is opportunity cost, and why can a choice be costly even when no money changes hands?",
-    "answer": "Opportunity cost is the value of the best alternative you give up when you make a choice under scarcity, and it need not be monetary. Doing a task yourself instead of your highest-value use of that time carries a real cost even though no invoice is issued.",
+    "title": "Costs that never show on a receipt",
+    "body": "Every choice made under scarcity forecloses alternatives, and its true cost is the best of those forgone options, not the money spent. Spending a Saturday building a deck yourself has a price even if you buy no labour: the most valuable thing you gave up that day. A firm holding cash in a vault forgoes the interest it could have earned. Because this cost leaves no invoice, decisions that look free often are not.",
+    "prompt": "You spend a free Saturday building a deck yourself and pay nobody. In what sense was it still expensive?",
+    "answer": "You paid the opportunity cost: the value of the best alternative use of that day, which need not be monetary. Every choice under scarcity forecloses others, so a decision can be costly even when no invoice is issued and no money changes hands.",
     "difficulty": 1,
     "sources": [
       "https://en.wikipedia.org/wiki/Opportunity_cost"
@@ -736,10 +740,10 @@
     "domain": "finance",
     "topic": "network effects",
     "title": "Why the value grows with the crowd",
-    "body": "For some products, each new user makes the product more valuable to everyone else. A phone network, a marketplace, or a messaging app is nearly useless with one user and compelling with millions. This positive feedback can tip a market: once a product pulls ahead, its growing value attracts still more users, and rivals struggle even if technically better. The same force locks users in, since leaving means abandoning the network. Where value scales with adoption, market share can become self-reinforcing rather than a verdict on quality.",
-    "prompt": "What is a network effect, and why can it lead to one product dominating a market?",
+    "body": "For some products, each new user makes the product more valuable to everyone else. A phone network or a marketplace is nearly useless with one user and compelling with millions. This positive feedback can tip a market. Once a product pulls ahead, its growing value attracts still more users, and rivals struggle even if technically better.",
+    "prompt": "Why can a technically inferior product end up dominating a market and staying there?",
     "answer": "A network effect means a product becomes more valuable to each user as more people use it, as with phone networks or marketplaces. This positive feedback can tip a market toward a single dominant product and lock users in, so market share need not reflect superior quality.",
-    "difficulty": 2,
+    "difficulty": 1,
     "sources": [
       "https://en.wikipedia.org/wiki/Network_effect"
     ],
@@ -754,7 +758,7 @@
     "domain": "finance",
     "topic": "price elasticity",
     "title": "When raising the price lowers the takings",
-    "body": "Price elasticity of demand measures how much quantity sold responds to a price change: the percent change in units per one percent change in price. If demand is inelastic, buyers barely cut back when prices rise, so raising the price increases total revenue. If demand is elastic, buyers flee, and a price rise lowers revenue while a cut raises it. This is why a seller's revenue-maximizing move depends entirely on which regime it is in. Whether a price change helps or hurts turns on the responsiveness of demand.",
+    "body": "Price elasticity of demand measures how much quantity sold responds to a price change: the percent change in units per one percent change in price. If demand is inelastic, buyers barely cut back when prices rise, so a higher price increases total revenue. If demand is elastic, buyers flee, and a price rise lowers revenue while a cut raises it. A seller's revenue-maximising move depends entirely on which regime it is in.",
     "prompt": "How does the price elasticity of demand determine whether raising a price increases or decreases total revenue?",
     "answer": "Elasticity is the percent change in quantity demanded per one percent change in price. When demand is inelastic, quantity barely falls, so a higher price raises revenue; when demand is elastic, quantity falls sharply, so a higher price lowers revenue.",
     "difficulty": 2,
@@ -772,8 +776,8 @@
     "domain": "finance",
     "topic": "externalities",
     "title": "The cost the price leaves out",
-    "body": "An externality is a cost or benefit landing on someone who was not party to a transaction. A factory that pollutes imposes cleanup and health costs on neighbours, but those costs never enter its price, so it produces more than is socially efficient. A vaccine, by contrast, protects others too, and its private buyer ignores that benefit, so the market underprovides it. Prices coordinate well only when they capture all the costs and benefits. When they do not, the market's quantity is wrong in a predictable direction.",
-    "prompt": "What is an externality, and why does its presence make a free market produce the wrong quantity?",
+    "body": "An externality is a cost or benefit landing on someone who was not party to a transaction. A factory that pollutes imposes cleanup and health costs on neighbours, but those costs never enter its price, so it produces more than is socially efficient. A vaccine protects others too, and its private buyer ignores that benefit, so the market underprovides it. Prices coordinate well only when they capture all the costs and benefits.",
+    "prompt": "Why does a polluting factory produce too much, and a vaccine too little, without anyone behaving irrationally?",
     "answer": "An externality is a cost or benefit falling on a third party outside the transaction, so the market price omits it. Markets overproduce goods with negative externalities like pollution and underproduce those with positive externalities like vaccination, because buyers and sellers ignore the effects on others.",
     "difficulty": 2,
     "sources": [
@@ -790,10 +794,10 @@
     "domain": "finance",
     "topic": "public goods",
     "title": "Why markets underfund the lighthouse",
-    "body": "A public good is both non-excludable, meaning you cannot easily stop non-payers from using it, and non-rivalrous, meaning one person's use does not diminish another's. National defence and a lighthouse fit: everyone benefits whether or not they paid. That invites free-riding, since each person hopes others foot the bill, so voluntary contributions fall short and the market underprovides the good. This is a standard reason such goods are funded collectively through taxation. When you cannot charge users and use is shared, private incentives to supply collapse.",
+    "body": "A public good is both non-excludable, meaning you cannot easily stop non-payers from using it, and non-rivalrous, meaning one person's use does not diminish another's. National defence and a lighthouse fit: everyone benefits whether or not they paid. That invites free-riding, since each person hopes others foot the bill, so voluntary contributions fall short and the market underprovides the good.",
     "prompt": "Why do private markets tend to underprovide public goods like national defence?",
     "answer": "A public good is non-excludable and non-rivalrous, so people can benefit without paying and one person's use does not reduce another's. That lets everyone free-ride in hope others will pay, so voluntary provision falls short, which is why such goods are typically funded through taxation.",
-    "difficulty": 2,
+    "difficulty": 1,
     "sources": [
       "https://en.wikipedia.org/wiki/Public_good_(economics)"
     ],
@@ -808,12 +812,13 @@
     "domain": "finance",
     "topic": "marginal tax rates",
     "title": "A raise into a higher bracket still pays",
-    "body": "A common fear is that earning more can push you into a higher tax bracket and leave you with less money. Under a progressive system with marginal rates, that cannot happen from the brackets alone. A bracket's rate applies only to income falling within that bracket, not to your whole income. Cross into the 22% band and only the dollars above the threshold are taxed at 22%; everything below keeps its lower rates. Your effective rate, total tax over total income, always stays below your top marginal rate.",
+    "body": "A common fear is that earning more can push you into a higher tax bracket and leave you with less money. Under a progressive system with marginal rates, that cannot happen from the brackets alone. A bracket's rate applies only to income falling within that bracket, not to your whole income. Cross into the 22% band and only the dollars above the threshold are taxed at 22%. Everything below keeps its lower rates.",
     "prompt": "Why can't moving into a higher tax bracket ever leave you with less take-home pay, in a progressive system?",
     "answer": "A bracket's rate applies only to the income that falls inside that bracket, not to your entire income, so income below the threshold keeps its lower rates. Extra earnings are therefore never fully clawed back, and your effective rate always stays below your top marginal rate.",
     "difficulty": 1,
     "sources": [
-      "https://en.wikipedia.org/wiki/Tax_rate"
+      "https://en.wikipedia.org/wiki/Tax_rate",
+      "https://www.gov.uk/income-tax-rates"
     ],
     "tags": [
       "taxation",
@@ -826,10 +831,10 @@
     "domain": "finance",
     "topic": "tax incidence",
     "title": "Who really pays a tax",
-    "body": "Whether a tax is legally collected from the buyer or the seller barely matters to who ultimately bears it. What decides the burden is the relative elasticity of supply and demand. The more inelastic side, the one less able to walk away, absorbs more of the tax. Tax cigarettes, whose buyers are addicted and unresponsive to price, and consumers pay most of it regardless of who writes the cheque. Economic burden follows whoever can least afford to change behaviour, not whoever remits the payment.",
+    "body": "Whether a tax is legally collected from the buyer or the seller barely matters to who ultimately bears it. What decides the burden is the relative elasticity of supply and demand. The more inelastic side, the one less able to walk away, absorbs more of the tax. Tax cigarettes, whose buyers are addicted and unresponsive to price, and consumers pay most of it regardless of who writes the cheque.",
     "prompt": "Does it matter whether a tax is legally charged to buyers or to sellers, and what actually decides who bears it?",
     "answer": "The legal side that remits the tax barely affects the real burden; what matters is the relative elasticity of supply and demand. The more inelastic side, less able to change its behaviour, bears more of the tax regardless of who writes the cheque.",
-    "difficulty": 2,
+    "difficulty": 3,
     "sources": [
       "https://en.wikipedia.org/wiki/Tax_incidence"
     ],
@@ -843,11 +848,11 @@
     "type": "concept",
     "domain": "finance",
     "topic": "deadweight loss",
-    "title": "The trades a tax quietly kills",
-    "body": "Beyond the revenue it raises, a tax destroys value by preventing trades that would have benefited both parties. If a job is worth $100 to a buyer and costs a seller $70, they should trade, but a $50 tax wedges apart what the buyer pays and what the seller keeps, and the deal collapses. Nobody captures that lost surplus; it vanishes. This deadweight loss is the wedge's efficiency cost, and price controls and monopolies cause it too. Any wedge between price paid and received leaves value on the table.",
+    "title": "Trades a tax quietly kills",
+    "body": "Beyond the revenue it raises, a tax destroys value by preventing trades that would have benefited both parties. If a job is worth $100 to a buyer and costs a seller $70, they should trade, but a $50 tax wedges apart what the buyer pays and what the seller keeps, and the deal collapses. Nobody captures that lost surplus. It vanishes.",
     "prompt": "What is the deadweight loss of a tax, and why is it a cost beyond the revenue collected?",
-    "answer": "Deadweight loss is the value of mutually beneficial trades that no longer happen because the tax drives a wedge between the price the buyer pays and the price the seller receives. That surplus is captured by no one and simply vanishes, and price controls and monopolies create the same loss.",
-    "difficulty": 2,
+    "answer": "Deadweight loss is the value of mutually beneficial trades that no longer happen because the tax drives a wedge between the price the buyer pays and the price the seller receives. That surplus is captured by no one and simply vanishes. Price controls and monopolies create the same loss.",
+    "difficulty": 3,
     "sources": [
       "https://en.wikipedia.org/wiki/Deadweight_loss"
     ],
@@ -862,9 +867,9 @@
     "domain": "finance",
     "topic": "liquidity",
     "title": "Why the same asset can fetch less in a hurry",
-    "body": "Liquidity is how easily you can convert an asset to cash quickly without moving its price. A blue-chip stock is liquid: sell instantly at the quoted price. A house or a thinly traded bond is illiquid, so to sell fast you must accept a discount. Because investors dislike being stuck, they demand extra expected return to hold illiquid assets, a liquidity premium. Two assets with identical cash flows can trade at different prices purely because one is easier to exit. Liquidity itself carries a price.",
-    "prompt": "What is liquidity, and why can two assets with identical cash flows trade at different prices?",
-    "answer": "Liquidity is how quickly an asset can be sold for cash without moving its price. Illiquid assets can only be sold fast at a discount, so investors demand a liquidity premium to hold them, meaning otherwise-identical assets can differ in price purely by how easily they can be exited.",
+    "body": "Liquidity is how easily you can convert an asset to cash quickly without moving its price. A blue-chip stock is liquid, since you can sell instantly at the quoted price. A house or a thinly traded bond is illiquid, so to sell fast you must accept a discount. Because investors dislike being stuck, they demand extra expected return to hold illiquid assets.",
+    "prompt": "Two assets promise identical cash flows, yet one trades at a lower price. What can explain the gap?",
+    "answer": "One is harder to get out of. Liquidity is how quickly an asset can be sold for cash without moving its price, and illiquid assets can only be sold fast at a discount. Investors therefore demand a liquidity premium to hold them, which shows up as a lower price for otherwise identical cash flows.",
     "difficulty": 2,
     "sources": [
       "https://en.wikipedia.org/wiki/Market_liquidity"
@@ -880,12 +885,13 @@
     "domain": "finance",
     "topic": "purchasing power parity",
     "title": "What a Big Mac says about exchange rates",
-    "body": "Purchasing power parity starts from the law of one price: absent trade barriers, the same good should cost the same everywhere once you convert currencies. If a basket of goods is much cheaper in one country, its currency looks undervalued, and PPP says exchange rates should drift to close the gap. The Economist's Big Mac Index makes this playful by using one good, a burger, to compare currencies. Real rates deviate for many reasons, so PPP is a long-run tendency, not a precise prediction.",
+    "body": "Purchasing power parity starts from the law of one price: absent trade barriers, the same good should cost the same everywhere once you convert currencies. If a basket of goods is much cheaper in one country, its currency looks undervalued, and PPP says exchange rates should drift to close the gap. The Economist's Big Mac Index makes this playful by using one good, a burger, to compare currencies. Real rates deviate for many reasons.",
     "prompt": "What does purchasing power parity claim about exchange rates, and how does the Big Mac Index illustrate it?",
     "answer": "Purchasing power parity says exchange rates should move so that a basket of goods costs the same across countries, following the law of one price. The Big Mac Index applies this to a single good, using burger prices to flag currencies that look over- or under-valued, though it holds only as a long-run tendency.",
     "difficulty": 2,
     "sources": [
-      "https://en.wikipedia.org/wiki/Purchasing_power_parity"
+      "https://en.wikipedia.org/wiki/Purchasing_power_parity",
+      "https://en.wikipedia.org/wiki/Big_Mac_Index"
     ],
     "tags": [
       "macroeconomics",
@@ -898,8 +904,8 @@
     "domain": "finance",
     "topic": "money illusion",
     "title": "Mistaking the number for the value",
-    "body": "Money illusion is the tendency to think in nominal dollars rather than real, inflation-adjusted ones. A worker given a 2% raise when prices rose 4% feels richer but can actually buy less. People often prefer a small nominal raise in high inflation to a nominal pay cut in zero inflation, even when the second leaves them better off in real terms. The face value of money is not its purchasing power. Judging wealth by the number on the cheque, rather than what it buys, systematically misleads.",
-    "prompt": "What is money illusion, and how can it make someone feel richer while actually being worse off?",
+    "body": "Money illusion is the tendency to think in nominal dollars rather than real, inflation-adjusted ones. A worker given a 2% raise when prices rose 4% feels richer but can actually buy less. People often prefer a small nominal raise in high inflation to a nominal pay cut in zero inflation, even when the second leaves them better off in real terms.",
+    "prompt": "A colleague celebrates a 2% raise in a year when prices rose 4%. What has she got wrong?",
     "answer": "Money illusion is the tendency to reason in nominal rather than real, inflation-adjusted terms. A 2% raise when prices rise 4% looks like a gain but reduces real purchasing power, because people mistake the face value of money for what it can actually buy.",
     "difficulty": 1,
     "sources": [
@@ -916,7 +922,7 @@
     "domain": "finance",
     "topic": "risk-adjusted return",
     "title": "Return means little without its risk",
-    "body": "A fund that returned 20% is not obviously better than one that returned 12%; you have to ask how much risk each took to get there. The Sharpe ratio makes this comparison by taking an investment's return above the risk-free rate and dividing by the volatility of its returns. A high ratio means more reward per unit of risk borne. Two portfolios with the same return can score very differently if one swung wildly to earn it. Raw return is only half a number until you divide by the risk.",
+    "body": "A fund that returned 20% is not obviously better than one that returned 12%. You have to ask how much risk each took to get there. The Sharpe ratio makes the comparison by taking an investment's return above the risk-free rate and dividing by the volatility of its returns. Two portfolios with the same return can score very differently.",
     "prompt": "Why is a raw return figure incomplete, and what does the Sharpe ratio add?",
     "answer": "A return says nothing about the risk taken to earn it, so a high return from wild swings may be worse than a steadier lower one. The Sharpe ratio divides return above the risk-free rate by the volatility of returns, measuring reward earned per unit of risk.",
     "difficulty": 2,
@@ -934,10 +940,10 @@
     "domain": "finance",
     "topic": "hyperinflation",
     "title": "When money burns faster than a pocket",
-    "body": "Hyperinflation is inflation so rapid that prices can double in days. Historically it traces to one cause above all: a government financing its deficits by creating money on a vast scale. As the currency loses value by the hour, people refuse to hold it and spend the moment they are paid, which speeds money through the economy and drives prices up further. The spiral feeds itself. It ends only when the money creation stops, usually via a new currency or a hard fiscal anchor.",
+    "body": "Hyperinflation is inflation so rapid that prices can double in days. Historically it traces to one cause above all: a government financing its deficits by creating money on a vast scale. As the currency loses value by the hour, people refuse to hold it and spend the moment they are paid, which speeds money through the economy and drives prices up further. The spiral feeds itself.",
     "prompt": "What typically causes hyperinflation, and why does it tend to accelerate once it starts?",
     "answer": "Hyperinflation almost always stems from a government financing deficits by creating money on a large scale. As the currency loses value people spend it immediately rather than hold it, speeding money through the economy and pushing prices up further, a self-feeding spiral that ends only when the money creation stops.",
-    "difficulty": 2,
+    "difficulty": 3,
     "sources": [
       "https://en.wikipedia.org/wiki/Hyperinflation"
     ],
@@ -952,12 +958,13 @@
     "domain": "finance",
     "topic": "credit ratings",
     "title": "The grade that sets the interest rate",
-    "body": "A credit rating is an estimate of how likely a borrower is to repay, on a scale from top-grade down to speculative junk. It forecasts default risk rather than guaranteeing anything. Because lenders demand compensation for risk, a lower rating forces a borrower to pay a higher interest rate; the extra yield over a safe benchmark is the credit spread. A downgrade can raise a company's borrowing costs overnight. Perceived default risk is priced directly into the rate a borrower must offer.",
+    "body": "A credit rating is an estimate of how likely a borrower is to repay, on a scale from top grade down to speculative junk. It forecasts default risk rather than guaranteeing anything. Because lenders demand compensation for risk, a lower rating forces a borrower to pay a higher interest rate, and the extra yield over a safe benchmark is the credit spread.",
     "prompt": "What does a credit rating represent, and how does it affect what a borrower pays?",
-    "answer": "A credit rating is a forecast of a borrower's likelihood of repaying rather than defaulting, from top grade down to speculative junk. Lower-rated borrowers must pay higher interest to compensate lenders for the added risk, so a downgrade can raise borrowing costs, with the gap over a safe benchmark being the credit spread.",
+    "answer": "A credit rating forecasts a borrower's likelihood of repaying rather than defaulting, from top grade down to speculative junk. Lower-rated borrowers must pay higher interest to compensate lenders for the added risk, so a downgrade can raise borrowing costs, with the gap over a safe benchmark being the credit spread.",
     "difficulty": 1,
     "sources": [
-      "https://en.wikipedia.org/wiki/Credit_rating"
+      "https://en.wikipedia.org/wiki/Credit_rating",
+      "https://www.sec.gov/about/divisions-offices/office-credit-ratings"
     ],
     "tags": [
       "debt",
@@ -970,12 +977,13 @@
     "domain": "finance",
     "topic": "tragedy of the commons",
     "title": "The pasture everyone ruins",
-    "body": "A hundred herders share one open pasture that can sustain a fixed number of animals. Each herder reasons that adding one more cow brings them the full profit of that animal, while the cost of slightly overgrazing is spread across all hundred. So every herder adds cows, the pasture is stripped bare, and all of them end up worse off than if the herd had been capped. Each acted rationally in their own interest. Why does individually sensible behaviour lead to collective ruin?",
+    "body": "A hundred herders share one open pasture that can sustain a fixed number of animals. Each herder reasons that adding one more cow brings them the full profit of that animal, while the cost of slightly overgrazing is spread across all hundred. So every herder adds cows, the pasture is stripped bare, and all of them end up worse off than if the herd had been capped. Each acted rationally in their own interest.",
     "prompt": "Why do herders sharing an open pasture overgraze it into ruin even though each is acting rationally?",
     "answer": "Each herder captures the full benefit of an added animal but shares the cost of overgrazing with everyone, so the private calculation always favours adding more. Because all face the same incentive the shared resource is depleted; the fix requires limiting access or making each bear the true social cost.",
-    "difficulty": 2,
+    "difficulty": 1,
     "sources": [
-      "https://en.wikipedia.org/wiki/Tragedy_of_the_commons"
+      "https://en.wikipedia.org/wiki/Tragedy_of_the_commons",
+      "https://www.nobelprize.org/prizes/economic-sciences/2009/summary/"
     ],
     "tags": [
       "game-theory",
@@ -988,12 +996,12 @@
     "domain": "finance",
     "topic": "prisoner's dilemma",
     "title": "Two confessions nobody wanted",
-    "body": "Two suspects are held separately and each offered a deal. Stay silent and, if the other also stays silent, both get a light sentence. But betray the other and you go free while they take the heavy fall, unless they betray too, in which case you both get a moderately harsh term. Whatever the other does, betraying leaves you individually better off. Both reason this way, both betray, and both end up worse than if they had trusted each other. What makes cooperation unravel?",
+    "body": "Two suspects are held separately and each offered a deal. Stay silent and, if the other also stays silent, both get a light sentence. Betray the other and you go free while they take the heavy fall, unless they betray too, in which case you both get a moderately harsh term. Whatever the other does, betraying leaves you individually better off.",
     "prompt": "In the prisoner's dilemma, why do two rational suspects both betray each other and end up worse than if both stayed silent?",
     "answer": "Whatever the other does, betraying yields a better individual payoff, so defection is each player's dominant strategy. Both defect and reach the only stable outcome, which is worse for both than mutual cooperation; individual rationality and collective benefit pull apart.",
-    "difficulty": 2,
+    "difficulty": 1,
     "sources": [
-      "https://en.wikipedia.org/wiki/Prisoner%27s_dilemma"
+      "https://plato.stanford.edu/entries/prisoner-dilemma/"
     ],
     "tags": [
       "game-theory",
@@ -1006,7 +1014,7 @@
     "domain": "finance",
     "topic": "dollar auction",
     "title": "The auction you win by losing less",
-    "body": "A dollar is auctioned to the highest bidder, but with a twist: the second-highest bidder also pays their final bid and gets nothing. Bidding starts cheap, since who would not offer five cents for a dollar? But as bids near a dollar, the runner-up faces losing their bid outright, so bidding a little more to win looks better than dropping out. Two rational players can end up paying well over a dollar each for a single dollar. What drives the escalation past all reason?",
+    "body": "A dollar is auctioned to the highest bidder, with a twist: the second-highest bidder also pays their final bid and gets nothing. Bidding starts cheap, since who would not offer five cents for a dollar? As bids near a dollar, the runner-up faces losing their bid outright, so bidding a little more to win looks better than dropping out. Two rational players can end up paying well over a dollar each.",
     "prompt": "In the dollar auction, why do rational bidders end up paying more than a dollar for a dollar?",
     "answer": "Because the second-highest bidder also forfeits their bid, each player near a dollar faces a certain loss from quitting versus a slightly larger bid that might still win. Raising to avoid the loss always looks better locally, so the two escalate past a dollar, each throwing good money after bad.",
     "difficulty": 2,
@@ -1024,10 +1032,10 @@
     "domain": "finance",
     "topic": "paradox of value",
     "title": "Why water is cheap and diamonds are dear",
-    "body": "Water keeps you alive; diamonds are ornaments you could live without. Yet water costs almost nothing and diamonds cost a fortune. If price tracked usefulness, this ordering would be backwards. Classical economists were stuck on it for a long time, because they kept looking at the total usefulness of each good. The resolution comes from asking a different question, not how useful water is in total, but how much you would pay for one more glass when it is all around you. What concept flips the paradox?",
+    "body": "Water keeps you alive. Diamonds are ornaments you could live without. Yet water costs almost nothing and diamonds cost a fortune. If price tracked usefulness, this ordering would be backwards. Classical economists were stuck on it for a long time, because they kept looking at the total usefulness of each good. The resolution comes from asking a different question: not how useful water is in total, but what you would pay for one more glass.",
     "prompt": "Why does water, essential for life, cost far less than diamonds, which are inessential?",
     "answer": "Price reflects marginal utility, the value of one more unit, not total usefulness. Water is so abundant that an extra unit is worth almost nothing, while diamonds are scarce so an extra one is highly valued, which reverses the ordering that total usefulness alone would suggest.",
-    "difficulty": 2,
+    "difficulty": 1,
     "sources": [
       "https://en.wikipedia.org/wiki/Paradox_of_value"
     ],
@@ -1042,12 +1050,13 @@
     "domain": "finance",
     "topic": "allais paradox",
     "title": "The certainty people won't give up",
-    "body": "Choose between A, a guaranteed $1 million, and B, a 10% shot at $5 million, an 89% shot at $1 million, and a 1% shot at nothing. Most people take the sure million. Now choose between C, an 11% chance of $1 million, and D, a 10% chance of $5 million. Most people take D. Yet these two choices, examined together, are inconsistent under any steady valuation of money. Where does the reasoning quietly contradict itself?",
+    "body": "Choose between A, a guaranteed $1 million, and B, a 10% shot at $5 million, an 89% shot at $1 million, and a 1% shot at nothing. Most people take the sure million. Now choose between C, an 11% chance of $1 million, and D, a 10% chance of $5 million. Most people take D. Examined together, these two choices are inconsistent under any steady valuation of money.",
     "prompt": "Why is preferring a sure $1 million in one gamble but the riskier option in a parallel gamble inconsistent?",
     "answer": "The two choice pairs differ only by an identical 89% chance of $1 million added to both options, which should cancel out and not flip the preference. Preferring certainty in the first but the higher prize in the second violates the independence axiom of expected utility; people overweight certainty itself.",
     "difficulty": 3,
     "sources": [
-      "https://en.wikipedia.org/wiki/Allais_paradox"
+      "https://en.wikipedia.org/wiki/Allais_paradox",
+      "https://plato.stanford.edu/entries/decision-theory/"
     ],
     "tags": [
       "behavioral-economics",
@@ -1059,8 +1068,8 @@
     "type": "puzzle",
     "domain": "finance",
     "topic": "ellsberg paradox",
-    "title": "The bet people avoid because the odds are hidden",
-    "body": "An urn holds 90 balls: exactly 30 are red, and the other 60 are an unknown mix of black and yellow. You can bet on red, a known one-in-three chance, or on black, whose chance is unknown but could reach two-thirds. Most people bet on red. Offered instead a bet on red-or-yellow versus black-or-yellow, most switch to the black side. Those two preferences cannot both follow from any single guess about the black count. What are people avoiding?",
+    "title": "A bet avoided because the odds are hidden",
+    "body": "An urn holds 90 balls. Exactly 30 are red, and the other 60 are an unknown mix of black and yellow. You can bet on red, a known one-in-three chance, or on black, whose chance is unknown but could reach two-thirds. Most people bet on red. Offered instead a bet on red-or-yellow versus black-or-yellow, most switch to the black side.",
     "prompt": "In the Ellsberg urn, why is preferring the known-odds bet in one framing but the unknown-odds bet in another inconsistent?",
     "answer": "Preferring red over black implies you treat black as scarce, yet preferring black-or-yellow over red-or-yellow implies you treat black as plentiful, and no single belief about the black count supports both. People are exhibiting ambiguity aversion, favouring known probabilities over unknown ones even at a cost.",
     "difficulty": 3,

@@ -62,6 +62,7 @@ import ProgressScreen from "../app/stats";
 import SettingsScreen from "../app/settings";
 import OnboardingScreen from "../app/onboarding";
 import CardDetailScreen from "../app/card/[id]";
+import { getCard } from "../src/corpus";
 
 const metrics = {
   frame: { x: 0, y: 0, width: 390, height: 844 },
@@ -277,7 +278,10 @@ describe("Onboarding screen", () => {
 describe("Card detail screen", () => {
   it("shows the concept, its schedule and related concepts", () => {
     const { getByText } = mount(<CardDetailScreen />);
-    getByText("Why appending to a dynamic array is O(1)");
+    // Read the expected title from the corpus rather than hardcoding the prose:
+    // card text is revised freely (only ids are stable), so a literal here fails
+    // the suite for an edit that broke nothing.
+    getByText(getCard("cs-0001")!.title);
     getByText("Test yourself");
     getByText("Your schedule");
     getByText("Not started");
