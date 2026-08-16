@@ -132,11 +132,54 @@ describe("searchCards", () => {
 
   it("combines text, domain and saved filters", () => {
     const out = searchCards(deps(cards, [], ["fin-0001", "math-0001"]), {
+      ...EMPTY_QUERY,
       text: "interest",
       domains: ["math"],
-      status: "all",
       savedOnly: true,
     });
     expect(out.map((c) => c.id)).toEqual(["math-0001"]);
+  });
+
+  it("returns every level when the filter is empty", () => {
+    const cards = [
+      mkCard({ id: "cs-0001", difficulty: 1 }),
+      mkCard({ id: "cs-0002", difficulty: 2 }),
+      mkCard({ id: "cs-0003", difficulty: 3 }),
+    ];
+    expect(searchCards(deps(cards), EMPTY_QUERY)).toHaveLength(3);
+  });
+
+  it("narrows to one level", () => {
+    const cards = [
+      mkCard({ id: "cs-0001", difficulty: 1 }),
+      mkCard({ id: "cs-0002", difficulty: 2 }),
+      mkCard({ id: "cs-0003", difficulty: 3 }),
+    ];
+    const out = searchCards(deps(cards), { ...EMPTY_QUERY, levels: [3] });
+    expect(out.map((c) => c.id)).toEqual(["cs-0003"]);
+  });
+
+  it("unions two levels", () => {
+    const cards = [
+      mkCard({ id: "cs-0001", difficulty: 1 }),
+      mkCard({ id: "cs-0002", difficulty: 2 }),
+      mkCard({ id: "cs-0003", difficulty: 3 }),
+    ];
+    const out = searchCards(deps(cards), { ...EMPTY_QUERY, levels: [1, 3] });
+    expect(out.map((c) => c.id)).toEqual(["cs-0001", "cs-0003"]);
+  });
+
+  it("intersects a level with a subject rather than unioning them", () => {
+    const cards = [
+      mkCard({ id: "cs-0001", domain: "cs", difficulty: 3 }),
+      mkCard({ id: "fin-0001", domain: "finance", difficulty: 3 }),
+      mkCard({ id: "fin-0002", domain: "finance", difficulty: 1 }),
+    ];
+    const out = searchCards(deps(cards), {
+      ...EMPTY_QUERY,
+      domains: ["finance" as Domain],
+      levels: [3],
+    });
+    expect(out.map((c) => c.id)).toEqual(["fin-0001"]);
   });
 });

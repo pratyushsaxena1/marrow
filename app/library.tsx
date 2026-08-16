@@ -54,7 +54,7 @@ export default function LibraryScreen() {
   );
 
   const now = Date.now();
-  const query: Query = { text, domains, status, savedOnly };
+  const query: Query = { text, domains, levels: [], status, savedOnly };
   const results = useMemo(
     () =>
       searchCards(

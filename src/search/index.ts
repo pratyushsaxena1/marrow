@@ -1,10 +1,11 @@
-import type { Card, CardState, CardStatus, Domain } from "../types";
+import type { Card, CardState, CardStatus, Domain, Level } from "../types";
 
 export type StatusFilter = "all" | "new" | "learning" | "mastered" | "due";
 
 export type Query = {
   text: string;
   domains: Domain[]; // empty = every domain
+  levels: Level[];   // empty = every level
   status: StatusFilter;
   savedOnly: boolean;
 };
@@ -16,7 +17,7 @@ export type SearchDeps = {
   now: number;
 };
 
-export const EMPTY_QUERY: Query = { text: "", domains: [], status: "all", savedOnly: false };
+export const EMPTY_QUERY: Query = { text: "", domains: [], levels: [], status: "all", savedOnly: false };
 
 /** A card with no state has never been seen. Two clean reps promote it to review, and
  *  that is what the rest of the app calls "mastered". */
@@ -83,6 +84,7 @@ export function searchCards(deps: SearchDeps, q: Query): Card[] {
 
   deps.cards.forEach((card, i) => {
     if (q.domains.length > 0 && !q.domains.includes(card.domain)) return;
+    if (q.levels.length > 0 && !q.levels.includes(card.difficulty)) return;
     if (q.savedOnly && !deps.saved.has(card.id)) return;
     if (!passesStatus(q.status, deps.stateOf(card.id), deps.now)) return;
     const score = ts.length === 0 ? 0 : scoreCard(card, ts);
