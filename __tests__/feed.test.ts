@@ -1,13 +1,18 @@
 import { createSession, nextChunk } from "../src/feed";
-import type { Card, CardState, Domain, FeedItem } from "../src/types";
+import type { Card, CardState, Domain, FeedItem, Level } from "../src/types";
 import { DOMAINS, REVIEW_CAP_PER_SESSION } from "../src/constants";
 
 const NOW = 1_700_000_000_000;
 const mid = () => 0.5;
 
-const mkCard = (id: string, domain: Domain, type: "concept" | "puzzle" = "concept"): Card => ({
+const mkCard = (
+  id: string,
+  domain: Domain,
+  type: "concept" | "puzzle" = "concept",
+  difficulty: Level = 1,
+): Card => ({
   id, type, domain, topic: "t", title: "T", body: "b", prompt: "p", answer: "a",
-  difficulty: 1, sources: ["https://example.com"], tags: [],
+  difficulty, sources: ["https://example.com"], tags: [],
 });
 
 const mkState = (cardId: string, dueAt: number): CardState => ({
@@ -171,5 +176,55 @@ describe("nextChunk", () => {
     const items: FeedItem[] = nextChunk(deps, createSession(mid), 5);
     expect(items.some((i) => i.kind === "review")).toBe(false);
     expect(items[items.length - 1].kind).toBe("caught-up");
+  });
+
+  it("draws new cards only from the selected levels", () => {
+    const cards = [
+      mkCard("cs-0", "cs", "concept", 1),
+      mkCard("cs-1", "cs", "concept", 2),
+      mkCard("cs-2", "cs", "concept", 3),
+    ];
+    const deps = {
+      corpus: fakeCorpus(cards), store: fakeStore([]), now: NOW, rng: mid,
+      domains: ["cs" as Domain], levels: [3 as Level],
+    };
+    const items = nextChunk(deps, createSession(mid), 10);
+    const served = items.flatMap((i) => (i.kind === "caught-up" ? [] : [i.card.id]));
+    expect(served).toEqual(["cs-2"]);
+  });
+
+  it("skips a due review that sits outside the selected levels", () => {
+    const cards = [mkCard("cs-0", "cs", "concept", 1), mkCard("cs-1", "cs", "concept", 3)];
+    const due = [mkState("cs-0", NOW - 1000)];
+    const deps = {
+      corpus: fakeCorpus(cards), store: fakeStore(due, new Set(["cs-0"])),
+      now: NOW, rng: mid, domains: ["cs" as Domain], levels: [3 as Level],
+    };
+    const items = nextChunk(deps, createSession(mid), 10);
+    expect(items.some((i) => i.kind === "review")).toBe(false);
+  });
+
+  it("reports caught-up when no card sits at the selected levels", () => {
+    const cards = [mkCard("cs-0", "cs", "concept", 1)];
+    const deps = {
+      corpus: fakeCorpus(cards), store: fakeStore([]), now: NOW, rng: mid,
+      levels: [3 as Level],
+    };
+    const items = nextChunk(deps, createSession(mid), 10);
+    expect(items).toEqual([{ kind: "caught-up" }]);
+  });
+
+  it("serves every level when levels is absent", () => {
+    const cards = [
+      mkCard("cs-0", "cs", "concept", 1),
+      mkCard("cs-1", "cs", "concept", 2),
+      mkCard("cs-2", "cs", "concept", 3),
+    ];
+    const deps = {
+      corpus: fakeCorpus(cards), store: fakeStore([]), now: NOW, rng: mid,
+      domains: ["cs" as Domain],
+    };
+    const items = nextChunk(deps, createSession(mid), 10);
+    expect(items.filter((i) => i.kind !== "caught-up")).toHaveLength(3);
   });
 });

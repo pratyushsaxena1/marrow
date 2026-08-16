@@ -1,7 +1,7 @@
 import {
-  DOMAINS, REVIEW_CAP_PER_SESSION, REVIEW_GAP_MAX, REVIEW_GAP_MIN,
+  DOMAINS, LEVELS, REVIEW_CAP_PER_SESSION, REVIEW_GAP_MAX, REVIEW_GAP_MIN,
 } from "../constants";
-import type { Card, CardState, Domain, FeedItem, Rng, Session } from "../types";
+import type { Card, CardState, Domain, FeedItem, Level, Rng, Session } from "../types";
 
 export type CorpusPort = {
   getUnseen(seen: Set<string>, domain?: Domain): Card[];
@@ -19,12 +19,18 @@ export type FeedDeps = {
   now: number;
   rng: Rng;
   domains?: Domain[]; // undefined or empty array = all domains (no filter)
+  levels?: Level[];   // undefined or empty array = all levels (no filter)
 };
 
 // The domains this session draws from. An absent or empty filter means all domains,
 // so the unfiltered path stays identical to the pre-filter behavior.
 const activeDomains = (deps: FeedDeps): Domain[] =>
   deps.domains && deps.domains.length > 0 ? deps.domains : DOMAINS;
+
+// The levels this session draws from. An absent or empty filter means all levels, so
+// the unfiltered path stays identical to the pre-filter behavior.
+const activeLevels = (deps: FeedDeps): Level[] =>
+  deps.levels && deps.levels.length > 0 ? deps.levels : LEVELS;
 
 const drawGap = (rng: Rng): number =>
   REVIEW_GAP_MIN + Math.floor(rng() * (REVIEW_GAP_MAX - REVIEW_GAP_MIN + 1));
@@ -44,12 +50,13 @@ function takeReview(deps: FeedDeps, s: Session): Card | undefined {
   // Over-fetch so cards already served this session don't hide the rest of the queue.
   const due = deps.store.getDue(deps.now, REVIEW_CAP_PER_SESSION + s.servedIds.size + 1);
   const domains = activeDomains(deps);
+  const levels = activeLevels(deps);
   for (const st of due) {
     if (s.servedIds.has(st.cardId)) continue;
     const card = deps.corpus.getCard(st.cardId);
-    // Skip due cards outside the selected domains. With no filter every domain is
-    // active, so this check is a no-op and existing behavior is preserved.
-    if (card && domains.includes(card.domain)) return card;
+    // Skip due cards outside the selected subjects or levels. With no filter every
+    // subject and level is active, so this check is a no-op.
+    if (card && domains.includes(card.domain) && levels.includes(card.difficulty)) return card;
   }
   return undefined;
 }
@@ -58,9 +65,12 @@ function takeNew(deps: FeedDeps, s: Session): Card | undefined {
   const seen = new Set([...deps.store.getSeenIds(), ...s.servedIds]);
   // Round-robin only within the selected domains (all four when unfiltered).
   const domains = activeDomains(deps);
+  const levels = activeLevels(deps);
   for (let i = 0; i < domains.length; i++) {
     const domain = domains[(s.domainCursor + i) % domains.length];
-    const pool = deps.corpus.getUnseen(seen, domain);
+    const pool = deps.corpus
+      .getUnseen(seen, domain)
+      .filter((c) => levels.includes(c.difficulty));
     if (pool.length === 0) continue;
     s.domainCursor = (s.domainCursor + i + 1) % domains.length;
     return pool[Math.floor(deps.rng() * pool.length)];
