@@ -1,6 +1,10 @@
 export type Domain = "cs" | "finance" | "math" | "science";
 export type CardType = "concept" | "puzzle";
 export type Grade = "got" | "missed";
+/** How far into a subject a reader has to be for a card to land. Named for the
+ *  reader's stage rather than for the card's difficulty, since "advanced" only says
+ *  what a card is relative to the others. */
+export type Level = 1 | 2 | 3;
 
 /** Returns a float in [0, 1). Injected so tests are deterministic. */
 export type Rng = () => number;
@@ -14,7 +18,7 @@ export type Card = {
   body: string;
   prompt: string;
   answer: string;
-  difficulty: 1 | 2 | 3;
+  difficulty: Level;
   sources: string[];
   tags: string[];
 };

@@ -1,4 +1,5 @@
-import { DAY_MS } from "./constants";
+import { DAY_MS, LEVEL_LABELS } from "./constants";
+import type { Level } from "./types";
 
 const HOUR_MS = 3_600_000;
 const MINUTE_MS = 60_000;
@@ -15,9 +16,11 @@ export function nextReviewLabel(dueAt: number, now: number): string {
   return `Due in ${plural(Math.round(ms / DAY_MS), "day")}`;
 }
 
-const DIFFICULTY: Record<number, string> = { 1: "Introductory", 2: "Intermediate", 3: "Advanced" };
-
-export const difficultyLabel = (d: number): string => DIFFICULTY[d] ?? "Intermediate";
+/** The band name shown beside a card's subject. Takes a plain number rather than a
+ *  Level so a value arriving from outside the type system falls back instead of
+ *  rendering "undefined". */
+export const difficultyLabel = (d: number): string =>
+  LEVEL_LABELS[d as Level] ?? LEVEL_LABELS[2];
 
 /** Single-letter weekday for the activity chart's axis. */
 export const weekdayInitial = (ts: number): string =>

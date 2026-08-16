@@ -43,7 +43,7 @@ Enforced by `npm run validate-corpus` (`scripts/validate-corpus.ts`).
 | `body` | **40 to 90 words**, one idea |
 | `prompt` | one question, answerable from the body alone |
 | `answer` | **1 to 3 sentences**, actually answering the prompt |
-| `difficulty` | `1` most educated adults follow it, `2` needs some background, `3` needs real familiarity |
+| `difficulty` | `1` High school, most educated adults follow it; `2` Undergrad, needs some background; `3` Graduate+, needs real familiarity. The band name is what the app shows the reader. |
 | `sources` | `https://` only; concept cards need at least one |
 | `tags` | 1 to 3 lowercase kebab-case tags |
 

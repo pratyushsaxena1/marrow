@@ -29,10 +29,10 @@ describe("nextReviewLabel", () => {
 
 describe("difficultyLabel", () => {
   it("names each level and falls back for an unknown one", () => {
-    expect(difficultyLabel(1)).toBe("Introductory");
-    expect(difficultyLabel(2)).toBe("Intermediate");
-    expect(difficultyLabel(3)).toBe("Advanced");
-    expect(difficultyLabel(9)).toBe("Intermediate");
+    expect(difficultyLabel(1)).toBe("High school");
+    expect(difficultyLabel(2)).toBe("Undergrad");
+    expect(difficultyLabel(3)).toBe("Graduate+");
+    expect(difficultyLabel(9)).toBe("Undergrad");
   });
 });
 
