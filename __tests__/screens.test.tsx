@@ -69,6 +69,10 @@ import { getCard, loadCorpus, countByDomain } from "../src/corpus";
 // spurious test failure.
 const TOTAL = loadCorpus().length;
 const BY_DOMAIN = countByDomain();
+const BY_LEVEL = loadCorpus().reduce<Record<number, number>>(
+  (acc, c) => ({ ...acc, [c.difficulty]: (acc[c.difficulty] ?? 0) + 1 }),
+  {},
+);
 
 const metrics = {
   frame: { x: 0, y: 0, width: 390, height: 844 },
@@ -157,6 +161,22 @@ describe("Library screen", () => {
     // Every row's status pill is "New" on a fresh install; pressing one opens its card.
     fireEvent.press(getAllByText("New")[0]);
     expect(mockRouter.push).toHaveBeenCalledWith(expect.stringContaining("/card/"));
+  });
+
+  it("filters by level chip", () => {
+    const { getByText } = mount(<LibraryScreen />);
+    fireEvent.press(getByText("Graduate+"));
+    getByText(`${BY_LEVEL[3]} of ${TOTAL} concepts`);
+  });
+
+  it("intersects a level chip with a subject chip", () => {
+    const { getByText } = mount(<LibraryScreen />);
+    fireEvent.press(getByText("Finance"));
+    fireEvent.press(getByText("Graduate+"));
+    const expected = loadCorpus().filter(
+      (c) => c.domain === "finance" && c.difficulty === 3,
+    ).length;
+    getByText(`${expected} of ${TOTAL} concepts`);
   });
 });
 
