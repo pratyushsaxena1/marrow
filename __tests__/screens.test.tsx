@@ -127,6 +127,14 @@ describe("Feed screen", () => {
     const { getByText } = mount(<FeedScreen />);
     getByText("1 due");
   });
+
+  it("serves only the persisted levels", () => {
+    mockData.settings.set("selectedLevels", "[3]");
+    const { queryByText } = mount(<FeedScreen />);
+    const shown = loadCorpus().filter((c) => queryByText(c.title) !== null);
+    expect(shown.length).toBeGreaterThan(0);
+    expect(shown.every((c) => c.difficulty === 3)).toBe(true);
+  });
 });
 
 describe("Library screen", () => {
@@ -275,6 +283,20 @@ describe("Settings screen", () => {
     fireEvent.press(getByText("Replay the intro"));
     expect(mockData.settings.get("onboardingDone")).toBe("0");
     expect(mockRouter.replace).toHaveBeenCalledWith("/onboarding");
+  });
+
+  it("persists a level selection", () => {
+    const { getByText } = mount(<SettingsScreen />);
+    fireEvent.press(getByText("Graduate+"));
+    expect(mockData.settings.get("selectedLevels")).toBe("[3]");
+  });
+
+  it("normalizes a full selection back to every level", () => {
+    const { getByText } = mount(<SettingsScreen />);
+    fireEvent.press(getByText("High school"));
+    fireEvent.press(getByText("Undergrad"));
+    fireEvent.press(getByText("Graduate+"));
+    expect(mockData.settings.get("selectedLevels")).toBe("[]");
   });
 });
 

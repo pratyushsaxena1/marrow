@@ -5,6 +5,7 @@ import { Redirect, useFocusEffect, useRouter } from "expo-router";
 import { createSession, nextChunk, type FeedDeps } from "../src/feed";
 import { openStore } from "../src/store";
 import { getCard, getUnseen } from "../src/corpus";
+import { loadSelectedLevels } from "../src/format";
 import { initialState, review } from "../src/scheduler";
 import { ConceptCard } from "../src/ui/ConceptCard";
 import { RevealCard } from "../src/ui/RevealCard";
@@ -19,7 +20,7 @@ import {
   FEED_ADVANCE_DELAY_MS,
   SESSION_IDLE_MS,
 } from "../src/constants";
-import type { Domain, FeedItem, Grade, Session } from "../src/types";
+import type { Domain, FeedItem, Grade, Level, Session } from "../src/types";
 
 const rng = () => Math.random();
 
@@ -39,6 +40,9 @@ function loadSelectedDomains(raw: string | null): Domain[] {
 const labelForDomains = (domains: Domain[]): string =>
   domains.length === 0 ? "All domains" : domains.map((d) => DOMAIN_LABELS_SHORT[d]).join(" + ");
 
+// Comparing by sorted key rather than element-wise keeps the check order-proof.
+const levelKey = (levels: Level[]): string => [...levels].sort().join(",");
+
 export default function FeedScreen() {
   const { height: winHeight } = useWindowDimensions();
   const insets = useSafeAreaInsets();
@@ -57,6 +61,9 @@ export default function FeedScreen() {
   const [selectedDomains, setSelectedDomains] = useState<Domain[]>(() =>
     loadSelectedDomains(store.getSetting("selectedDomains")),
   );
+  const [selectedLevels, setSelectedLevels] = useState<Level[]>(() =>
+    loadSelectedLevels(store.getSetting("selectedLevels")),
+  );
   const [sheetOpen, setSheetOpen] = useState(false);
 
   // Saved cards and the due count are also changed from the Library, the card detail
@@ -68,13 +75,6 @@ export default function FeedScreen() {
     const now = Date.now();
     setDueCount(store.getAllStates().filter((s) => s.dueAt <= now).length);
   }, [store]);
-
-  useFocusEffect(
-    useCallback(() => {
-      setSaved(new Set(store.getBookmarks()));
-      refreshDueCount();
-    }, [store, refreshDueCount]),
-  );
 
   const toggleSave = useCallback(
     (cardId: string) => {
@@ -97,8 +97,10 @@ export default function FeedScreen() {
   const pendingScrollReset = useRef(false);
 
   const deps = useCallback(
-    (): FeedDeps => ({ corpus, store, now: Date.now(), rng, domains: selectedDomains }),
-    [corpus, store, selectedDomains],
+    (): FeedDeps => ({
+      corpus, store, now: Date.now(), rng, domains: selectedDomains, levels: selectedLevels,
+    }),
+    [corpus, store, selectedDomains, selectedLevels],
   );
 
   const loadMore = useCallback(() => {
@@ -118,6 +120,22 @@ export default function FeedScreen() {
     pendingScrollReset.current = true;
     setItems(nextChunk(d, session.current, CHUNK_SIZE));
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      setSaved(new Set(store.getBookmarks()));
+      refreshDueCount();
+      // Picks up a level chosen in Settings, which is a separate route and so cannot
+      // reach this screen's state directly. Restart only on an actual change.
+      const stored = loadSelectedLevels(store.getSetting("selectedLevels"));
+      if (levelKey(stored) !== levelKey(selectedLevels)) {
+        setSelectedLevels(stored);
+        restartSession({
+          corpus, store, now: Date.now(), rng, domains: selectedDomains, levels: stored,
+        });
+      }
+    }, [store, refreshDueCount, corpus, restartSession, selectedDomains, selectedLevels]),
+  );
 
   // Reset the session on cold start, or on foreground after >= 30 min in background.
   const backgroundedAt = useRef<number | null>(null);

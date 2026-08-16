@@ -1,4 +1,4 @@
-import { difficultyLabel, nextReviewLabel, weekdayInitial } from "../src/format";
+import { difficultyLabel, loadSelectedLevels, nextReviewLabel, weekdayInitial } from "../src/format";
 import { related } from "../src/search";
 import { DAY_MS } from "../src/constants";
 import type { Card } from "../src/types";
@@ -33,6 +33,19 @@ describe("difficultyLabel", () => {
     expect(difficultyLabel(2)).toBe("Undergrad");
     expect(difficultyLabel(3)).toBe("Graduate+");
     expect(difficultyLabel(9)).toBe("Undergrad");
+  });
+});
+
+describe("loadSelectedLevels", () => {
+  it("reads a stored selection", () => {
+    expect(loadSelectedLevels("[1,3]")).toEqual([1, 3]);
+  });
+
+  it("degrades to every level for missing, malformed or foreign values", () => {
+    expect(loadSelectedLevels(null)).toEqual([]);
+    expect(loadSelectedLevels("not json")).toEqual([]);
+    expect(loadSelectedLevels('{"a":1}')).toEqual([]);
+    expect(loadSelectedLevels("[9,2]")).toEqual([2]);
   });
 });
 

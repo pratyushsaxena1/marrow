@@ -12,7 +12,11 @@ import { SectionLabel } from "../src/ui/SectionLabel";
 import { COLORS } from "../src/ui/theme";
 import { tick, warn } from "../src/ui/haptics";
 import { useLayout } from "../src/ui/layout";
-import { DAILY_GOAL_DEFAULT, DAILY_GOAL_OPTIONS } from "../src/constants";
+import {
+  DAILY_GOAL_DEFAULT, DAILY_GOAL_OPTIONS, LEVELS, LEVEL_LABELS,
+} from "../src/constants";
+import { loadSelectedLevels } from "../src/format";
+import type { Level } from "../src/types";
 
 const SUPPORT_URL = "https://pratyushsaxena1.github.io/marrow/support.html";
 const PRIVACY_URL = "https://pratyushsaxena1.github.io/marrow/privacy.html";
@@ -30,10 +34,21 @@ export default function SettingsScreen() {
     return Number.isFinite(raw) && raw > 0 ? raw : DAILY_GOAL_DEFAULT;
   });
   const [savedCount, setSavedCount] = useState(() => store.getBookmarks().length);
+  const [levels, setLevels] = useState<Level[]>(() =>
+    loadSelectedLevels(store.getSetting("selectedLevels")),
+  );
 
   const chooseGoal = (n: number) => {
     store.putSetting("dailyGoal", String(n));
     setGoal(n);
+  };
+
+  const toggleLevel = (l: Level) => {
+    const next = levels.includes(l) ? levels.filter((x) => x !== l) : [...levels, l];
+    // Covering all three means the same as choosing none: every level.
+    const canonical = next.length === LEVELS.length ? [] : next;
+    store.putSetting("selectedLevels", JSON.stringify(canonical));
+    setLevels(canonical);
   };
 
   const confirmReset = () => {
@@ -78,6 +93,22 @@ export default function SettingsScreen() {
       >
         <View style={column}>
           <ScreenHeader title="Settings" onBack={() => router.back()} />
+
+          <SectionLabel>Level</SectionLabel>
+          <Text className="text-neutral-400 text-sm leading-relaxed mb-4">
+            Which levels the feed draws from. With none chosen you see every level. The
+            Library always searches everything.
+          </Text>
+          <View className="flex-row gap-2 mb-10">
+            {LEVELS.map((l) => (
+              <Chip
+                key={l}
+                label={LEVEL_LABELS[l]}
+                selected={levels.includes(l)}
+                onPress={() => toggleLevel(l)}
+              />
+            ))}
+          </View>
 
           <SectionLabel>Daily review goal</SectionLabel>
           <Text className="text-neutral-400 text-sm leading-relaxed mb-4">
