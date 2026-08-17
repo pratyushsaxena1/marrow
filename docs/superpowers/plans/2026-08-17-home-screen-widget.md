@@ -227,7 +227,7 @@ The widget cannot read `corpus/*.json` from the app bundle, and cannot import Ty
 
 **Interfaces:**
 - Consumes: `Card` from `src/types.ts`.
-- Produces: `buildWidgetCards(): string`, exported from `scripts/build-widget-cards.ts`, returning the exact file contents including the trailing newline. `targets/widget/assets/cards.json` is a JSON array of objects with keys `id`, `domain`, `topic`, `title`, `body`, `difficulty`, sorted by `id`.
+- Produces: `buildWidgetCards(): string`, exported from `scripts/build-widget-cards.ts`, returning the exact file contents including the trailing newline. `targets/widget/assets/cards.json` is a JSON array of objects with keys `id`, `domain`, `title`, `body`, `difficulty`, sorted by `id`.
 
 - [ ] **Step 1: Write the failing test**
 
@@ -251,7 +251,7 @@ describe("widget card data", () => {
     const list = cards as Record<string, unknown>[];
     expect(list).toHaveLength(loadCorpus().length);
     expect(Object.keys(list[0]).sort()).toEqual(
-      ["body", "difficulty", "domain", "id", "title", "topic"],
+      ["body", "difficulty", "domain", "id", "title"],
     );
   });
 
@@ -281,9 +281,9 @@ const DOMAINS: Domain[] = ["cs", "finance", "math", "science"];
 const OUT_DIR = join(__dirname, "..", "targets", "widget", "assets");
 export const WIDGET_CARDS_PATH = join(OUT_DIR, "cards.json");
 
-/** The six fields the widget renders. Answers, prompts, sources and tags are left
- *  behind: the widget never shows them, and shipping them would double the payload. */
-type WidgetCard = Pick<Card, "id" | "domain" | "topic" | "title" | "body" | "difficulty">;
+/** The five fields the widget renders. Answers, prompts, sources, tags and topic are
+ *  left behind: no layout shows them, and shipping them would inflate the payload. */
+type WidgetCard = Pick<Card, "id" | "domain" | "title" | "body" | "difficulty">;
 
 /** Returns the exact bytes the committed file should hold. Kept pure so a test can
  *  compare against the file without writing to disk. */
@@ -295,7 +295,6 @@ export function buildWidgetCards(): string {
       cards.push({
         id: card.id,
         domain: card.domain,
-        topic: card.topic,
         title: card.title,
         body: card.body,
         difficulty: card.difficulty,
@@ -572,7 +571,7 @@ Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
 **Interfaces:**
 - Consumes: `targets/widget/assets/cards.json` from Task 2.
 - Produces:
-  - `struct Card: Decodable` with `id`, `domain`, `topic`, `title`, `body: String`, `difficulty: Int`
+  - `struct Card: Decodable` with `id`, `domain`, `title`, `body: String`, `difficulty: Int`
   - `enum CardLoader { static func load() -> [Card] }`
   - `enum Labels { static func domain(_:) -> String; static func level(_:) -> String }`
   - `struct Preferences: Decodable` with `levels: [Int]`, `domains: [String]`, `static let all`, `static func load(appGroup:) -> Preferences`
@@ -585,12 +584,11 @@ Create `targets/widget/Card.swift`:
 ```swift
 import Foundation
 
-/// The six fields scripts/build-widget-cards.ts writes. JSONDecoder ignores unknown
+/// The five fields scripts/build-widget-cards.ts writes. JSONDecoder ignores unknown
 /// keys, so adding a field to the generator will not break an older widget build.
 struct Card: Decodable {
     let id: String
     let domain: String
-    let topic: String
     let title: String
     let body: String
     let difficulty: Int

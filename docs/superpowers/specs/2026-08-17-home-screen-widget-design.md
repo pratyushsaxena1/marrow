@@ -131,8 +131,8 @@ feature the app otherwise supports, which is not a trade worth taking for one mo
 ### Card data
 
 `scripts/build-widget-cards.ts` reads the four corpus files and writes
-`targets/widget/assets/cards.json`, trimmed to the six fields the widget renders: `id`,
-`domain`, `topic`, `title`, `body`, `difficulty`. That is roughly 167KB against 320KB for
+`targets/widget/assets/cards.json`, trimmed to the five fields the widget renders: `id`,
+`domain`, `title`, `body`, `difficulty`. `topic` is deliberately absent: no layout shows it. That is roughly 167KB against 320KB for
 the raw files. It lives under `assets/` because that is the directory the plugin links as
 target resources; a JSON file elsewhere in the target directory is not guaranteed to be
 copied into the appex.
