@@ -40,6 +40,7 @@
     "validate-corpus": "ts-node --compilerOptions '{\"module\":\"commonjs\"}' scripts/validate-corpus.ts",
     "corpus-style": "ts-node --compilerOptions '{\"module\":\"commonjs\"}' scripts/corpus-style.ts",
     "check-links": "ts-node --compilerOptions '{\"module\":\"commonjs\"}' scripts/check-links.ts",
+    "build-widget-cards": "ts-node --compilerOptions '{\"module\":\"commonjs\"}' scripts/build-widget-cards.ts",
     "postinstall": "patch-package"
   },
   "private": true,
