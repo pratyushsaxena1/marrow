@@ -122,6 +122,30 @@ provisioning profiles for both targets on the first build. That step is the like
 thing to fail for reasons unrelated to the code, so it is done early rather than
 discovered at submission.
 
+### One thing the repo owner has to supply: `ios.appleTeamId`
+
+Every prebuild now prints:
+
+```
+[bacons/apple-targets] Expo config is missing required ios.appleTeamId property.
+Find this in Xcode and add to the Expo Config to correct. iOS builds may fail until
+this is corrected.
+```
+
+The plugin defaults a target's signing team to the main app target's, and on a simulator
+build nothing is signed, so this does not block the verification build. It is unresolved
+for the device and EAS paths, where the appex has to be code signed in its own right.
+
+It is deliberately not filled in here. The value is an Apple Developer team identifier
+and it is not discoverable from this machine: the project has never been signed locally,
+because production builds go through EAS cloud credentials, so there is no
+`DEVELOPMENT_TEAM` in the generated project and no provisioning profile on disk.
+Guessing it would be worse than leaving it visible.
+
+**Action for the repo owner:** before the first EAS build of this branch, add
+`"appleTeamId": "<TEAM_ID>"` inside `app.json`'s `ios` block. The value is in Xcode under
+Signing and Capabilities, or in the Apple Developer account's membership page.
+
 ### Deployment target
 
 16.4 for both targets, matching the app today.
