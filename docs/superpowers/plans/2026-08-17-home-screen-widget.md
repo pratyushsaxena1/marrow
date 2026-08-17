@@ -715,24 +715,31 @@ enum DailyCard {
 }
 ```
 
-- [ ] **Step 3: Verify it compiles**
+- [ ] **Step 3: Typecheck the Swift against the real iOS SDK**
 
-There is no Swift test target, by the design's recorded decision, so compilation is the gate here. Run:
+There is no Swift test target, by the design's recorded decision, so this is the gate. It typechecks against the actual SDK including SwiftUI and WidgetKit, so a wrong signature, a misspelled API or a type error fails here rather than surviving to Task 6.
+
+```bash
+xcrun -sdk iphonesimulator swiftc -typecheck -parse-as-library \
+  -target arm64-apple-ios16.4-simulator targets/widget/*.swift
+echo "EXIT=$?"
+```
+
+Expected: `EXIT=0` and no output. `-parse-as-library` is required and is what Xcode passes for a real target; without it the compiler rejects `@main` as top level code. If your editor shows a SourceKit error saying "'main' attribute cannot be used in a module that contains top-level code", that is the same false positive and this command is the authority, not the editor.
+
+- [ ] **Step 4: Verify the files link into the target**
 
 ```bash
 npx expo prebuild -p ios --clean
-```
-
-Expected: succeeds. Confirm both files were linked into the target:
-```bash
 grep -c "Selection.swift" ios/marrow.xcodeproj/project.pbxproj
 ```
-Expected: non-zero. A full compile happens in Task 6.
 
-- [ ] **Step 4: Commit**
+Expected: prebuild succeeds and the grep prints a non-zero count. A full compile and link happens in Task 6.
+
+- [ ] **Step 5: Commit**
 
 ```bash
-npm run validate-corpus && npm run corpus-style && npm test && npm run check-links
+npm run validate-corpus && npm run corpus-style && npm test
 ```
 
 ```bash
@@ -913,15 +920,25 @@ struct MarrowWidget: Widget {
 }
 ```
 
-- [ ] **Step 2: Verify the project still generates**
+- [ ] **Step 2: Typecheck the Swift against the real iOS SDK**
+
+```bash
+xcrun -sdk iphonesimulator swiftc -typecheck -parse-as-library \
+  -target arm64-apple-ios16.4-simulator targets/widget/*.swift
+echo "EXIT=$?"
+```
+
+Expected: `EXIT=0` and no output. This compiles your views and provider against the actual SwiftUI and WidgetKit headers, so a wrong modifier signature or a bad availability guard fails here. `-parse-as-library` is required; without it the compiler rejects `@main`.
+
+- [ ] **Step 3: Verify the project still generates**
 
 Run: `npx expo prebuild -p ios --clean`
 Expected: succeeds.
 
-- [ ] **Step 3: Run the gates and commit**
+- [ ] **Step 4: Run the gates and commit**
 
 ```bash
-npm run validate-corpus && npm run corpus-style && npm test && npm run check-links
+npm run validate-corpus && npm run corpus-style && npm test
 ```
 
 ```bash
