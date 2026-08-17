@@ -158,13 +158,19 @@ feed into a state where it serves nothing.
 
 `selectedLevels` is loaded at mount alongside `selectedDomains` and threaded into `deps`.
 
-The one piece of non-obvious wiring: Settings is a separate route, so a level chosen there
-must reach a feed that is already mounted. The feed's existing `useFocusEffect`, which
-already re-reads saved cards and the due count, also re-reads `selectedLevels`; if the value
-differs from the mounted state it calls `restartSession` with the new levels threaded
-directly into the deps object, the way `applyDomains` does at `app/index.tsx:205`. Comparing
-before restarting matters, since restarting on every focus would throw away the user's place
-in the feed each time they returned from any other tab.
+The live mechanism is simpler than it first looks: `app/_layout.tsx` is a single `Stack`,
+and every tab switch uses `router.replace`, which unmounts the outgoing screen. Settings is
+reachable only via `router.push("/settings")` from the Library and Progress screens, never
+from the feed itself, so the feed is always unmounted before Settings can open. What actually
+picks up a level chosen in Settings is the feed's `useState` initializer re-reading
+`selectedLevels` on the remount that follows.
+
+The feed's `useFocusEffect`, which already re-reads saved cards and the due count, also
+re-reads `selectedLevels` and restarts the session if it differs from the mounted state. This
+is defensive, not the live path: it only does anything if a future Settings entry point from
+the feed's own top bar keeps the feed mounted underneath. Comparing before restarting matters
+regardless, since restarting on every focus would throw away the user's place in the feed
+each time they returned from any other tab.
 
 `DomainSheet` is not touched.
 
@@ -216,3 +222,18 @@ guidance on assigning difficulty honestly, and the 15% minimum share, are unchan
 - Writing elementary or middle school cards, or adding a fourth band.
 - Folding the Library's filter rows into a sheet.
 - The home screen widget, which is a separate project with its own design.
+- The quiz screen (`app/quiz.tsx`). It has its own domain chip row and no level
+  equivalent, so after this branch level is a filter everywhere domain is except there.
+  That asymmetry is deliberate for this change, not an oversight: a level filter on the
+  quiz is a reasonable follow-up, but it was not requested and is left for a future
+  change rather than pre-empted here.
+
+## Known follow-up
+
+`refreshDueCount` (`app/index.tsx:74-77`) counts every due card regardless of the level
+filter, so a reader who narrows to Graduate+ can see a due count higher than what the
+feed will actually serve them. This is pre-existing behavior: the domain filter has
+always had the same gap, and the level filter now mirrors it rather than fixing it.
+Making the due count respect the active filters is a product decision for the repo
+owner and is deliberately not being made on this branch. Recorded here so it is a known
+gap rather than a rediscovered one.
