@@ -46,8 +46,8 @@ When building locally, run `npx expo prebuild -p ios --clean` explicitly before
 embedding the widget target, and the failure is quiet: the app builds and launches
 normally, just with no widget in it.
 
-Before the first EAS build, `app.json` needs `ios.appleTeamId`. The config plugin warns
-on every prebuild until it is set, and the extension cannot be code signed without it.
+`app.json` sets `ios.appleTeamId`. The config plugin needs it to sign the extension, and
+warns on every prebuild if it is ever removed.
 
 Design: `docs/superpowers/specs/2026-08-17-home-screen-widget-design.md`.
 

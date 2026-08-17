@@ -12,6 +12,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.pratyushs123.marrow",
       "buildNumber": "12",
+      "appleTeamId": "68LY82NV2V",
       "entitlements": {
         "com.apple.security.application-groups": ["group.com.pratyushs123.marrow"]
       },
