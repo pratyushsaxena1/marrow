@@ -41,7 +41,8 @@ const labelForDomains = (domains: Domain[]): string =>
   domains.length === 0 ? "All domains" : domains.map((d) => DOMAIN_LABELS_SHORT[d]).join(" + ");
 
 // Comparing by sorted key rather than element-wise keeps the check order-proof.
-const levelKey = (levels: Level[]): string => [...levels].sort().join(",");
+const levelKey = (levels: Level[]): string =>
+  [...levels].sort((a, b) => a - b).join(",");
 
 export default function FeedScreen() {
   const { height: winHeight } = useWindowDimensions();
@@ -97,8 +98,9 @@ export default function FeedScreen() {
   const pendingScrollReset = useRef(false);
 
   const deps = useCallback(
-    (): FeedDeps => ({
-      corpus, store, now: Date.now(), rng, domains: selectedDomains, levels: selectedLevels,
+    (over?: Partial<FeedDeps>): FeedDeps => ({
+      corpus, store, now: Date.now(), rng,
+      domains: selectedDomains, levels: selectedLevels, ...over,
     }),
     [corpus, store, selectedDomains, selectedLevels],
   );
@@ -111,8 +113,9 @@ export default function FeedScreen() {
   }, [deps, done]);
 
   // Starts a brand-new session from the given deps and snaps the scroll back to the top.
-  // Used by the idle reset and by applying a new domain filter. Takes deps explicitly so
-  // a caller can pass freshly-chosen domains without waiting for state to settle.
+  // Used by the idle reset, by applying a new domain filter, and by the focus-effect
+  // level sync. Takes deps explicitly so a caller can pass freshly-chosen domains or
+  // levels without waiting for state to settle.
   const restartSession = useCallback((d: FeedDeps) => {
     session.current = createSession(rng);
     seeded.current = new Set();
@@ -125,16 +128,18 @@ export default function FeedScreen() {
     useCallback(() => {
       setSaved(new Set(store.getBookmarks()));
       refreshDueCount();
-      // Picks up a level chosen in Settings, which is a separate route and so cannot
-      // reach this screen's state directly. Restart only on an actual change.
+      // Defensive, not the live mechanism: the feed is only reachable from Settings via
+      // a route that unmounts this screen first (Settings opens from Library or Progress,
+      // never from here), so the useState initializer's mount-time read of selectedLevels
+      // is what actually picks up a level chosen in Settings today. This effect only
+      // matters if a future Settings entry point from the feed's own top bar keeps the
+      // feed mounted underneath. Restart only on an actual change.
       const stored = loadSelectedLevels(store.getSetting("selectedLevels"));
       if (levelKey(stored) !== levelKey(selectedLevels)) {
         setSelectedLevels(stored);
-        restartSession({
-          corpus, store, now: Date.now(), rng, domains: selectedDomains, levels: stored,
-        });
+        restartSession(deps({ levels: stored }));
       }
-    }, [store, refreshDueCount, corpus, restartSession, selectedDomains, selectedLevels]),
+    }, [store, refreshDueCount, deps, restartSession, selectedLevels]),
   );
 
   // Reset the session on cold start, or on foreground after >= 30 min in background.
@@ -224,9 +229,9 @@ export default function FeedScreen() {
       store.putSetting("selectedDomains", JSON.stringify(domains));
       setSelectedDomains(domains);
       setSheetOpen(false);
-      restartSession({ corpus, store, now: Date.now(), rng, domains });
+      restartSession(deps({ domains }));
     },
-    [corpus, store, restartSession],
+    [store, restartSession, deps],
   );
 
   const renderItem = useCallback(

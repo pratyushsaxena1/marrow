@@ -204,6 +204,18 @@ describe("nextChunk", () => {
     expect(items.some((i) => i.kind === "review")).toBe(false);
   });
 
+  it("serves a due review that sits inside the selected levels", () => {
+    const cards = [mkCard("cs-0", "cs", "concept", 1), mkCard("cs-1", "cs", "concept", 3)];
+    const due = [mkState("cs-1", NOW - 1000)];
+    const deps = {
+      corpus: fakeCorpus(cards), store: fakeStore(due, new Set(["cs-1"])),
+      now: NOW, rng: mid, domains: ["cs" as Domain], levels: [3 as Level],
+    };
+    const items = nextChunk(deps, createSession(mid), 10);
+    const reviews = items.flatMap((i) => (i.kind === "review" ? [i.card.id] : []));
+    expect(reviews).toContain("cs-1");
+  });
+
   it("reports caught-up when no card sits at the selected levels", () => {
     const cards = [mkCard("cs-0", "cs", "concept", 1)];
     const deps = {

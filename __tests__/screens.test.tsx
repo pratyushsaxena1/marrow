@@ -135,6 +135,28 @@ describe("Feed screen", () => {
     expect(shown.length).toBeGreaterThan(0);
     expect(shown.every((c) => c.difficulty === 3)).toBe(true);
   });
+
+  it("keeps the level filter after applying a domain through the subject sheet", () => {
+    mockData.settings.set("selectedLevels", "[3]");
+    const { getByLabelText, getByRole, getByText, queryByText } = mount(<FeedScreen />);
+    // Opens the DomainSheet the way a user would: tap the subject label in the top bar,
+    // pick a subject, then Apply. This is the path applyDomains runs through, which is
+    // what dropped the level filter in the original bug (app/index.tsx:227). The sheet's
+    // subject row is a checkbox labeled with the full domain name, which also appears
+    // as plain text on cards behind the sheet, so it is targeted by role, not by text.
+    // The sheet starts with every row checked (the "all domains" state), so isolating
+    // cs means unchecking the other three rather than checking cs itself.
+    fireEvent.press(getByLabelText("Subjects: All domains"));
+    fireEvent.press(getByRole("checkbox", { name: "Finance" }));
+    fireEvent.press(getByRole("checkbox", { name: "Math" }));
+    fireEvent.press(getByRole("checkbox", { name: "Science" }));
+    fireEvent.press(getByText("Apply"));
+
+    const shown = loadCorpus().filter((c) => queryByText(c.title) !== null);
+    expect(shown.length).toBeGreaterThan(0);
+    expect(shown.every((c) => c.difficulty === 3)).toBe(true);
+    expect(shown.every((c) => c.domain === "cs")).toBe(true);
+  });
 });
 
 describe("Library screen", () => {
@@ -185,6 +207,15 @@ describe("Library screen", () => {
       (c) => c.domain === "finance" && c.difficulty === 3,
     ).length;
     getByText(`${expected} of ${TOTAL} concepts`);
+  });
+
+  it("ignores the persisted level filter, unlike the feed", () => {
+    // The Library's level chips are local UI state, not a read of selectedLevels: a
+    // level chosen in Settings shapes the feed but must not silently hide rows here.
+    // This asymmetry is deliberate (see the design doc's Library section).
+    mockData.settings.set("selectedLevels", "[3]");
+    const { getByText } = mount(<LibraryScreen />);
+    getByText(`${TOTAL} of ${TOTAL} concepts`);
   });
 });
 
