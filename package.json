@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "expo-router/entry",
   "dependencies": {
+    "@bacons/apple-targets": "5.0.0",
     "expo": "~57.0.6",
     "expo-constants": "~57.0.5",
     "expo-haptics": "~57.0.1",
@@ -39,6 +40,7 @@
     "validate-corpus": "ts-node --compilerOptions '{\"module\":\"commonjs\"}' scripts/validate-corpus.ts",
     "corpus-style": "ts-node --compilerOptions '{\"module\":\"commonjs\"}' scripts/corpus-style.ts",
     "check-links": "ts-node --compilerOptions '{\"module\":\"commonjs\"}' scripts/check-links.ts",
+    "build-widget-cards": "ts-node --compilerOptions '{\"module\":\"commonjs\"}' scripts/build-widget-cards.ts",
     "postinstall": "patch-package"
   },
   "private": true,

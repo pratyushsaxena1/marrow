@@ -41,7 +41,14 @@ const mockStore = {
 
 jest.mock("../src/store", () => ({ openStore: () => mockStore }));
 
-const mockRouter = { push: jest.fn(), replace: jest.fn(), back: jest.fn() };
+const mockRouter = {
+  push: jest.fn(),
+  replace: jest.fn(),
+  back: jest.fn(),
+  // Defaults to true, the ordinary case of a screen pushed from another screen. The
+  // card detail tests flip it to false to stand in for a cold start from the widget.
+  canGoBack: jest.fn(() => true),
+};
 const mockParams = { id: "cs-0001" };
 
 jest.mock("expo-router", () => {
@@ -89,6 +96,9 @@ beforeEach(() => {
   mockData.bookmarks.length = 0;
   mockRouter.push.mockClear();
   mockRouter.replace.mockClear();
+  mockRouter.back.mockClear();
+  mockRouter.canGoBack.mockClear();
+  mockRouter.canGoBack.mockReturnValue(true);
   // Every test but the onboarding one starts past the first-run gate.
   mockData.settings.set("onboardingDone", "1");
 });
@@ -384,6 +394,37 @@ describe("Card detail screen", () => {
     expect(mockData.bookmarks).toEqual(["cs-0001"]);
     fireEvent.press(getByLabelText("Remove from saved"));
     expect(mockData.bookmarks).toEqual([]);
+  });
+
+  // Opening a card from the home screen widget cold starts the app straight onto this
+  // screen, so there is nothing on the stack to pop. A plain back() does nothing there
+  // and the reader is stranded on the card.
+  it("pops the stack when there is somewhere to go back to", () => {
+    const { getByLabelText } = mount(<CardDetailScreen />);
+    fireEvent.press(getByLabelText("Back"));
+    expect(mockRouter.back).toHaveBeenCalled();
+    expect(mockRouter.replace).not.toHaveBeenCalled();
+  });
+
+  it("goes to the feed when the card was opened cold from the widget", () => {
+    mockRouter.canGoBack.mockReturnValue(false);
+    const { getByLabelText } = mount(<CardDetailScreen />);
+    fireEvent.press(getByLabelText("Back"));
+    expect(mockRouter.replace).toHaveBeenCalledWith("/");
+    expect(mockRouter.back).not.toHaveBeenCalled();
+  });
+
+  it("leaves the not-found state for the feed on a cold start", () => {
+    const original = mockParams.id;
+    mockRouter.canGoBack.mockReturnValue(false);
+    mockParams.id = "does-not-exist";
+    try {
+      const { getByText } = mount(<CardDetailScreen />);
+      fireEvent.press(getByText("Go back"));
+      expect(mockRouter.replace).toHaveBeenCalledWith("/");
+    } finally {
+      mockParams.id = original;
+    }
   });
 
   it("degrades to a not-found state for an unknown id", () => {

@@ -45,6 +45,15 @@ export default function CardDetailScreen() {
     [card],
   );
 
+  // Tapping the home screen widget cold starts the app straight onto this screen, so
+  // there is no stack to pop and a plain back() silently does nothing, stranding the
+  // reader on the card. Falling back to the feed gives back a destination in the one
+  // case it lacks one, and leaves the ordinary push from the Library or search alone.
+  const goBack = useCallback(() => {
+    if (router.canGoBack()) router.back();
+    else router.replace("/");
+  }, [router]);
+
   // Grading here writes through the same scheduler and log the feed uses, so practising
   // a card from the Library moves its real schedule rather than being a dry run.
   const onGrade = useCallback(
@@ -80,7 +89,7 @@ export default function CardDetailScreen() {
         <Text className="text-neutral-400 text-base leading-relaxed mb-8">
           This card is no longer part of the library.
         </Text>
-        <Button label="Go back" onPress={() => router.back()} />
+        <Button label="Go back" onPress={goBack} />
       </View>
     );
   }
@@ -97,7 +106,7 @@ export default function CardDetailScreen() {
         <View style={column}>
           <ScreenHeader
             title={card.topic}
-            onBack={() => router.back()}
+            onBack={goBack}
             right={
               <View className="flex-row items-center -mr-2">
                 <IconButton name="share" size={19} onPress={onShare} label="Share" />

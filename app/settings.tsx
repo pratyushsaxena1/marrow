@@ -16,6 +16,7 @@ import {
   DAILY_GOAL_DEFAULT, DAILY_GOAL_OPTIONS, LEVELS, LEVEL_LABELS,
 } from "../src/constants";
 import { loadSelectedLevels } from "../src/format";
+import { syncWidgetPreferences } from "../src/widget/preferences";
 import type { Level } from "../src/types";
 
 const SUPPORT_URL = "https://pratyushsaxena1.github.io/marrow/support.html";
@@ -49,6 +50,7 @@ export default function SettingsScreen() {
     const canonical = next.length === LEVELS.length ? [] : next;
     store.putSetting("selectedLevels", JSON.stringify(canonical));
     setLevels(canonical);
+    syncWidgetPreferences(store);
   };
 
   const confirmReset = () => {
