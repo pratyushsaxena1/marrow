@@ -1,5 +1,4 @@
 import { readFileSync } from "fs";
-import { join } from "path";
 import { buildWidgetCards, WIDGET_CARDS_PATH } from "../scripts/build-widget-cards";
 import { loadCorpus } from "../src/corpus";
 

@@ -17,6 +17,40 @@ into the scroll. Expo, TypeScript strict, NativeWind, expo-sqlite, expo-router.
 - **No em dashes anywhere**, in code comments, docs, commit messages or card text.
   This is a standing preference of the repo owner, not a style suggestion.
 
+## The home screen widget
+
+`targets/widget/` is a WidgetKit extension, injected into the Xcode project on every
+prebuild by `@bacons/apple-targets`. `/ios` stays gitignored: never hand edit the Xcode
+project, because the next prebuild discards it. The empty `entitlements: {}` in
+`targets/widget/expo-target.config.js` is load bearing, not leftover: the plugin only
+mirrors the app's App Group onto the target from inside a truthy entitlements check.
+
+The widget ships its own trimmed copy of the corpus at
+`targets/widget/assets/cards.json`. **After changing any card, run
+`npm run build-widget-cards`.** `npm test` fails if you forget, which is the point.
+
+Only the reader's level and subject filters cross the App Group boundary, written by
+`src/widget/preferences.ts`. Progress never crosses it: not `card_state`, not
+`review_log`, not `bookmarks`. The widget picks its own card and does not need the app to
+have run, so it works on a fresh install and cannot go stale.
+
+To check the Swift without a full build:
+
+```bash
+xcrun -sdk iphonesimulator swiftc -typecheck -parse-as-library \
+  -target arm64-apple-ios16.4-simulator targets/widget/*.swift
+```
+
+When building locally, run `npx expo prebuild -p ios --clean` explicitly before
+`npx expo run:ios`. Letting `run:ios` do its own implicit prebuild can silently skip
+embedding the widget target, and the failure is quiet: the app builds and launches
+normally, just with no widget in it.
+
+Before the first EAS build, `app.json` needs `ios.appleTeamId`. The config plugin warns
+on every prebuild until it is set, and the extension cannot be code signed without it.
+
+Design: `docs/superpowers/specs/2026-08-17-home-screen-widget-design.md`.
+
 ## Writing corpus cards
 
 This is the part of the repo that most needs a human standard held to it. The app's
@@ -143,7 +177,8 @@ statistical agencies, NASA, NIST, the Stanford Encyclopedia of Philosophy.
    maximum. Never reuse a retired id.
 2. Update the expected counts in `scripts/validate-corpus.ts` (`EXPECTED`).
 3. Update the total in `__tests__/corpus.test.ts` (three assertions).
-4. Run the full verification below.
+4. Run `npm run build-widget-cards` so the widget's copy of the corpus keeps up.
+5. Run the full verification below.
 
 ### Verification
 
