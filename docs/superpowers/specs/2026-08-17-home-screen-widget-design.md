@@ -39,6 +39,17 @@ Medium shows the first sentence rather than a character truncation. A hard cut l
 mid-clause, and a sentence is a unit the reader can finish. Tail truncation stays as the
 backstop for a long first sentence or large Dynamic Type.
 
+Finding the first sentence is less obvious than it looks. A naive search for the first
+". " matched the third dot of an ellipsis, so the card whose body opens "0.999... is not
+a number creeping toward 1." rendered on the medium family as the fragment "0.999..." and
+nothing else, which is worse than the truncation the sentence rule exists to avoid. It
+was the only card in 270 affected, and it was found by the final review rather than by
+any test or by the simulator run. The Swift now skips a candidate whose preceding
+character is also a period. Note that `src/corpus/schema.ts` already solved a harder
+version of this problem for the validator, handling abbreviations and initials too; the
+widget's copy is deliberately simpler because it only ever needs the first sentence of
+prose that has already passed that validator.
+
 ## Architecture
 
 One new committed directory. `/ios` stays gitignored and is never hand edited.
