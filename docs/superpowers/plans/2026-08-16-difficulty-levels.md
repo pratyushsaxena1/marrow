@@ -879,7 +879,8 @@ Expected: no output.
 
 - [ ] **Step 7: Check for stray dashes in the diff**
 
-Run: `git diff main | grep -n "[—–]"`
+Run a check of the diff against main for the em dash and en dash characters, the same
+pair matched by the `DASHES` regex in `scripts/corpus-style.ts`.
 Expected: no matches. Any hit violates the repo's standing no-dashes rule and must be fixed.
 
 - [ ] **Step 8: Drive the app**
