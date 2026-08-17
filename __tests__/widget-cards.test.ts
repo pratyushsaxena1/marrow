@@ -13,9 +13,15 @@ describe("widget card data", () => {
     expect(Array.isArray(cards)).toBe(true);
     const list = cards as Record<string, unknown>[];
     expect(list).toHaveLength(loadCorpus().length);
-    expect(Object.keys(list[0]).sort()).toEqual(
-      ["body", "difficulty", "domain", "id", "title"],
-    );
+    // Every element, not just the first: JSON.stringify drops a missing key rather than
+    // emitting it as null, so a single card mid-corpus missing a field would pass a
+    // first-element-only check while still failing Swift's non-optional Card decode for
+    // the whole array.
+    for (const card of list) {
+      expect(Object.keys(card).sort()).toEqual(
+        ["body", "difficulty", "domain", "id", "title"],
+      );
+    }
   });
 
   it("is sorted by id, so the widget's pool order does not depend on file order", () => {

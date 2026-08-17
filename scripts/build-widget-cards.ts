@@ -1,8 +1,8 @@
 import { mkdirSync, readFileSync, writeFileSync } from "fs";
 import { join } from "path";
+import { DOMAINS } from "../src/constants";
 import type { Card, Domain } from "../src/types";
 
-const DOMAINS: Domain[] = ["cs", "finance", "math", "science"];
 const OUT_DIR = join(__dirname, "..", "targets", "widget", "assets");
 export const WIDGET_CARDS_PATH = join(OUT_DIR, "cards.json");
 

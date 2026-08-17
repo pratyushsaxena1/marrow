@@ -17,8 +17,11 @@ enum CardLoader {
     ///
     /// Two lookups because the config plugin links `assets/` as target resources, and
     /// whether Xcode flattens that directory or preserves it as a folder reference
-    /// decides which name resolves. Trying both costs nothing and the alternative is a
-    /// silently empty widget. Task 6 confirms which one actually hits.
+    /// decides which name resolves. The plugin only declares explicit folder references
+    /// for subdirectories of `assets/`, and `assets/` itself holds a file, so
+    /// `cards.json` lands flat in the appex root and the first lookup is the one that
+    /// resolves. The second lookup stays as insurance: trying both costs nothing and
+    /// the alternative is a silently empty widget.
     static func load() -> [Card] {
         let url = Bundle.main.url(forResource: "cards", withExtension: "json")
             ?? Bundle.main.url(forResource: "assets/cards", withExtension: "json")

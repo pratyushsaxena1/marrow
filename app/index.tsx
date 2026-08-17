@@ -64,12 +64,6 @@ export default function FeedScreen() {
     setDueCount(store.getAllStates().filter((s) => s.dueAt <= now).length);
   }, [store]);
 
-  // Backfills the shared container on launch. An install upgrading from 1.2.0 already
-  // has filters chosen, and the widget has never seen them.
-  useEffect(() => {
-    syncWidgetPreferences(store);
-  }, [store]);
-
   const toggleSave = useCallback(
     (cardId: string) => {
       const nowSaved = store.toggleBookmark(cardId, Date.now());

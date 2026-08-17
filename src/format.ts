@@ -40,8 +40,8 @@ export function loadSelectedLevels(raw: string | null): Level[] {
   }
 }
 
-// Reads the persisted domain filter. A missing or malformed value means "all domains"
-// (the empty array), so a corrupt setting degrades to the default rather than crashing.
+/** Reads the persisted domain filter. A missing or malformed value means "all domains"
+ *  (the empty array), so a corrupt setting degrades to the default rather than crashing. */
 export function loadSelectedDomains(raw: string | null): Domain[] {
   if (!raw) return [];
   try {

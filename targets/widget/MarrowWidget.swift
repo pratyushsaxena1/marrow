@@ -125,12 +125,22 @@ struct MarrowWidgetView: View {
 
 /// The medium family has room for one sentence, and a sentence is a unit the reader can
 /// finish. A character count truncation lands mid clause instead.
+///
+/// An ellipsis is not a sentence end. Without this the card whose body opens
+/// "0.999... is not a number creeping toward 1." renders as just "0.999..." on the
+/// medium family, which is less than a plain truncation would have given.
 func firstSentence(of text: String) -> String {
-    let cut = [". ", "? ", "! "]
-        .compactMap { text.range(of: $0)?.lowerBound }
-        .min()
-    guard let cut else { return text }
-    return String(text[text.startIndex ... cut])
+    var from = text.startIndex
+    while let cut = [". ", "? ", "! "]
+        .compactMap({ text.range(of: $0, range: from ..< text.endIndex)?.lowerBound })
+        .min() {
+        if cut > text.startIndex, text[text.index(before: cut)] == "." {
+            from = text.index(after: cut)
+            continue
+        }
+        return String(text[text.startIndex ... cut])
+    }
+    return text
 }
 
 private extension View {
