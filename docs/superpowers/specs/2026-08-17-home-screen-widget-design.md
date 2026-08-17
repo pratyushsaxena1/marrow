@@ -301,6 +301,16 @@ config plugin. The mitigation is keeping the picker to about fifteen lines with 
 dependencies, and verifying on the simulator. Recorded so it is a known gap rather than a
 rediscovered one.
 
+Two things narrow it. The Swift is typechecked against the real iOS SDK on every task
+that touches it, with `swiftc -typecheck -parse-as-library`, so signature and type errors
+cannot survive to the simulator. And the picker's one interesting property, that a reader
+sees every card in their pool exactly once before any repeat, was verified by simulating
+the exact algorithm against the real 270 card data across twelve filter combinations:
+every level, every subject, several intersections, and an impossible filter. All twelve
+had gcd(stride, count) equal to 1 and visited every card, and the impossible filter fell
+back to the full corpus. That is evidence about the algorithm, not about the Swift that
+implements it, which is why the gap is narrowed rather than closed.
+
 **The widget cannot distinguish a filter the reader chose from one they never set.** Both
 arrive as an empty array meaning "everything", which is correct behavior and matches the
 app. It does mean the widget cannot show a "you have filtered this" state, and it should
