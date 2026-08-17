@@ -69,6 +69,10 @@ import { getCard, loadCorpus, countByDomain } from "../src/corpus";
 // spurious test failure.
 const TOTAL = loadCorpus().length;
 const BY_DOMAIN = countByDomain();
+const BY_LEVEL = loadCorpus().reduce<Record<number, number>>(
+  (acc, c) => ({ ...acc, [c.difficulty]: (acc[c.difficulty] ?? 0) + 1 }),
+  {},
+);
 
 const metrics = {
   frame: { x: 0, y: 0, width: 390, height: 844 },
@@ -123,6 +127,36 @@ describe("Feed screen", () => {
     const { getByText } = mount(<FeedScreen />);
     getByText("1 due");
   });
+
+  it("serves only the persisted levels", () => {
+    mockData.settings.set("selectedLevels", "[3]");
+    const { queryByText } = mount(<FeedScreen />);
+    const shown = loadCorpus().filter((c) => queryByText(c.title) !== null);
+    expect(shown.length).toBeGreaterThan(0);
+    expect(shown.every((c) => c.difficulty === 3)).toBe(true);
+  });
+
+  it("keeps the level filter after applying a domain through the subject sheet", () => {
+    mockData.settings.set("selectedLevels", "[3]");
+    const { getByLabelText, getByRole, getByText, queryByText } = mount(<FeedScreen />);
+    // Opens the DomainSheet the way a user would: tap the subject label in the top bar,
+    // pick a subject, then Apply. This is the path applyDomains runs through, which is
+    // what dropped the level filter in the original bug (app/index.tsx:227). The sheet's
+    // subject row is a checkbox labeled with the full domain name, which also appears
+    // as plain text on cards behind the sheet, so it is targeted by role, not by text.
+    // The sheet starts with every row checked (the "all domains" state), so isolating
+    // cs means unchecking the other three rather than checking cs itself.
+    fireEvent.press(getByLabelText("Subjects: All domains"));
+    fireEvent.press(getByRole("checkbox", { name: "Finance" }));
+    fireEvent.press(getByRole("checkbox", { name: "Math" }));
+    fireEvent.press(getByRole("checkbox", { name: "Science" }));
+    fireEvent.press(getByText("Apply"));
+
+    const shown = loadCorpus().filter((c) => queryByText(c.title) !== null);
+    expect(shown.length).toBeGreaterThan(0);
+    expect(shown.every((c) => c.difficulty === 3)).toBe(true);
+    expect(shown.every((c) => c.domain === "cs")).toBe(true);
+  });
 });
 
 describe("Library screen", () => {
@@ -157,6 +191,31 @@ describe("Library screen", () => {
     // Every row's status pill is "New" on a fresh install; pressing one opens its card.
     fireEvent.press(getAllByText("New")[0]);
     expect(mockRouter.push).toHaveBeenCalledWith(expect.stringContaining("/card/"));
+  });
+
+  it("filters by level chip", () => {
+    const { getByText } = mount(<LibraryScreen />);
+    fireEvent.press(getByText("Graduate+"));
+    getByText(`${BY_LEVEL[3]} of ${TOTAL} concepts`);
+  });
+
+  it("intersects a level chip with a subject chip", () => {
+    const { getByText } = mount(<LibraryScreen />);
+    fireEvent.press(getByText("Finance"));
+    fireEvent.press(getByText("Graduate+"));
+    const expected = loadCorpus().filter(
+      (c) => c.domain === "finance" && c.difficulty === 3,
+    ).length;
+    getByText(`${expected} of ${TOTAL} concepts`);
+  });
+
+  it("ignores the persisted level filter, unlike the feed", () => {
+    // The Library's level chips are local UI state, not a read of selectedLevels: a
+    // level chosen in Settings shapes the feed but must not silently hide rows here.
+    // This asymmetry is deliberate (see the design doc's Library section).
+    mockData.settings.set("selectedLevels", "[3]");
+    const { getByText } = mount(<LibraryScreen />);
+    getByText(`${TOTAL} of ${TOTAL} concepts`);
   });
 });
 
@@ -255,6 +314,20 @@ describe("Settings screen", () => {
     fireEvent.press(getByText("Replay the intro"));
     expect(mockData.settings.get("onboardingDone")).toBe("0");
     expect(mockRouter.replace).toHaveBeenCalledWith("/onboarding");
+  });
+
+  it("persists a level selection", () => {
+    const { getByText } = mount(<SettingsScreen />);
+    fireEvent.press(getByText("Graduate+"));
+    expect(mockData.settings.get("selectedLevels")).toBe("[3]");
+  });
+
+  it("normalizes a full selection back to every level", () => {
+    const { getByText } = mount(<SettingsScreen />);
+    fireEvent.press(getByText("High school"));
+    fireEvent.press(getByText("Undergrad"));
+    fireEvent.press(getByText("Graduate+"));
+    expect(mockData.settings.get("selectedLevels")).toBe("[]");
   });
 });
 

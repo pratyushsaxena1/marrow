@@ -13,8 +13,8 @@ import { tick } from "../src/ui/haptics";
 import { pillFor } from "../src/ui/StatusPill";
 import { TabBar, TAB_ROUTES, TAB_BAR_HEIGHT, type TabKey } from "../src/ui/TabBar";
 import { useLayout } from "../src/ui/layout";
-import { DOMAINS, DOMAIN_LABELS_SHORT } from "../src/constants";
-import type { CardState, Domain } from "../src/types";
+import { DOMAINS, DOMAIN_LABELS_SHORT, LEVELS, LEVEL_LABELS } from "../src/constants";
+import type { CardState, Domain, Level } from "../src/types";
 
 const STATUS_FILTERS: Array<{ key: StatusFilter; label: string }> = [
   { key: "all", label: "All" },
@@ -34,6 +34,7 @@ export default function LibraryScreen() {
 
   const [text, setText] = useState("");
   const [domains, setDomains] = useState<Domain[]>([]);
+  const [levels, setLevels] = useState<Level[]>([]);
   const [status, setStatus] = useState<StatusFilter>("all");
   const [savedOnly, setSavedOnly] = useState(false);
 
@@ -54,7 +55,7 @@ export default function LibraryScreen() {
   );
 
   const now = Date.now();
-  const query: Query = { text, domains, status, savedOnly };
+  const query: Query = { text, domains, levels, status, savedOnly };
   const results = useMemo(
     () =>
       searchCards(
@@ -63,20 +64,25 @@ export default function LibraryScreen() {
       ),
     // `now` is intentionally excluded: it changes on every render, and re-ranking the
     // list on each keystroke tick would thrash. Focus already refreshes the snapshot.
-    [cards, snapshot, text, domains, status, savedOnly], // eslint-disable-line react-hooks/exhaustive-deps
+    [cards, snapshot, text, domains, levels, status, savedOnly], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   const toggleDomain = (d: Domain) =>
     setDomains((prev) => (prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d]));
 
+  const toggleLevel = (l: Level) =>
+    setLevels((prev) => (prev.includes(l) ? prev.filter((x) => x !== l) : [...prev, l]));
+
   const clearFilters = () => {
     setText("");
     setDomains([]);
+    setLevels([]);
     setStatus("all");
     setSavedOnly(false);
   };
 
-  const filtered = domains.length > 0 || status !== "all" || savedOnly || text.length > 0;
+  const filtered =
+    domains.length > 0 || levels.length > 0 || status !== "all" || savedOnly || text.length > 0;
 
   // The reading column exists to cap line length for prose. The Library is a list, and
   // on a tablet it runs two-up across the full width, so capping the header and search
@@ -161,6 +167,23 @@ export default function LibraryScreen() {
               label={item.label}
               selected={status === item.key}
               onPress={() => setStatus(item.key)}
+            />
+          )}
+        />
+      </View>
+
+      <View className="mb-2">
+        <FlatList
+          horizontal
+          data={LEVELS}
+          keyExtractor={(l) => String(l)}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ paddingHorizontal: gutter, gap: 8, paddingVertical: 4 }}
+          renderItem={({ item }) => (
+            <Chip
+              label={LEVEL_LABELS[item]}
+              selected={levels.includes(item)}
+              onPress={() => toggleLevel(item)}
             />
           )}
         />

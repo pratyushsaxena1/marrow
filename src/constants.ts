@@ -1,4 +1,4 @@
-import type { Domain } from "./types";
+import type { Domain, Level } from "./types";
 
 export const DOMAINS: Domain[] = ["cs", "finance", "math", "science"];
 
@@ -24,6 +24,15 @@ export const DOMAIN_LABELS_SHORT: Record<Domain, string> = {
   finance: "Finance",
   math: "Math",
   science: "Science",
+};
+/** The three tiers, named for where a reader would first meet the idea. The corpus
+ *  runs from high school to graduate with nothing below it, so these names describe
+ *  the cards that exist rather than a span reaching down to grade school. */
+export const LEVELS: Level[] = [1, 2, 3];
+export const LEVEL_LABELS: Record<Level, string> = {
+  1: "High school",
+  2: "Undergrad",
+  3: "Graduate+",
 };
 export const DAY_MS = 86_400_000;
 export const EASE_INITIAL = 2.5;
