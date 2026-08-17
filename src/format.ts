@@ -1,5 +1,5 @@
-import { DAY_MS, LEVEL_LABELS, LEVELS } from "./constants";
-import type { Level } from "./types";
+import { DAY_MS, DOMAINS, LEVEL_LABELS, LEVELS } from "./constants";
+import type { Domain, Level } from "./types";
 
 const HOUR_MS = 3_600_000;
 const MINUTE_MS = 60_000;
@@ -28,13 +28,26 @@ export const weekdayInitial = (ts: number): string =>
 
 /** Reads the persisted level filter. A missing or malformed value means "every level"
  *  (the empty array), so a corrupt setting degrades to showing everything rather than
- *  to showing nothing. Mirrors loadSelectedDomains in app/index.tsx. */
+ *  to showing nothing. Mirrors loadSelectedDomains below. */
 export function loadSelectedLevels(raw: string | null): Level[] {
   if (!raw) return [];
   try {
     const parsed: unknown = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
     return parsed.filter((l): l is Level => LEVELS.includes(l as Level));
+  } catch {
+    return [];
+  }
+}
+
+// Reads the persisted domain filter. A missing or malformed value means "all domains"
+// (the empty array), so a corrupt setting degrades to the default rather than crashing.
+export function loadSelectedDomains(raw: string | null): Domain[] {
+  if (!raw) return [];
+  try {
+    const parsed: unknown = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter((d): d is Domain => DOMAINS.includes(d as Domain));
   } catch {
     return [];
   }

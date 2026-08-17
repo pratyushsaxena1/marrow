@@ -5,7 +5,7 @@ import { Redirect, useFocusEffect, useRouter } from "expo-router";
 import { createSession, nextChunk, type FeedDeps } from "../src/feed";
 import { openStore } from "../src/store";
 import { getCard, getUnseen } from "../src/corpus";
-import { loadSelectedLevels } from "../src/format";
+import { loadSelectedDomains, loadSelectedLevels } from "../src/format";
 import { initialState, review } from "../src/scheduler";
 import { ConceptCard } from "../src/ui/ConceptCard";
 import { RevealCard } from "../src/ui/RevealCard";
@@ -13,9 +13,9 @@ import { CaughtUpCard } from "../src/ui/CaughtUpCard";
 import { TopBar, TOP_BAR_HEIGHT } from "../src/ui/TopBar";
 import { DomainSheet } from "../src/ui/DomainSheet";
 import { TabBar, TAB_ROUTES, TAB_BAR_HEIGHT, type TabKey } from "../src/ui/TabBar";
+import { syncWidgetPreferences } from "../src/widget/preferences";
 import {
   CHUNK_SIZE,
-  DOMAINS,
   DOMAIN_LABELS_SHORT,
   FEED_ADVANCE_DELAY_MS,
   SESSION_IDLE_MS,
@@ -23,19 +23,6 @@ import {
 import type { Domain, FeedItem, Grade, Level, Session } from "../src/types";
 
 const rng = () => Math.random();
-
-// Reads the persisted domain filter. A missing or malformed value means "all domains"
-// (the empty array), so a corrupt setting degrades to the default rather than crashing.
-function loadSelectedDomains(raw: string | null): Domain[] {
-  if (!raw) return [];
-  try {
-    const parsed = JSON.parse(raw);
-    if (!Array.isArray(parsed)) return [];
-    return parsed.filter((d): d is Domain => DOMAINS.includes(d as Domain));
-  } catch {
-    return [];
-  }
-}
 
 const labelForDomains = (domains: Domain[]): string =>
   domains.length === 0 ? "All domains" : domains.map((d) => DOMAIN_LABELS_SHORT[d]).join(" + ");
@@ -75,6 +62,12 @@ export default function FeedScreen() {
   const refreshDueCount = useCallback(() => {
     const now = Date.now();
     setDueCount(store.getAllStates().filter((s) => s.dueAt <= now).length);
+  }, [store]);
+
+  // Backfills the shared container on launch. An install upgrading from 1.2.0 already
+  // has filters chosen, and the widget has never seen them.
+  useEffect(() => {
+    syncWidgetPreferences(store);
   }, [store]);
 
   const toggleSave = useCallback(
@@ -230,6 +223,7 @@ export default function FeedScreen() {
       setSelectedDomains(domains);
       setSheetOpen(false);
       restartSession(deps({ domains }));
+      syncWidgetPreferences(store);
     },
     [store, restartSession, deps],
   );
