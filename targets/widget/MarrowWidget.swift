@@ -75,6 +75,7 @@ struct MarrowWidgetView: View {
                 .tracking(0.8)
                 .foregroundStyle(Color(white: 0.45))
                 .lineLimit(1)
+                .minimumScaleFactor(0.7)
 
             Text(card.title)
                 .font(.system(size: titleSize, weight: .semibold))
@@ -85,9 +86,10 @@ struct MarrowWidgetView: View {
 
             if let text = bodyText(card) {
                 Text(text)
-                    .font(.system(size: 13))
+                    .font(.system(size: bodySize))
                     .foregroundStyle(Color(white: 0.68))
                     .lineLimit(bodyLines)
+                    .minimumScaleFactor(0.85)
                     .fixedSize(horizontal: false, vertical: true)
             }
 
@@ -95,12 +97,22 @@ struct MarrowWidgetView: View {
         }
     }
 
-    private var titleSize: CGFloat { family == .systemLarge ? 22 : 16 }
+    private var titleSize: CGFloat {
+        switch family {
+        case .systemLarge: return 22
+        case .systemSmall: return 18
+        default: return 16
+        }
+    }
 
     /// The small family has no body text, so the title gets the room instead.
     private var titleLines: Int { family == .systemSmall ? 4 : 2 }
 
-    private var bodyLines: Int { family == .systemLarge ? 14 : 3 }
+    private var bodyLines: Int { family == .systemLarge ? 15 : 3 }
+
+    /// The large family has room the medium one does not, and a 400 character body set
+    /// at the medium size left roughly half the widget empty.
+    private var bodySize: CGFloat { family == .systemLarge ? 15 : 13 }
 
     private func bodyText(_ card: Card) -> String? {
         switch family {

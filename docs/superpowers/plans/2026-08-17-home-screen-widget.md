@@ -35,6 +35,7 @@
 - `targets/widget/Selection.swift` - preferences decoding and the daily pick
 - `targets/widget/MarrowWidget.swift` - timeline provider, views, widget entry point
 - `targets/widget/assets/cards.json` - generated, committed card data
+- `targets/widget/Info.plist` - pins the extension's Info.plist rather than letting the plugin regenerate its default each prebuild
 - `scripts/build-widget-cards.ts` - generator for the above
 - `src/widget/preferences.ts` - the only writer to the shared container
 - `__tests__/widget-cards.test.ts` - asserts the generated file is not stale
@@ -1063,18 +1064,43 @@ Design: `docs/superpowers/specs/2026-08-17-home-screen-widget-design.md`.
 5. Run `npm run build-widget-cards` so the widget's copy of the corpus keeps up.
 ```
 
-- [ ] **Step 3: Bump the version**
+- [ ] **Step 3: Clear the Minor findings collected during review**
+
+Three cosmetic items were deferred from earlier task reviews rather than interrupting them. Fix all three here.
+
+In `__tests__/widget-cards.test.ts`, remove `join` from the `path` import: it is imported and never used. It came from the plan's own code block, so it is a plan defect rather than an implementer's slip. If `join` turns out to be used somewhere in the file after all, leave it and say so.
+
+Add a trailing newline to the end of `targets/widget/Info.plist`.
+
+Then re-run `npm test` to confirm the import removal broke nothing.
+
+- [ ] **Step 4: Record the build recipe that actually works**
+
+Task 6 established that `npx expo run:ios` alone, run against a copy with no `ios/` directory, silently skips embedding the widget target. Running `npx expo prebuild -p ios --clean` explicitly first fixes it reproducibly. That is a trap worth writing down, because the failure is silent: the app builds and runs perfectly well with no widget in it.
+
+Add to the CLAUDE.md section from Step 1:
+
+```markdown
+When building locally, run `npx expo prebuild -p ios --clean` explicitly before
+`npx expo run:ios`. Letting `run:ios` do its own implicit prebuild can silently skip
+embedding the widget target, and the failure is quiet: the app builds and launches
+normally, just with no widget in it.
+```
+
+- [ ] **Step 5: Bump the version**
 
 In `app.json`, set `expo.version` to `"1.3.0"`. Leave `ios.buildNumber` alone: `eas.json` sets `autoIncrement` on the production profile.
 
-- [ ] **Step 4: Run the gates and commit**
+- [ ] **Step 6: Run the gates and commit**
+
+All four gates here, including `check-links`, since this is the last commit on the branch.
 
 ```bash
 npm run validate-corpus && npm run corpus-style && npm test && npm run check-links
 ```
 
 ```bash
-git add CLAUDE.md app.json
+git add CLAUDE.md app.json __tests__/widget-cards.test.ts targets/widget/Info.plist
 git commit -m "docs: record the widget's corpus copy and its regeneration step
 
 Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>"
