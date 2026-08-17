@@ -41,18 +41,34 @@ backstop for a long first sentence or large Dynamic Type.
 
 ## Architecture
 
-Three new committed directories. `/ios` stays gitignored and is never hand edited.
+One new committed directory. `/ios` stays gitignored and is never hand edited.
+
+### Prerequisites
+
+`@bacons/apple-targets` requires CocoaPods 1.16.2 or newer, Xcode 16 or newer, and Expo
+SDK 53 or newer. The development machine was checked against this before the design was
+accepted: macOS 15.7.4, Xcode 26.3, CocoaPods 1.16.2, Expo 57.0.6. CocoaPods is exactly at
+the floor, so a downgrade would break the build.
 
 ### `targets/widget/`
 
 The extension's own source, injected into the Xcode project on every prebuild by
-`@bacons/apple-targets`, pinned to exactly `5.0.0` in `devDependencies` and listed in
-`app.json`'s `plugins`. The plugin creates the `PBXNativeTarget`, its build phases,
+`@bacons/apple-targets`, pinned to exactly `5.0.0` and listed in `app.json`'s `plugins`.
+It is a regular dependency rather than a dev dependency, because the app imports
+`ExtensionStorage` from it at runtime and its native module has to autolink. The plugin creates the `PBXNativeTarget`, its build phases,
 entitlements and the appex embed step, so the Expo prebuild workflow stays intact and
 nothing about the app target's generated output changes.
 
-The directory holds `expo-target.config.js`, the Swift sources, and the generated card
-data. The widget's bundle identifier is `com.pratyushs123.marrow.widget`.
+The root `targets/` directory is the plugin's convention: every subdirectory holding an
+`expo-target.config.js` becomes a target, and every file inside it becomes part of that
+target. Our directory holds `expo-target.config.js`, the Swift sources, and the generated
+card data under `assets/`, which is the path the plugin links as target resources rather
+than as compiled sources.
+
+The widget's bundle identifier is set as `.widget`, which the plugin appends to the app's,
+giving `com.pratyushs123.marrow.widget`. `deploymentTarget` must be set explicitly to
+`"16.4"`, because the plugin defaults to `18.0` and that default would silently drop every
+reader below iOS 18.
 
 This is the riskiest dependency in the repo, because it now sits in the prebuild path. It
 was chosen over writing a bespoke plugin against `@expo/config-plugins` and the `xcode`
@@ -61,27 +77,39 @@ Info.plist and the appex embed in several hundred lines of the most fragile code
 Pinning exactly means an install never surprises us. It does not remove the coupling: an
 SDK 58 upgrade can block on this package catching up.
 
-### `modules/marrow-widget/`
+### Reaching the shared container from JavaScript
 
-A local Expo module, roughly forty lines of Swift, exposing preference writes and a
-timeline reload to JavaScript. It exists because React Native cannot reach `UserDefaults`,
-and the published packages that offer it (`expo-shared-preferences`,
+We write no native module of our own. This design originally called for a local Expo
+module of about forty lines of Swift, because React Native cannot reach `UserDefaults` and
+the published packages that offer it (`expo-shared-preferences`,
 `react-native-shared-group-preferences`) were last released in 2024 and 2023 respectively
 and predate the New Architecture.
 
-It writes into `UserDefaults(suiteName: "group.com.pratyushs123.marrow")` and then calls
-`WidgetCenter.shared.reloadAllTimelines()`, so a setting change is reflected on the home
+Inspecting `@bacons/apple-targets@5.0.0` showed it already ships exactly that module. It
+exports an `ExtensionStorage` class backed by `ExtensionStorageModule.swift`:
+
+```ts
+import { ExtensionStorage } from "@bacons/apple-targets";
+
+const storage = new ExtensionStorage("group.com.pratyushs123.marrow");
+storage.set("preferences", json);
+ExtensionStorage.reloadWidget();
+```
+
+`set` with a string calls `UserDefaults(suiteName:).set(_:forKey:)`, and `reloadWidget`
+calls `WidgetCenter.shared.reloadAllTimelines()`, so a setting change reaches the home
 screen immediately rather than at the system's next refresh.
 
-The TypeScript wrapper resolves the native module through `requireOptionalNativeModule`,
-so it returns null rather than throwing at import time when the native side is absent.
-That is the path taken by Jest and by Android, and every call site treats it as a no-op.
-No `any`.
+Its JavaScript layer already substitutes no-op stubs when the native module is absent,
+which is the path taken by Jest and by Android. That is precisely the safety our own
+wrapper would have had to provide, so the wrapper is gone too. Deleting a directory of our
+own Swift is the single biggest risk reduction found during planning.
 
 ### App Group
 
-`group.com.pratyushs123.marrow`, declared on the app through `app.json`'s
-`ios.entitlements` and on the widget through its target config.
+`group.com.pratyushs123.marrow`, declared once on the app through `app.json`'s
+`ios.entitlements`. The plugin automatically mirrors that array onto targets that can use
+App Groups, so the widget's config does not repeat it and the two cannot drift apart.
 
 This is a credentials change to a shipping app. EAS must register the group and issue new
 provisioning profiles for both targets on the first build. That step is the likeliest
@@ -103,9 +131,11 @@ feature the app otherwise supports, which is not a trade worth taking for one mo
 ### Card data
 
 `scripts/build-widget-cards.ts` reads the four corpus files and writes
-`targets/widget/cards.json`, trimmed to the six fields the widget renders: `id`, `domain`,
-`topic`, `title`, `body`, `difficulty`. That is roughly 167KB against 320KB for the raw
-files.
+`targets/widget/assets/cards.json`, trimmed to the six fields the widget renders: `id`,
+`domain`, `topic`, `title`, `body`, `difficulty`. That is roughly 167KB against 320KB for
+the raw files. It lives under `assets/` because that is the directory the plugin links as
+target resources; a JSON file elsewhere in the target directory is not guaranteed to be
+copied into the appex.
 
 Shipping the four corpus files unchanged as widget resources was considered, since Swift's
 `JSONDecoder` ignores unknown keys and it would need no script at all. It does not work:
@@ -212,7 +242,8 @@ Jest covers what runs in JavaScript:
 
 - `syncWidgetPreferences`: empty arrays normalize to "all"; the serialized payload shape;
   a no-op when the native module is absent, which is also the Jest and Android path.
-- `targets/widget/cards.json` still matches what `scripts/build-widget-cards.ts` produces.
+- `targets/widget/assets/cards.json` still matches what `scripts/build-widget-cards.ts`
+  produces.
 
 Simulator verification covers what unit tests cannot: all three families render, a level
 change in Settings reloads the home screen immediately, and a tap lands on the right card.
