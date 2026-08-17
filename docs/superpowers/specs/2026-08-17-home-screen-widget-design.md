@@ -108,8 +108,14 @@ own Swift is the single biggest risk reduction found during planning.
 ### App Group
 
 `group.com.pratyushs123.marrow`, declared once on the app through `app.json`'s
-`ios.entitlements`. The plugin automatically mirrors that array onto targets that can use
-App Groups, so the widget's config does not repeat it and the two cannot drift apart.
+`ios.entitlements`. The plugin mirrors that array onto targets that can use App Groups,
+so the widget's config does not repeat the identifier and the two cannot drift apart.
+
+The mirror has a condition the README does not state: in `build/with-widget.js` it runs
+inside `if (entitlementsJson)`, so a target config with no `entitlements` key at all is
+skipped, and no `generated.entitlements` is written. The widget's config therefore
+declares an empty `entitlements: {}`. This was found by the first implementation attempt
+failing its own verification step, which is exactly what that step was for.
 
 This is a credentials change to a shipping app. EAS must register the group and issue new
 provisioning profiles for both targets on the first build. That step is the likeliest

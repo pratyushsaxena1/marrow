@@ -20,6 +20,7 @@
 - App Group identifier: `group.com.pratyushs123.marrow`
 - Widget bundle identifier: `com.pratyushs123.marrow.widget` (written as `".widget"` in the target config, which the plugin appends to the app's).
 - Widget deployment target: `"16.4"`. The plugin defaults to `18.0`, so this must be set explicitly.
+- The widget target config must declare `entitlements: {}`. The plugin skips App Group mirroring entirely when the key is absent, so an empty object is load bearing.
 - Shared preferences key: `preferences`. Value is a JSON **string**.
 - Deep link format: `marrow:///card/<id>` with three slashes.
 - `@bacons/apple-targets` is pinned to exactly `5.0.0` as a regular dependency, not a dev dependency.
@@ -65,7 +66,7 @@ Prove the riskiest part first: that a native target can be generated from JavaSc
 
 - [ ] **Step 1: Register the plugin and the App Group in `app.json`**
 
-Add `"@bacons/apple-targets"` as the last element of `expo.plugins`, and add an `entitlements` block inside `expo.ios`. The plugin automatically mirrors this App Group array onto the widget target, so it is declared once here and never repeated in the target config.
+Add `"@bacons/apple-targets"` as the last element of `expo.plugins`, and add an `entitlements` block inside `expo.ios`. The plugin mirrors this App Group array onto the widget target, so the array itself is declared once here and never repeated in the target config. The target config must still declare an empty `entitlements: {}` for the mirror to run at all; see Step 2.
 
 ```json
 "ios": {
@@ -110,7 +111,11 @@ module.exports = {
   // The plugin defaults to 18.0. Marrow's app target is 16.4 and the widget matches it,
   // so a reader on iOS 16 is not silently excluded from the feature.
   deploymentTarget: "16.4",
-  frameworks: ["SwiftUI", "WidgetKit"],
+  // Load bearing despite being empty. The plugin mirrors the app's App Group onto this
+  // target from inside `if (entitlementsJson)` in build/with-widget.js, so omitting the
+  // key entirely skips both the mirror and the generated.entitlements file. An empty
+  // object is truthy, which is all it takes to reach the mirror.
+  entitlements: {},
 };
 ```
 
